@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/my/my"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "小柴随心记",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#dddddd",
+    "selectedColor": "#FC5C7D",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/index1.png",
+        "selectedIconPath": "images/index2.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "images/my1.png",
+        "selectedIconPath": "images/my2.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于个人信息的页面显示" 
+    }
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

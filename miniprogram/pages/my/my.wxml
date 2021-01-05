@@ -1,0 +1,2 @@
+<!--pages/my/my.wxml-->
+<lc_header heightInfo="{{heightInfo}}" header_title="{{header_title}}"></lc_header>

@@ -1,0 +1,51 @@
+<!--pages/index.wxml-->
+<lc_header heightInfo="{{heightInfo}}" header_title="{{header_title}}"></lc_header>
+
+<view class="index"  style="top: {{heightInfo.cH+heightInfo.cT+12}}px">
+  <scroll-view class="index_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+    <view>11111</view>
+  </scroll-view>
+</view>

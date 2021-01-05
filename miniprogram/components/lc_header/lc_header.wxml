@@ -1,0 +1,2 @@
+<view class="index-nav" style="top: 0; height: {{heightInfo.cH+heightInfo.cT+12}}px"></view>
+<view class="index-header" style="height: {{heightInfo.cH}}px; top: {{heightInfo.cT}}px; line-height:{{heightInfo.cH}}px">{{header_title}}</view>  

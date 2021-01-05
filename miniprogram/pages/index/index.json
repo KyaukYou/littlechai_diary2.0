@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "主页",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "lc_header": "/components/lc_header/lc_header"
+  }
+}

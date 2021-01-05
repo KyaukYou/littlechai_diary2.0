@@ -1,0 +1,18 @@
+.index-header {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  color: white;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+}
+
+.index-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to left, #FC5C7D, #ee67a1);
+  z-index: 999;
+}
