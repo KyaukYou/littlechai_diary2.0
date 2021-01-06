@@ -1,51 +1,9 @@
 <!--pages/index.wxml-->
-<lc_header heightInfo="{{heightInfo}}" header_title="{{header_title}}"></lc_header>
+<l-capsule-bar bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="主页">
+	<view class="index">
+    <scroll-view class="index_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    </scroll-view>
+  </view>
+</l-capsule-bar>
 
-<view class="index"  style="top: {{heightInfo.cH+heightInfo.cT+12}}px">
-  <scroll-view class="index_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-    <view>11111</view>
-  </scroll-view>
-</view>
+

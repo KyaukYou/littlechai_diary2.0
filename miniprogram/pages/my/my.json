@@ -1,8 +1,9 @@
 {
   "navigationBarTitleText": "我的",
-  "enablePullDownRefresh": true,
+  "enablePullDownRefresh": false,
   "navigationStyle": "custom",
   "usingComponents": {
-    "lc_header": "/components/lc_header/lc_header"
+    "l-capsule-bar": "/lin-ui/dist/capsule-bar",
+    "l-list": "/lin-ui/dist/list"
   }
 }

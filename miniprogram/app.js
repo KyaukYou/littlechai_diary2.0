@@ -29,5 +29,7 @@ App({
   globalData: {
     navHeight: 0,
     customHeight: 0,
+    //全局颜色
+    color: "rgb(244,118,149)"
   }
 })

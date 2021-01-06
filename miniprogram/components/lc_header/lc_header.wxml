@@ -1,2 +1,4 @@
-<view class="index-nav" style="top: 0; height: {{heightInfo.cH+heightInfo.cT+12}}px"></view>
+<view style="background-url: " class="index-nav" style="top: 0; height: {{(heightInfo.cH+heightInfo.cT+12) * 1}}px">
+  <!-- <image mode="widthFix" src='../../images/06d330b49878cb3fab2fc8274fca60d7.jpg'></image> -->
+</view>
 <view class="index-header" style="height: {{heightInfo.cH}}px; top: {{heightInfo.cT}}px; line-height:{{heightInfo.cH}}px">{{header_title}}</view>  

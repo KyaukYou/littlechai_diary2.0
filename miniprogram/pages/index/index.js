@@ -6,21 +6,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    header_title: "主页",
-    heightInfo: {},
-    refreshBol: false
+    refreshBol: false,
+    globalData: {}
   },
-  getHeightInfo() {
-    let heightInfo = {
-      navH: app.globalData.navHeight,
-      cH: app.globalData.customHeight.height,
-      cT: app.globalData.customHeight.top
-    }
+  getGlobalData() {
     this.setData({
-      heightInfo: heightInfo
+      globalData: app.globalData
     })
   },
-
   //scroll-view 自定义下拉刷新
   refresh() {
     console.log('开始刷新')
@@ -39,7 +32,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getHeightInfo();
+    this.getGlobalData();
   },
 
   /**

@@ -1,2 +1,15 @@
 <!--pages/my/my.wxml-->
-<lc_header heightInfo="{{heightInfo}}" header_title="{{header_title}}"></lc_header>
+<l-capsule-bar bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="我的">
+	<view class="index">
+    <scroll-view class="index_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+      <view class="my_header"></view>
+      <view class="my_container">
+        <l-list title="个人资料" icon="cart"  />
+        <l-list title="全局配色" icon="cart" />
+        <l-list title="更新日志" icon="notification" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list title="错误提交" icon="notification" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list title="设置" icon="notification" tag-content="新功能" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+      </view> 
+    </scroll-view>
+  </view>
+</l-capsule-bar>
