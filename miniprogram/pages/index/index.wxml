@@ -1,5 +1,5 @@
 <!--pages/index.wxml-->
-<l-capsule-bar bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="主页">
+<l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="小柴随心记">
 	<view class="index">
     <scroll-view class="index_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
     </scroll-view>

@@ -5,7 +5,7 @@
   <cover-view class="capsule-bar" style="background-color: {{bgColor}};">
     
     
-    <cover-view class="status-bar" style="height: {{statusBarHeight+4}}rpx;background-color: {{statusBarColor}};"></cover-view>
+    <cover-view class="status-bar" style="height: {{statusBarHeight+12}}rpx;background-color: {{statusBarColor}};"></cover-view>
 
     
     <cover-view class="title-bar" style="height: {{titleBarHeight}}rpx;background-color: {{titleBarColor}};">

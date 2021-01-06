@@ -7,11 +7,27 @@ Page({
    */
   data: {
     refreshBol: false,
-    globalData: {}
+    globalData: {},
+    rgb: 'rgb(0,0,0)',//初始值
+    pick: false
+  },
+  // 显示取色器
+  toPick: function () {
+    this.setData({
+      pick: true
+    })
+  },
+  //取色结果回调
+  pickColor(e) {
+    let rgb = e.detail.color;
+    app.changeColor(rgb);
+    wx.setStorageSync('color', rgb);
+    this.getGlobalData();
   },
   getGlobalData() {
     this.setData({
-      globalData: app.globalData
+      globalData: app.globalData,
+      rgb:app.globalData.color
     })
   },
   //scroll-view 自定义下拉刷新
@@ -32,7 +48,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getGlobalData();
+    
   },
 
   /**
@@ -46,7 +62,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getGlobalData();
   },
 
   /**

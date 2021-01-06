@@ -12,6 +12,10 @@ App({
       }
     })
 
+    if(wx.getStorageSync('color')) {
+      this.globalData.color = wx.getStorageSync('color');
+    }
+
 
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
@@ -25,6 +29,9 @@ App({
         traceUser: true,
       })
     }
+  },
+  changeColor(color) {
+    this.globalData.color = color;
   },
   globalData: {
     navHeight: 0,
