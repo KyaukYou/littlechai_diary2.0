@@ -27,6 +27,7 @@
 }
 
 .container .capsule-bar .title-bar .title {
+  color: white!important;
   font-size: 36rpx;
   font-weight: 400
 }

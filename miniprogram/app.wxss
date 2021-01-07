@@ -3,10 +3,16 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 6rpx 10rpx;
 }
 
 .index_container {
   width: 100%;
   height: 100%;
 }
+
+
+
+/*switch组件*/
+/* .wx-switch-input{width:46px !important;height:25px !important;}
+.wx-switch-input::before{width:44px !important;height: 23px !important;}
+.wx-switch-input::after{width: 22px !important;height: 22px !important;} */

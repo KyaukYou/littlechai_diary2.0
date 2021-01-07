@@ -2,11 +2,28 @@
 <color-picker bindchangeColor="pickColor" initColor="{{rgb}}" show="{{pick}}" />
 
 <l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="我的信息">
-	<view class="index">
-    <scroll-view class="index_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
-      <view class="my_header"></view>
-      <view class="my_container">
+</l-capsule-bar>
+<!-- style="top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" -->
+
+
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
+    <view class="my_header"  style="background-color: {{globalData.color}};">
+      <view style="top: -{{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_bg">
+        <image mode="scaleToFill" src='http://data.littlechai.cn/blog_bg28.jpg'></image>
+      </view>
+    </view>
+
+    
+
+    <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+      <view class="my_wrap">
         <l-list title="个人资料" icon="cart"  />
+        <l-list title="自定义背景" icon="cart">
+          <view slot="right-section">
+            <switch style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
+          </view>
+        </l-list>  
         <l-list bindtap="toPick" title="全局配色" icon="cart" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
         <l-list title="更新日志" icon="notification" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
         <l-list title="错误提交" icon="notification" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
@@ -14,4 +31,3 @@
       </view> 
     </scroll-view>
   </view>
-</l-capsule-bar>

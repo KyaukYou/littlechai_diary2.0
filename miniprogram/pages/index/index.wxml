@@ -1,6 +1,17 @@
 <!--pages/index.wxml-->
 <l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="小柴随心记">
 	<view class="index">
+    <!-- <view class="index_search"> -->
+      <l-search-bar class="index_search" placeholder="搜索"/>
+    <!-- </view> -->
+    <view class="index_tab">
+      <l-segment active-color='{{globalData.color}}' bind:linchange="changeTabs">
+        <l-segment-item tab="最近更新" key="tab_one" />
+        <l-segment-item tab="时间正序" key="tab_two" />
+        <l-segment-item tab="点赞次数" key="tab_three" />
+        <l-segment-item tab="浏览次数" key="tab_four" />
+      </l-segment>  
+    </view>
     <scroll-view class="index_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
     </scroll-view>
   </view>

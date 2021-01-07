@@ -14,6 +14,10 @@ Page({
       globalData: app.globalData
     })
   },
+  // 选项切换
+  changeTabs(e) {
+    console.log(e.detail.activeKey)
+  },
   //scroll-view 自定义下拉刷新
   refresh() {
     console.log('开始刷新')

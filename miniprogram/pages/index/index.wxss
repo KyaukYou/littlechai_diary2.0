@@ -1,1 +1,9 @@
 /* pages/index.wxss */
+.index_search {
+  height: 80rpx;
+  /* display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center; */
+}
+
