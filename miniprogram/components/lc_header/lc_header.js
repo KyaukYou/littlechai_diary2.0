@@ -1,5 +1,3 @@
-const app = require('../../app')
-
 Component({
   data: {
     heightInfo: {}
@@ -12,9 +10,13 @@ Component({
       type: String,
       value: ""
     },
-    heightInfo: {
-      type: Object,
-      value: {}
+    header_color: {
+      type: String,
+      value: ""
+    },
+    header_image: {
+      type: String,
+      value: ""
     }
   },
   ready() {
@@ -22,6 +24,20 @@ Component({
   },
   methods: {
     init(e) {
+      wx.getSystemInfo({
+        success: res => {
+          //导航高度
+          this.setData({
+            heightInfo: {
+              navHeight: res.statusBarHeight,
+              customHeight:wx.getMenuButtonBoundingClientRect()
+            }
+          })
+          console.log(this.data.heightInfo)
+        }, fail(err) {
+          console.log(err);
+        }
+      })
       // 这里可以进行数据操作
       // console.log(this.data.heightInfo,this.data.header_title)
     },

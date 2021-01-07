@@ -1,15 +1,14 @@
 <!--pages/my/my.wxml-->
 <color-picker bindchangeColor="pickColor" initColor="{{rgb}}" show="{{pick}}" />
 
-<l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="我的信息">
-</l-capsule-bar>
-<!-- style="top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" -->
-
+<!-- <l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="我的信息">
+</l-capsule-bar> -->
+<lc_header header_title='我的信息' header_color="{{color}}" header_image="{{header_image}}"></lc_header> 
 
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
-    <view class="my_header"  style="background-color: {{globalData.color}};">
-      <view style="top: -{{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_bg">
+    <view class="my_header"  style="background-color: {{globalData.color}};background-image: {{header_imageX}};">
+      <view wx:if="{{globalData.background}}" style="top: -{{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_bg">
         <image mode="scaleToFill" src='http://data.littlechai.cn/blog_bg28.jpg'></image>
       </view>
     </view>
@@ -19,9 +18,14 @@
     <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
       <view class="my_wrap">
         <l-list title="个人资料" icon="cart"  />
+        <l-list title="毛玻璃效果" icon="notification">
+          <view slot="right-section">
+            <switch checked='{{globalData.blur}}' bindchange='changeBlur' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
+          </view>
+        </l-list>
         <l-list title="自定义背景" icon="cart">
           <view slot="right-section">
-            <switch style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
+            <switch checked='{{globalData.background}}' bindchange='changeBackground' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
           </view>
         </l-list>  
         <l-list bindtap="toPick" title="全局配色" icon="cart" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />

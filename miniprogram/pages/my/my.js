@@ -9,7 +9,10 @@ Page({
     refreshBol: false,
     globalData: {},
     rgb: 'rgb(0,0,0)',//初始值
-    pick: false
+    pick: false,
+    header_image: "",
+    header_imageX: "",
+    color: ""
   },
   // 显示取色器
   toPick: function () {
@@ -27,7 +30,8 @@ Page({
   getGlobalData() {
     this.setData({
       globalData: app.globalData,
-      rgb:app.globalData.color
+      rgb:app.globalData.color,
+      color: app.globalData.background === true ? "" : app.globalData.color
     })
   },
   //scroll-view 自定义下拉刷新
@@ -42,6 +46,28 @@ Page({
       })
       console.log('结束')
     }, 3000)
+  },
+  changeBlur(e) {
+    this.data.globalData.blur = e.detail.value;
+    if(e.detail.value === true) {
+      this.setData({
+        header_image: "url('../../images/dot.png')",
+        header_imageX: "url('/images/dot.png')"
+      })
+    }
+    else {
+      this.setData({
+        header_image: "",
+        header_imageX: ""
+      })
+    }
+    wx.setStorageSync('blur', e.detail.value)
+    this.getGlobalData();
+  },
+  changeBackground(e) {
+    this.data.globalData.background = e.detail.value;
+    wx.setStorageSync('background', e.detail.value)
+    this.getGlobalData();
   },
 
   /**

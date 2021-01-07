@@ -7,10 +7,106 @@
 
 .index_container {
   width: 100%;
+  position: absolute;
+  top: 156rpx;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* padding-top: 156rpx; */
   height: 100%;
+  box-sizing: border-box;
+  background-color: rgb(250, 250, 250);
 }
 
 
+/*公共diary组件*/
+.diary_scroll {
+  width: 100%;
+  height: auto;
+  padding-top: 24rpx;
+  padding-bottom: 336rpx;
+}  
+
+.diary_main {
+  width: 95%;
+  height: 320rpx;
+  background-color: white;
+  border-right-style: 12rpx;
+  box-shadow: 2px 2px 10px #c7ccd7;
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0 auto 36rpx auto;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.diary_left {
+  width: 55%;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.diary_left>image {
+  width: 97%;
+  height: 98%;
+  border-radius: 8rpx;
+}
+
+.diary_right {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.diary_title {
+  width: 92%;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-weight: 600;
+  font-size: 32rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diary_time {
+  width: 92%;
+  height: 38rpx;
+  line-height: 36rpx;
+  font-size: 22rpx;
+  color: #999;
+  font-weight: 600;
+}
+
+.diary_location {
+  width: 92%;
+  height: 105rpx;
+  line-height: 34rpx;
+  font-size: 22rpx;
+  color: #999;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-bottom: 12rpx;
+}
+
+.diary_more {
+  width: 92%;
+  height: 44rpx;
+  line-height: 36rpx;
+  font-size: 22rpx;
+  color: rgb(130, 130, 130);
+  font-weight: 600;
+}
 
 /*switch组件*/
 /* .wx-switch-input{width:46px !important;height:25px !important;}

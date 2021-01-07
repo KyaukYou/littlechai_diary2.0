@@ -15,6 +15,12 @@ App({
     if(wx.getStorageSync('color')) {
       this.globalData.color = wx.getStorageSync('color');
     }
+    if(wx.getStorageSync('blur')) {
+      this.globalData.blur = wx.getStorageSync('blur');
+    }
+    if(wx.getStorageSync('background')) {
+      this.globalData.background = wx.getStorageSync('background');
+    }
 
 
     if (!wx.cloud) {
@@ -34,9 +40,9 @@ App({
     this.globalData.color = color;
   },
   globalData: {
-    navHeight: 0,
-    customHeight: 0,
     //全局颜色
-    color: "rgb(244,118,149)"
+    color: "rgb(244,118,149)",
+    blur: false,
+    background: false
   }
 })

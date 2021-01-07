@@ -23,7 +23,6 @@
 .my_header {
   width: 100%;
   height: 400rpx;
-  background-color: aquamarine!important;
   position: relative;
 }
 

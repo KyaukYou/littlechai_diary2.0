@@ -31,6 +31,10 @@ Page({
       console.log('结束')
     },3000)
   },
+  // 滚动到底部
+  scrollToBottom(e) {
+    console.log(e)
+  },
 
   /**
    * 生命周期函数--监听页面加载
