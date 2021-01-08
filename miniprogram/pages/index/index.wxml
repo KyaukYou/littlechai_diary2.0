@@ -1,7 +1,7 @@
 <!--pages/index.wxml-->
 <!-- <l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="小柴随心记">
 </l-capsule-bar> -->
-<lc_header header_title='小柴随心记' header_color="{{globalData.color}}"></lc_header> 
+<lc_header header_title='小柴随心记' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header> 
 
 <view class="index" style="top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
   <!-- <view class="index_search"> -->

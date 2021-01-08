@@ -49,18 +49,6 @@ Page({
   },
   changeBlur(e) {
     this.data.globalData.blur = e.detail.value;
-    if(e.detail.value === true) {
-      this.setData({
-        header_image: "url('../../images/dot.png')",
-        header_imageX: "url('/images/dot.png')"
-      })
-    }
-    else {
-      this.setData({
-        header_image: "",
-        header_imageX: ""
-      })
-    }
     wx.setStorageSync('blur', e.detail.value)
     this.getGlobalData();
   },

@@ -17,7 +17,11 @@ Component({
     header_image: {
       type: String,
       value: ""
-    }
+    },
+    blur: {
+      type: Boolean,
+      value: ""
+    },
   },
   ready() {
     this.init();

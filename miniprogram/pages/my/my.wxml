@@ -1,15 +1,34 @@
 <!--pages/my/my.wxml-->
 <color-picker bindchangeColor="pickColor" initColor="{{rgb}}" show="{{pick}}" />
-
-<!-- <l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="我的信息">
-</l-capsule-bar> -->
-<lc_header header_title='我的信息' header_color="{{color}}" header_image="{{header_image}}"></lc_header> 
+<lc_header header_title='我的信息' header_color="{{color}}" blur="{{globalData.blur}}"></lc_header> 
 
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
-    <view class="my_header"  style="background-color: {{globalData.color}};background-image: {{header_imageX}};">
+    <view class="my_header"  style="background-color: {{globalData.color}}; background-image:{{globalData.blur === true ? 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/dot.png?sign=f6f105901602fb46727be2f82c1b33b4&t=1610067412)' : ''}};">
+      
+      <!-- 自定义背景图 -->
       <view wx:if="{{globalData.background}}" style="top: -{{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_bg">
         <image mode="scaleToFill" src='http://data.littlechai.cn/blog_bg28.jpg'></image>
+      </view>
+
+      <!-- 头像区域 -->
+      <view class="my_info">
+          <view class="my_info_top">
+            <view class="my_info_left">
+              <button></button>
+            </view>
+            <view class="my_info_right">
+              <view class="my_info_username">用户名用户名用户名</view>
+              <view class="my_info_location">江苏省-无锡市-锡山区</view>
+            </view>
+          </view>
+
+          <view class="my_info_bottom">
+            <view class="my_info_list">我的日记</view>
+            <view class="my_info_list">我的收藏</view>
+            <view class="my_info_list">我的关注</view>
+            <view class="my_info_list">我的粉丝</view>
+          </view>
       </view>
     </view>
 
@@ -17,21 +36,21 @@
 
     <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
       <view class="my_wrap">
-        <l-list title="个人资料" icon="cart"  />
-        <l-list title="毛玻璃效果" icon="notification">
-          <view slot="right-section">
-            <switch checked='{{globalData.blur}}' bindchange='changeBlur' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
-          </view>
-        </l-list>
-        <l-list title="自定义背景" icon="cart">
+        <l-list title="个人资料" image="/images/info.svg"  />
+        <l-list title="自定义背景" image="/images/image.svg">
           <view slot="right-section">
             <switch checked='{{globalData.background}}' bindchange='changeBackground' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
           </view>
         </l-list>  
-        <l-list bindtap="toPick" title="全局配色" icon="cart" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
-        <l-list title="更新日志" icon="notification" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
-        <l-list title="错误提交" icon="notification" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
-        <l-list title="设置" icon="notification" tag-content="新功能" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list title="毛绒效果" image="/images/blur.svg">
+          <view slot="right-section">
+            <switch checked='{{globalData.blur}}' bindchange='changeBlur' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
+          </view>
+        </l-list>
+        <l-list bindtap="toPick" title="全局配色" image="/images/color.svg" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
+        <l-list title="更新日志" image="/images/ver.svg" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list title="错误提交" image="/images/bug.svg" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list title="设置" image="/images/set.svg" tag-content="新功能" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
       </view> 
     </scroll-view>
   </view>

@@ -13,6 +13,7 @@
   left: 0;
   right: 0;
   width: 100%;
+  z-index: 998;
 }
 
 .my_bg image {
@@ -26,13 +27,83 @@
   position: relative;
 }
 
+.my_info {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.my_info_top {
+  width: 90%;
+  height: 130rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  left: 5%;
+  top: 5%;
+  color: white;
+}
+
+.my_info_left {
+  width: 112rpx;
+  height: 112rpx;
+  position: relative;
+}
+
+.my_info_left button {
+  width: 112rpx!important;
+  height: 112rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.my_info_right {
+  width: 360rpx;
+  height: 120rpx;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 0 16rpx;
+}
+
+.my_info_username {
+  width: 100%;
+  height: 44rpx;
+  line-height: 44rpx;
+  font-size: 30rpx;
+}
+
+.my_info_location {
+  width: 100%;
+  height: 44rpx;
+  line-height: 44rpx;
+  font-size: 26rpx;
+}
+
+.my_info_bottom {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  left: 0;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  height: 120rpx;
+}
+
 .my_container {
   position: absolute;
   top: 400rpx;
   bottom: 0;
   left: 0;
   width: 100%;
-  
 }
 
 .my_wrap {
