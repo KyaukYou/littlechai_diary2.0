@@ -55,7 +55,7 @@
 
 .l-placement-bottom,
 .l-placement-top {
-  height: 80rpx
+  height: 80rpx;
 }
 
 .l-placement-bottom .l-tabs-header,

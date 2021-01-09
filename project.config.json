@@ -19,15 +19,13 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
+    "useMultiFrameRuntime": false,
     "useApiHook": true,
-    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -39,7 +37,7 @@
   },
   "appid": "wx7e8eb46444d8dd39",
   "projectname": "%E5%B0%8F%E6%9F%B4%E9%9A%8F%E5%BF%83%E8%AE%B0",
-  "libVersion": "2.14.1",
+  "libVersion": "2.14.3",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {

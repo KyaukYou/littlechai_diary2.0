@@ -2,7 +2,11 @@
 .index {
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
+}
+
+.index_tab {
+  
 }
 
 .index_container {
@@ -13,8 +17,8 @@
   left: 0;
   right: 0;
   /* padding-top: 156rpx; */
-  height: 100%;
-  box-sizing: border-box;
+  /* height: 100%; */
+  /* box-sizing: border-box; */
   background-color: rgb(250, 250, 250);
 }
 
@@ -23,19 +27,19 @@
 .diary_scroll {
   width: 100%;
   height: auto;
-  padding-top: 24rpx;
-  padding-bottom: 336rpx;
+  box-sizing: border-box;
+  /* padding-top: 24rpx; */
+  /* padding-bottom: 320rpx; */
 }  
 
 .diary_main {
   width: 95%;
   height: 320rpx;
   background-color: white;
-  border-right-style: 12rpx;
   box-shadow: 2px 2px 10px #c7ccd7;
   display: flex;
   flex-flow: row nowrap;
-  margin: 0 auto 36rpx auto;
+  margin: 0 auto 40rpx auto;
   border-radius: 12rpx;
   overflow: hidden;
 }
@@ -50,7 +54,7 @@
 }
 
 .diary_left>image {
-  width: 97%;
+  width: 98%;
   height: 98%;
   border-radius: 8rpx;
 }
@@ -86,9 +90,9 @@
 
 .diary_location {
   width: 92%;
-  height: 105rpx;
-  line-height: 34rpx;
-  font-size: 22rpx;
+  height: 90rpx;
+  line-height: 30rpx;
+  font-size: 20rpx;
   color: #999;
   font-weight: 600;
   overflow: hidden;
@@ -96,7 +100,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  margin-bottom: 12rpx;
+  margin-bottom: 16rpx;
 }
 
 .diary_more {
@@ -108,7 +112,184 @@
   font-weight: 600;
 }
 
-/*switch组件*/
-/* .wx-switch-input{width:46px !important;height:25px !important;}
-.wx-switch-input::before{width:44px !important;height: 23px !important;}
-.wx-switch-input::after{width: 22px !important;height: 22px !important;} */
+
+
+/* my */
+.my {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.my_bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 998;
+}
+
+.my_bg image {
+  width: 100%;
+  height: 100%;
+}
+
+.my_header {
+  width: 100%;
+  height: 400rpx;
+  position: relative;
+}
+
+.my_info {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.my_info_top {
+  width: 90%;
+  height: 130rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  left: 5%;
+  top: 5%;
+  color: white;
+}
+
+.my_info_left {
+  width: 112rpx;
+  height: 112rpx;
+  position: relative;
+}
+
+.my_info_left button {
+  width: 112rpx!important;
+  height: 112rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.my_info_right {
+  width: 360rpx;
+  height: 112rpx;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 0 16rpx;
+}
+
+.my_info_username {
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 36rpx;
+  position: relative;
+  top: 6rpx;
+}
+
+.my_info_location {
+  width: 100%;
+  height: 44rpx;
+  line-height: 44rpx;
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  top: 6rpx;
+}
+
+.my_info_bottom {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.1);
+  left: 0;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  height: 126rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.my_info_list {
+  width: 25%;
+  height: 100%;
+  color: white;
+  font-size: 26rpx;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+}
+
+.my_info_list_text {
+  width: 100%;
+  height: 47%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+.my_info_list_num {
+  width: 100%;
+  height: 47%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 26rpx;
+}
+
+.my_info_list_border {
+  width: 2rpx;
+  position: absolute;
+  top: 18%;
+  bottom: 18%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.my_info_list_border1 {
+  left: 25%;
+}
+
+.my_info_list_border2 {
+  left: 50%;
+}
+
+.my_info_list_border3 {
+  left: 75%;
+}
+
+.my_container {
+  position: absolute;
+  top: 400rpx;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.my_wrap {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 0 12rpx;
+}
+
+.login {
+  background-image: url('https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/login.png?sign=daacd3a077703f0b53ecbc16b5484038&t=1610187200');
+  background-size: 100% 100%;
+  box-shadow: 0 0 8rpx 0 rgba(50,50,50,0.45);
+}

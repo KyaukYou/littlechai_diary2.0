@@ -1,5 +1,11 @@
 <!--pages/my/my.wxml-->
-<color-picker bindchangeColor="pickColor" initColor="{{rgb}}" show="{{pick}}" />
+<color-picker bindchangeColor="pickColor" initColor="{{rgb}}" show="{{pick}}" initBol="{{globalData.initBol}}"/>
+<l-toast
+  show="{{toastBol}}"
+  icon="loading"
+  title="{{toastTitle}}"
+  duration="{{toastDuration}}"
+/>
 <lc_header header_title='我的信息' header_color="{{color}}" blur="{{globalData.blur}}"></lc_header> 
 
 
@@ -15,19 +21,52 @@
       <view class="my_info">
           <view class="my_info_top">
             <view class="my_info_left">
-              <button></button>
+              <button style="background-image: {{globalData.userInfo.avatarUrl ? 'url('+globalData.userInfo.avatarUrl+')' : 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/wx.png?sign=2a8dbe026ad644fdbce891f4b2109f87&t=1610211284)'}}" open-type="getUserInfo" bindgetuserinfo='bindgetuserinfo' class="login"></button>
             </view>
             <view class="my_info_right">
-              <view class="my_info_username">用户名用户名用户名</view>
-              <view class="my_info_location">江苏省-无锡市-锡山区</view>
+              <view class="my_info_username">{{globalData.userInfo.nickName || '登录一下吧~'}}</view>
+              <view class="my_info_location">{{globalData.userInfo.headline || '写点什么吧~'}}</view>
             </view>
           </view>
 
           <view class="my_info_bottom">
-            <view class="my_info_list">我的日记</view>
-            <view class="my_info_list">我的收藏</view>
-            <view class="my_info_list">我的关注</view>
-            <view class="my_info_list">我的粉丝</view>
+
+            <view class="my_info_list_border my_info_list_border1"></view>
+            <view class="my_info_list_border my_info_list_border2"></view>
+            <view class="my_info_list_border my_info_list_border3"></view>
+
+            <view class="my_info_list">
+              <view class="my_info_list_text">
+                我的日记
+              </view>
+              <view class="my_info_list_num">
+                {{info.diary_num}}
+              </view>
+            </view>
+            <view class="my_info_list">
+              <view class="my_info_list_text">
+                我的收藏
+              </view>
+              <view class="my_info_list_num">
+                {{info.collection_num}}
+              </view>
+            </view>
+            <view class="my_info_list">
+              <view class="my_info_list_text">
+                我的关注
+              </view>
+              <view class="my_info_list_num">
+                {{info.following_num}}
+              </view>
+            </view>
+            <view class="my_info_list">
+              <view class="my_info_list_text">
+                我的粉丝
+              </view>
+              <view class="my_info_list_num">
+                {{info.fans}}
+              </view>
+            </view>
           </view>
       </view>
     </view>
@@ -37,7 +76,7 @@
     <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
       <view class="my_wrap">
         <l-list title="个人资料" image="/images/info.svg"  />
-        <l-list title="自定义背景" image="/images/image.svg">
+        <l-list title="显示背景" image="/images/image.svg">
           <view slot="right-section">
             <switch checked='{{globalData.background}}' bindchange='changeBackground' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
           </view>
@@ -47,10 +86,12 @@
             <switch checked='{{globalData.blur}}' bindchange='changeBlur' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
           </view>
         </l-list>
+        <l-list title="消息通知" image="/images/notice.svg" />
         <l-list bindtap="toPick" title="全局配色" image="/images/color.svg" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
         <l-list title="更新日志" image="/images/ver.svg" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
-        <l-list title="错误提交" image="/images/bug.svg" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
-        <l-list title="设置" image="/images/set.svg" tag-content="新功能" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list title="问题反馈" image="/images/bug.svg" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+
+        
       </view> 
     </scroll-view>
   </view>

@@ -5,7 +5,7 @@
   padding: 0 20rpx;
   box-sizing: border-box;
   width: 100%;
-  margin-top: 16rpx
+  padding-top: 16rpx
 }
 
 .search-input {

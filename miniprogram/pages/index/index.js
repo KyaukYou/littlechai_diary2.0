@@ -10,26 +10,28 @@ Page({
     globalData: {}
   },
   getGlobalData() {
-    this.setData({
-      globalData: app.globalData
-    })
+    let timer = setInterval(() => {
+      if(app.globalData.initBol === true) {
+        this.setData({
+          globalData: app.globalData,
+          refreshBol: false
+        })
+        clearInterval(timer);
+      }
+    },100)
   },
   // 选项切换
   changeTabs(e) {
     console.log(e.detail.activeKey)
   },
   //scroll-view 自定义下拉刷新
-  refresh() {
-    console.log('开始刷新')
+  async refresh() {
+    // console.log('开始刷新')
     this.setData({
       refreshBol: true
     })
-    let timer = setTimeout(() => {
-      this.setData({
-        refreshBol: false
-      })
-      console.log('结束')
-    },3000)
+    await app.initData();
+    this.getGlobalData();
   },
   // 滚动到底部
   scrollToBottom(e) {

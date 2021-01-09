@@ -6,6 +6,7 @@
     "lc_header": "/components/lc_header/lc_header",
     "l-capsule-bar": "/lin-ui/dist/capsule-bar",
     "l-list": "/lin-ui/dist/list",
-    "color-picker":"/components/color-picker/color-picker" 
+    "color-picker":"/components/color-picker/color-picker",
+    "l-toast": "/lin-ui/dist/toast" 
   }
 }

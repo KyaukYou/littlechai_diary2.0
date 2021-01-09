@@ -16,9 +16,13 @@ Component({
       type: Boolean,
       value: false
     },
+    initBol: {
+      type: Boolean,
+      value: false
+    }
   },
   data: {
-
+    timer: null
   },
   lifetimes: {
     attached() {
@@ -28,38 +32,55 @@ Component({
       })
     },
     ready() {
-      if(wx.getStorageSync('hue')) {
-        this.setData({
-          hueColor: this.hsv2rgb(wx.getStorageSync('hue'), 100, 100),
-        })
-      }
+      console.log('刷新')
+      this.data.timer = setInterval(() => {
+        console.log(this.data.initBol)
+        this.init();  
+      },100)
       
-      console.log(this.data.initColor.split(','))
-      const $ = this.createSelectorQuery()
-      const target = $.select('.target')
-      target.boundingClientRect()
-      $.exec((res) => {
-        const rect = res[0]
-        if (rect) {
-          this.SV = {
-            W: rect.width - 28, //block-size=28
-            H: rect.height - 28,
-            Step: (rect.width - 28) / 100
-          }
-          let { h, s, v } = this.rgb2hsv(this.data.initColor)
-          // 初始化定位
-          this.setData({
-            hsv:{
-              h,s,v
-            },
-            x: Math.round(s * this.SV.Step),
-            y: Math.round((100-v )* this.SV.Step)
-          })
-        }
-      })
     }
   },
   methods: {
+    init() {
+      if(this.data.initBol === true) {
+        if(wx.getStorageSync('hue')) {
+          this.setData({
+            hueColor: this.hsv2rgb(wx.getStorageSync('hue'), 100, 100),
+          })
+        }
+        else {
+          this.setData({
+            hueColor: this.hsv2rgb(347, 100, 100),
+          })
+        }
+        
+        console.log(this.data.initColor.split(','))
+        const $ = this.createSelectorQuery()
+        const target = $.select('.target')
+        target.boundingClientRect()
+        $.exec((res) => {
+          const rect = res[0]
+          if (rect) {
+            this.SV = {
+              W: rect.width - 28, //block-size=28
+              H: rect.height - 28,
+              Step: (rect.width - 28) / 100
+            }
+            let { h, s, v } = this.rgb2hsv(this.data.initColor)
+            // 初始化定位
+            this.setData({
+              hsv:{
+                h,s,v
+              },
+              x: Math.round(s * this.SV.Step),
+              y: Math.round((100-v )* this.SV.Step)
+            })
+          }
+        })
+        clearInterval(this.data.timer)
+      }
+    },
+
     onEnd() {
       this.triggerEvent('changeColor', {
         color: this.data.colorRes
@@ -181,5 +202,11 @@ Component({
         v: (hsv_v * 100).toFixed()
       }
     },
+  },
+  observers: {
+    'initColor': function (params) {//  'params'是要监听的字段，（params）是已更新变化后的数据
+      console.log('变化')
+      this.init();
+    }
   }
 })

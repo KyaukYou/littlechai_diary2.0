@@ -7,5 +7,34 @@
   position: fixed;
   bottom: 0;
   left: 0;
+  top: 0;
 }
 
+.index_top {
+  width: 100%;
+  height: 156rpx;
+  position: relative;
+  z-index: 999;
+}
+
+.my_header {
+  width: 100%;
+  height: 156rpx;
+  position: relative;
+  top: 12rpx;
+}
+
+.my_container {
+  position: absolute;
+  top: 168rpx;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.my_wrap {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 30rpx 4rpx 0 4rpx;
+}

@@ -7,6 +7,7 @@
     "l-capsule-bar": "/lin-ui/dist/capsule-bar",
     "l-search-bar": "/lin-ui/dist/search-bar",
     "l-segment": "/lin-ui/dist/segment",
-    "l-segment-item": "/lin-ui/dist/segment-item"
+    "l-segment-item": "/lin-ui/dist/segment-item",
+    "l-list": "/lin-ui/dist/list"
   }
 }
