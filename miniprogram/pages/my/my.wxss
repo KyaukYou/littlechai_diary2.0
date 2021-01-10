@@ -1,1 +1,47 @@
 /* pages/my/my.wxss */
+.my_info_location image {
+  position: relative;
+  width: 34rpx;
+  height: 34rpx;
+  left: -2rpx;
+  top: 0rpx;
+}
+
+.my_info_username image {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 6rpx;
+
+}
+
+.my_edit_background {
+  position: absolute;
+  right: 6rpx;
+  top: 2rpx;
+  width: 64rpx;
+  height: 52rpx;
+  z-index: 999;
+}
+
+.my_info_setline {
+  position: relative;
+  max-width: 430rpx;
+  min-width: 154rpx;
+  width: auto;
+  height: 100%;
+}
+
+.my_info_setline text {
+  width: auto;
+  opacity: 0;
+  z-index: -1;
+}
+
+.my_info_setline input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}

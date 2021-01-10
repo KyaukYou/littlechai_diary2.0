@@ -49,7 +49,26 @@ App({
   },
   async initData() {
       let openid = wx.getStorageSync('openid')
-      let res = await this.ifUser(openid)
+      let res = await this.ifUser(openid);
+      let checkInfo = await wx.getUserInfo({})
+
+      console.log(checkInfo)
+      if(checkInfo.userInfo.avatarUrl !== res.res.data.userInfo.avatarUrl || checkInfo.userInfo.nickName !== res.res.data.userInfo.nickName) {
+        let newInfo = await wx.cloud.callFunction({
+          name: 'updateCustom',
+          data: {
+            openid: wx.getStorageSync('openid'),
+            update: {
+              userInfo: checkInfo.userInfo
+            }
+          }
+        })
+        if(newInfo.result.stats.updated === 1) {
+          await this.initData();
+        }
+      }
+      // return false;
+
       console.log(res)
       if(res.res.status === 'ok') {
         let user = res.res.data;
@@ -60,7 +79,9 @@ App({
         this.globalData.background = user.background_bol;
         wx.setStorageSync('blur', user.blur);
         wx.setStorageSync('background', user.background_bol);
+        wx.setStorageSync('user', user);
         this.globalData.userInfo = user.userInfo;
+        this.globalData.roles = user.roles;
       }
       else {
         if(wx.getStorageSync('color')) {
@@ -99,14 +120,16 @@ App({
   },
   //注册用户
   async createUser(openid,userInfo) {
+    let newUserInfo = userInfo;
+    newUserInfo.headline = "";
     const userSchema = {
       openid: openid,
-      userInfo: userInfo,
+      userInfo: newUserInfo,
       created_time: new Date().getTime(),
       updated_time: new Date().getTime(),
       diary: [],
       diary_num: 0,
-      background_url: "",
+      background_url: "https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/default.jpg?sign=a77b8fd58e9edc5b370e7837ea5e7876&t=1610260942",
       color: wx.getStorageSync('color') || "rgb(244,118,149)",
       hue: wx.getStorageSync('hue') || 347,
       blur: this.globalData.blur,
@@ -117,7 +140,8 @@ App({
       collection_num: 0,
       following: [],
       following_num: 0,
-      fans: 0
+      fans: 0,
+      roles: ["user"]
     }
     let res = await wx.cloud.callFunction({
       name: 'createUser',
@@ -168,6 +192,7 @@ App({
     blur: false,
     background: false,
     initBol: false,
-    userInfo: {}
+    userInfo: {},
+    roles: ["user"]
   }
 })

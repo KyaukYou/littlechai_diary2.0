@@ -3,7 +3,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 800;
   color: white;
   box-sizing: border-box;
   padding: 0 40rpx;
@@ -14,7 +14,7 @@
   left: 0;
   right: 0;
   /* background: linear-gradient(to left, #FC5C7D, #ee67a1); */
-  z-index: 999;
+  z-index: 699;
   overflow: hidden;
   /* background-image: url('https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/dot.png?sign=f6f105901602fb46727be2f82c1b33b4&t=1610067412'); */
   background-repeat: repeat;

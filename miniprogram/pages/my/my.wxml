@@ -6,7 +6,15 @@
   title="{{toastTitle}}"
   duration="{{toastDuration}}"
 />
-<lc_header header_title='我的信息' header_color="{{color}}" blur="{{globalData.blur}}"></lc_header> 
+
+<l-toast
+  show="{{toastBol1}}"
+  icon="loading"
+  title="{{toastTitle1}}"
+  duration="{{toastDuration}}"
+/>
+
+<lc_header header_title='我的信息' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header> 
 
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
@@ -14,18 +22,26 @@
       
       <!-- 自定义背景图 -->
       <view wx:if="{{globalData.background}}" style="top: -{{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_bg">
-        <image mode="scaleToFill" src='http://data.littlechai.cn/blog_bg28.jpg'></image>
+        <image mode="aspectFill" src='{{background_url}}'></image>
       </view>
 
       <!-- 头像区域 -->
       <view class="my_info">
+          <image class="my_edit_background" src='/images/img.svg' bindtap="chooseBackground"></image>
+
           <view class="my_info_top">
             <view class="my_info_left">
               <button style="background-image: {{globalData.userInfo.avatarUrl ? 'url('+globalData.userInfo.avatarUrl+')' : 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/wx.png?sign=2a8dbe026ad644fdbce891f4b2109f87&t=1610211284)'}}" open-type="getUserInfo" bindgetuserinfo='bindgetuserinfo' class="login"></button>
             </view>
             <view class="my_info_right">
-              <view class="my_info_username">{{globalData.userInfo.nickName || '登录一下吧~'}}</view>
-              <view class="my_info_location">{{globalData.userInfo.headline || '写点什么吧~'}}</view>
+              <view class="my_info_username"><text>{{globalData.userInfo.nickName || '登录一下吧~'}}</text><image src='{{globalData.userInfo.gender === 1? "/images/man.svg" : "/images/woman.svg"}}'></image> </view>
+              <view class="my_info_location">
+                <view class="my_info_setline">
+                  <text>{{info.headline || ''}}</text>
+                  <input maxlength='{{maxlength}}' bindblur='saveHeadline' placeholder-class='plcClass' bindinput='changeHeadline' placeholder="写点什么吧~" type="text" value="{{info.headline || ''}}" />
+                </view>
+                <image src='/images/pen.svg'></image> 
+              </view>
             </view>
           </view>
 
@@ -90,6 +106,14 @@
         <l-list bindtap="toPick" title="全局配色" image="/images/color.svg" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
         <l-list title="更新日志" image="/images/ver.svg" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
         <l-list title="问题反馈" image="/images/bug.svg" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+
+        <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-日记开关" image="/images/create.svg">
+          <view slot="right-section">
+            <switch checked='{{controlDiary_bol}}' bindchange='controlDiary' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
+          </view>
+        </l-list>  
+
+        <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-用户管理" image="/images/user.svg"/>
 
         
       </view> 

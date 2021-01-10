@@ -8,20 +8,62 @@ Page({
   data: {
     refreshBol: false,
     globalData: {},
-    rgb: 'rgb(0,0,0)',//初始值
+    rgb: 'rgb(0,0,0)', //初始值
     pick: false,
     header_image: "",
     header_imageX: "",
     color: "",
     info: {},
+    background_url: "",
+    controlDiary_bol: true,
     toastBol: false,
     toastTitle: '登录中',
-    toastDuration: 999999
+    toastBol1: false,
+    toastTitle1: '上传中',
+    toastDuration: 999999,
+    ms_content: "",
+    ms_show: "",
+    maxlength: 16
   },
+  //输入一句话
+  changeHeadline(e) {
+    console.log(e)
+    if (!wx.getStorageSync('openid')) {
+      
+    }
+    else {
+      let copy = JSON.parse(JSON.stringify(this.data.info));
+      copy.headline = e.detail.value
+      this.setData({
+        info: copy
+      })
+    }
+    
+  },
+
+  //存储一句话
+  async saveHeadline() {
+    if (!wx.getStorageSync('openid')) {
+      
+    }
+    else {
+      let res = await wx.cloud.callFunction({
+        name: 'updateCustom',
+        data: {
+          openid: wx.getStorageSync('openid'),
+          update: {
+            "userInfo.headline": this.data.info.headline
+          }
+        }
+      })
+    }
+    // console.log(res)
+  },
+
   // 颜色等自定义同步云函数
   async syncCustom(val) {
     // console.log(val)
-    if(wx.getStorageSync('openid')) {
+    if (wx.getStorageSync('openid')) {
       let res = await wx.cloud.callFunction({
         name: 'updateCustom',
         data: {
@@ -30,12 +72,11 @@ Page({
         }
       })
       console.log(res)
-      if(res.result.stats.updated === 1) {
+      if (res.result.stats.updated === 1) {
         await app.initData();
         this.getGlobalData();
       }
-    }
-    else {
+    } else {
       this.getGlobalData();
     }
   },
@@ -51,7 +92,10 @@ Page({
     let rgb = e.detail.color;
     app.changeColor(rgb);
     wx.setStorageSync('color', rgb);
-    // this.getGlobalData();
+    app.globalData.color = rgb;
+    this.setData({
+      globalData: app.globalData,
+    })
     this.syncCustom({
       color: rgb,
       hue: wx.getStorageSync('hue') ? wx.getStorageSync('hue') : 347
@@ -60,32 +104,39 @@ Page({
   getGlobalData() {
     let timer = setInterval(() => {
       // console.log(app.globalData.initBol)
-      if(app.globalData.initBol === true) {
+      if (app.globalData.initBol === true) {
         clearInterval(timer)
         this.setData({
           globalData: app.globalData,
-          rgb:app.globalData.color,
+          rgb: app.globalData.color,
           color: app.globalData.background === true ? "" : app.globalData.color
         })
-        if(wx.getStorageSync('user')) {
+        if (wx.getStorageSync('user')) {
           let res = wx.getStorageSync('user');
           this.setData({
             info: {
               diary_num: res.diary_num,
               collection_num: res.collection_num,
               following_num: res.following_num,
-              fans: res.fans
-            }
+              fans: res.fans,
+              headline: res.userInfo.headline
+            },
+            background_url: res.background_url
           })
         }
+
+        if (app.globalData.roles[0] === 'admin') {
+          this.getControlDiary();
+        }
+
         this.setData({
           toastBol: false,
           refreshBol: false
         })
-        
+
       }
       // console.log(app.globalData)
-    },100)
+    }, 100)
   },
   //scroll-view 自定义下拉刷新
   async refresh() {
@@ -99,6 +150,10 @@ Page({
   changeBlur(e) {
     this.data.globalData.blur = e.detail.value;
     wx.setStorageSync('blur', e.detail.value)
+    app.globalData.blur = e.detail.value;
+    this.setData({
+      globalData: app.globalData,
+    })
     this.syncCustom({
       blur: e.detail.value,
       hue: wx.getStorageSync('hue') ? wx.getStorageSync('hue') : 347
@@ -106,7 +161,11 @@ Page({
   },
   changeBackground(e) {
     this.data.globalData.background = e.detail.value;
-    wx.setStorageSync('background', e.detail.value)
+    wx.setStorageSync('background', e.detail.value);
+    app.globalData.background = e.detail.value;
+    this.setData({
+      globalData: app.globalData,
+    })
     this.syncCustom({
       background_bol: e.detail.value,
       hue: wx.getStorageSync('hue') ? wx.getStorageSync('hue') : 347
@@ -115,7 +174,11 @@ Page({
 
   //获取用户数据
   async bindgetuserinfo(e) {
-    if(wx.getStorageSync('openid')) {
+    console.log(e);
+    if(e.detail.errMsg !== "getUserInfo:ok") {
+      return;
+    }
+    if (wx.getStorageSync('openid')) {
       return;
     }
     this.setData({
@@ -124,26 +187,98 @@ Page({
     app.globalData.initBol = false;
     const res = await app.onGetOpenid();
     wx.setStorageSync('openid', res.openid)
-    if(res.status === 'ok') {
-      
+    if (res.status === 'ok') {
+
       let ifUser = await app.ifUser(res.openid);
       // console.log(ifUser)
       //获取值
-      if(ifUser.res.status === 'ok') {
+      if (ifUser.res.status === 'ok') {
         console.log(ifUser.res.data)
         wx.setStorageSync('user', ifUser.res.data)
         await app.initData();
         this.getGlobalData();
       }
       //创建用户
-      else if(ifUser.res.status === 'err') {
-        let createUser = await app.createUser(res.openid,e.detail.userInfo)
+      else if (ifUser.res.status === 'err') {
+        let createUser = await app.createUser(res.openid, e.detail.userInfo)
         await app.initData();
         this.getGlobalData();
       }
-    }
-    else {
+    } else {
       console.log('错误')
+    }
+
+  },
+  //日记开关权限控制
+  async controlDiary(e) {
+    this.setData({
+      controlDiary_bol: e.detail.value
+    })
+    let res = await wx.cloud.callFunction({
+      name: 'controlDiary',
+      data: {
+        openid: wx.getStorageSync('openid'),
+        bol: e.detail.value
+      }
+    })
+    console.log(res)
+    if (res.result.stats.updated === 1) {}
+  },
+
+  //获取日记开关状态
+  async getControlDiary() {
+    let res = await wx.cloud.callFunction({
+      name: 'getAdmin',
+      data: {
+        openid: wx.getStorageSync('openid')
+      }
+    })
+    console.log(res)
+    if (res.result.errMsg === "collection.get:ok") {
+      this.setData({
+        controlDiary_bol: res.result.data[0].controlDiary
+      })
+    }
+  },
+  //上传背景图-选择图片
+  async chooseBackground() {
+    if(!wx.getStorageSync('openid')) {
+      return false;
+    }
+    let that = this;
+    let res = await wx.chooseImage({
+      count: 1,
+    })
+    let filePath = res.tempFilePaths[0];
+    let pattern = /\.{1}[a-z]{1,}$/;
+    let cc = filePath.slice(0, pattern.exec(filePath).index);
+    cc = cc.slice(11);
+    let openid = wx.getStorageSync('openid');
+    let cloudPath = 'user/' + openid + '/backgroundImg/' + cc + filePath.match(/\.[^.]+?$/)[0];
+    that.setData({
+      toastBol1: true
+    })
+    let res1 = await wx.cloud.uploadFile({
+      cloudPath,
+      filePath,
+    })
+
+    let res2 = await wx.cloud.callFunction({
+      name: 'updateCustom',
+      data: {
+        openid: wx.getStorageSync('openid'),
+        update: {
+          background_url: res1.fileID
+        }
+      }
+    })
+    console.log(res2)
+    if (res2.result.stats.updated === 1) {
+      that.setData({
+        toastBol1: false
+      })
+      await app.initData();
+      that.getGlobalData();
     }
 
   },
@@ -152,7 +287,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**

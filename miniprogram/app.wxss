@@ -121,6 +121,7 @@
   left: 0;
   right: 0;
   top: 0;
+  z-index: 700;
 }
 
 .my_bg {
@@ -129,7 +130,7 @@
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 998;
+  z-index: 699;
 }
 
 .my_bg image {
@@ -149,7 +150,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 700;
 }
 
 .my_info_top {
@@ -182,13 +183,18 @@
 }
 
 .my_info_right {
-  width: 360rpx;
+  width: 480rpx;
   height: 112rpx;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
   justify-content: center;
   padding: 0 0 0 16rpx;
+}
+
+.my_info_right input{
+  max-width: 430rpx;
+  width: auto;
 }
 
 .my_info_username {
@@ -198,6 +204,19 @@
   font-size: 36rpx;
   position: relative;
   top: 6rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.my_info_username text {
+  max-width: 430rpx;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .my_info_location {
@@ -208,6 +227,17 @@
   color: rgba(255, 255, 255, 0.9);
   position: relative;
   top: 6rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.plcClass {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.my_info_location image {
+  /* transform: rotateY(180deg); */
 }
 
 .my_info_bottom {
