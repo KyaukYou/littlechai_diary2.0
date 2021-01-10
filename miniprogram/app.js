@@ -50,24 +50,37 @@ App({
   async initData() {
       let openid = wx.getStorageSync('openid')
       let res = await this.ifUser(openid);
-      let checkInfo = await wx.getUserInfo({})
 
-      console.log(checkInfo)
-      if(checkInfo.userInfo.avatarUrl !== res.res.data.userInfo.avatarUrl || checkInfo.userInfo.nickName !== res.res.data.userInfo.nickName) {
-        let newInfo = await wx.cloud.callFunction({
-          name: 'updateCustom',
-          data: {
-            openid: wx.getStorageSync('openid'),
-            update: {
-              userInfo: checkInfo.userInfo
+      let ifLogin = await wx.getSetting({});
+      console.log(ifLogin)
+      let forin = ifLogin.authSetting;
+      let ifUserInfo = false;
+      let arr = [];
+      for(var k in forin) {
+        arr.push(k)
+      }
+      // console.log(arr.includes('scope.userInfo'))
+
+      if(arr.includes('scope.userInfo')) {
+        let checkInfo = await wx.getUserInfo({})
+        if(checkInfo.errMsg === "getUserInfo:ok") {
+          console.log(checkInfo)
+          if(checkInfo.userInfo.avatarUrl !== res.res.data.userInfo.avatarUrl || checkInfo.userInfo.nickName !== res.res.data.userInfo.nickName) {
+            let newInfo = await wx.cloud.callFunction({
+              name: 'updateCustom',
+              data: {
+                openid: wx.getStorageSync('openid'),
+                update: {
+                  userInfo: checkInfo.userInfo
+                }
+              }
+            })
+            if(newInfo.result.stats.updated === 1) {
+              await this.initData();
             }
           }
-        })
-        if(newInfo.result.stats.updated === 1) {
-          await this.initData();
         }
       }
-      // return false;
 
       console.log(res)
       if(res.res.status === 'ok') {

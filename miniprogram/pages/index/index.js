@@ -27,6 +27,12 @@ Page({
   //scroll-view 自定义下拉刷新
   async refresh() {
     // console.log('开始刷新')
+    if(!wx.getStorageSync('openid')) {
+      this.setData({
+        refreshBol: false
+      })
+      return false;
+    }
     this.setData({
       refreshBol: true
     })
