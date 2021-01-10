@@ -34,7 +34,7 @@
               <button style="background-image: {{globalData.userInfo.avatarUrl ? 'url('+globalData.userInfo.avatarUrl+')' : 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/wx.png?sign=2a8dbe026ad644fdbce891f4b2109f87&t=1610211284)'}}" open-type="getUserInfo" bindgetuserinfo='bindgetuserinfo' class="login"></button>
             </view>
             <view class="my_info_right">
-              <view class="my_info_username"><text>{{globalData.userInfo.nickName || '登录一下吧~'}}</text><image src='{{globalData.userInfo.gender === 1? "/images/man.svg" : "/images/woman.svg"}}'></image> </view>
+              <view class="my_info_username"><text>{{globalData.userInfo.nickName || '登录一下吧~'}}</text><image src='{{globalData.userInfo.gender === 2? "/images/woman.svg" : "/images/man.svg"}}'></image> </view>
               <view class="my_info_location">
                 <view class="my_info_setline">
                   <text>{{info.headline || ''}}</text>
