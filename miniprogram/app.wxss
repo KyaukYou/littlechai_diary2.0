@@ -323,3 +323,37 @@
   background-size: 100% 100%;
   box-shadow: 0 0 8rpx 0 rgba(50,50,50,0.45);
 }
+
+
+
+/* 公共样式 */
+.opacity_button {
+  opacity: 0.72;
+}
+
+.opacity_button_pos {
+  opacity: 0.88;
+}
+
+.to_create {
+  position: fixed;
+  right: 8%;
+  bottom: 7%;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  color: white;
+  z-index: 999;
+  font-size: 80rpx;
+  line-height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 20rpx rgba(120, 120, 120, 0.3);
+  transition: all .2s ease;
+}
+
+.to_create image {
+  width: 65%;
+  height: 65%;
+}

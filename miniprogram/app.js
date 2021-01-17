@@ -27,7 +27,7 @@ App({
     })
 
     // 判断有没有openid,没有就是没有登录
-    if(!wx.getStorageSync('openid')) {
+    if(!wx.getStorageSync('openid') && !wx.getStorageSync('user')) {
       if(wx.getStorageSync('color')) {
         this.globalData.color = wx.getStorageSync('color');
       }
@@ -50,7 +50,7 @@ App({
   async initData() {
       let openid = wx.getStorageSync('openid')
       let res = await this.ifUser(openid);
-
+      console.log('a',res)
       let ifLogin = await wx.getSetting({});
       console.log(ifLogin)
       let forin = ifLogin.authSetting;
@@ -59,19 +59,19 @@ App({
       for(var k in forin) {
         arr.push(k)
       }
-      // console.log(arr.includes('scope.userInfo'))
-
-      if(arr.includes('scope.userInfo')) {
+      console.log('none',res)
+      if(arr.includes('scope.userInfo') && res.res.status !== "err") {
+        console.log('one')
         let checkInfo = await wx.getUserInfo({})
         if(checkInfo.errMsg === "getUserInfo:ok") {
-          console.log(checkInfo)
+          console.log('two',checkInfo)
           if(checkInfo.userInfo.avatarUrl !== res.res.data.userInfo.avatarUrl || checkInfo.userInfo.nickName !== res.res.data.userInfo.nickName) {
             let newInfo = await wx.cloud.callFunction({
               name: 'updateCustom',
               data: {
                 openid: wx.getStorageSync('openid'),
                 update: {
-                  userInfo: checkInfo.userInfo
+                  "userInfo": checkInfo.userInfo
                 }
               }
             })
@@ -198,6 +198,36 @@ App({
       }
     }
   },
+
+  async addZero(num) {
+    let addNum;
+    if (num <= 9) {
+      addNum = "0" + num;
+    } else {
+      addNum = num;
+    }
+    return addNum;
+  },
+
+  //时间戳转化
+  async timeStamp(time) {
+    let timerX = new Date(time);
+    let y = timerX.getFullYear();
+    let m = timerX.getMonth() + 1;
+    let d = timerX.getDate();
+    let h = timerX.getHours();
+    let m1 = timerX.getMinutes();
+    let s = timerX.getSeconds();
+    y = await this.addZero(y);
+    m = await this.addZero(m);
+    d = await this.addZero(d);
+    h = await this.addZero(h);
+    m1 = await this.addZero(m1);
+    s = await this.addZero(s);
+    // return `${y}-${m}-${d} ${h}:${m1}:${s}`;
+    return `${y}-${m}-${d}`;
+  },
+
 
   globalData: {
     //全局颜色

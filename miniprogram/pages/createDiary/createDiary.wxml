@@ -1,0 +1,81 @@
+<!--pages/createDiary/createDiary.wxml-->
+<lc_header header_title='创建日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+<l-calendar show="{{showBeginDate}}" bind:linselect='selectBeginDate' bind:linconfirm='selectBeginDate' />
+<l-calendar show="{{showEndDate}}" bind:linselect='selectEndDate' bind:linconfirm='selectEndDate' min-date="{{minDate2}}"/>
+<l-toast
+  show="{{toastBol}}"
+  title="{{toastTitle}}"
+  duration="{{toastDuration}}"
+/>
+
+
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+      
+      <view class="lc_list">
+        <view class="lc_list_title">日记标题</view>
+        <view class="lc_list_info">
+          <input maxlength="20" placeholder="请输入日记标题(20字以内)" value="{{info.title}}" bindinput='changeTitle' type="text" />
+        </view>
+      </view>
+
+      <view class="lc_list">
+        <view class="lc_list_title">日记封面</view>
+        <view class="lc_list_info">
+          <image mode='aspectFill' src='{{info.title_image}}'></image>
+        </view>
+      </view>
+      
+      <view class="lc_list">
+        <view class="lc_list_title">日记位置</view>
+        <view class="lc_list_info">
+          <input class="lc_list_location" maxlength="40" placeholder="请输入日记位置(40字以内)" value="{{info.location}}" bindinput='changeLocation' type="text" />
+          <button hover-class='opacity_button' style="background-color: {{globalData.color}}" bindtap="chooseLocation">选择位置</button>
+        </view>
+      </view>
+
+      <view class="lc_list">
+        <view class="lc_list_title">开始日期</view>
+        <view class="lc_list_info">
+          <input class="lc_list_location" placeholder="请选择日记开始日期" type="text" value="{{info.beginDate}}" />
+          <button hover-class='opacity_button' style="background-color: {{globalData.color}}" bindtap="showBeginDateBol">选择日期</button>
+        </view>
+      </view>
+
+      <view class="lc_list">
+        <view class="lc_list_title">结束日期</view>
+        <view class="lc_list_info">
+          <input class="lc_list_location" placeholder="请选择日记结束日期" type="text"  value="{{info.endDate}}" />
+          <button hover-class='opacity_button' style="background-color: {{globalData.color}}" bindtap="showEndDateBol">选择日期</button>
+        </view>
+      </view>
+
+      <view class="lc_list">
+        <view class="lc_list_title">是否锁定</view>
+        <view class="lc_list_info lc_list_info_switch">
+          <switch checked='{{info.lock}}' bindchange='lockFn' color="{{globalData.color}}" />
+        </view>
+      </view>
+
+      <view class="lc_list">
+        <view class="lc_list_title">是否显示</view>
+        <view class="lc_list_info lc_list_info_switch">
+          <switch checked='{{info.show}}' bindchange='showFn' color="{{globalData.color}}" />
+        </view>
+      </view>
+
+      <view class="lc_list">
+        <view class="lc_list_title lc_list_title_bg">排序方式(顺序)</view>
+        <view class="lc_list_info lc_list_info_switch">
+          <switch checked='{{info.sort}}' bindchange='sortFn' color="{{globalData.color}}" />
+        </view>
+      </view>
+
+
+    </view>
+  </scroll-view>
+</view>

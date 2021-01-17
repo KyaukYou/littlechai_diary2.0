@@ -1,0 +1,119 @@
+/* pages/createDiary/createDiary.wxss */
+.my {
+  z-index: 698;
+}  
+
+.my_container {
+  top: 0rpx;
+  background-color: rgb(240, 240, 240);
+  z-index: 698;
+}
+
+.my_wrap {
+  width: 96%;
+  padding: 0;
+  margin: 2% 2%;
+  background-color: white;
+  border-radius: 10rpx;
+}
+
+.lc_list {
+  width: 100%;
+  height: 88rpx;
+  position: relative;
+  color: #333;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 28rpx;
+}
+
+.lc_list::after {
+  content: "";
+  position: absolute;
+  left: 1%;
+  right: 1%;
+  height: 1rpx;
+  bottom: 0;
+  background-color: rgb(245, 245, 245);
+}
+
+.lc_list_title {
+  width: 170rpx;
+  height: 100%;
+  box-sizing: border-box;
+  padding-left: 20rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.lc_list_title_bg {
+  width: 220rpx;
+}
+
+.lc_list_info {
+  position: absolute;
+  left: 180rpx;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+
+.lc_list_info input {
+  width: 100%;
+  height: 100%;
+  
+}
+
+.lc_list_info image {
+  position: absolute;
+  width: 108rpx;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  bottom: 10%;
+  border-radius: 10rpx;
+  background-color: rgb(240, 240, 240);
+}
+
+.lc_list_info .lc_list_location {
+  width: unset;
+  position: absolute;
+  left: 0;
+  right: 142rpx;
+}
+
+.lc_list_info button {
+  position: absolute;
+  right: 12rpx;
+  width: 122rpx!important;
+  padding: 0!important;
+  top: 14%;
+  bottom: 14%;
+  height: 72%;
+  font-size: 24rpx;
+  color: white;
+  border-radius: 10rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  transition: all .2s ease;
+}
+
+.lc_list_info switch {
+  position: absolute;
+  right: 12rpx;
+  transform: scale(0.86);
+}
+
+.lc_list_info_switch {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}

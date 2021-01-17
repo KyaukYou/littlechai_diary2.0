@@ -6,13 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    refreshBol: false,
     globalData: {}
-  },
-  toCreate() {
-    wx.navigateTo({
-      url: '/pages/createDiary/createDiary',
-    })
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -24,29 +18,6 @@ Page({
         clearInterval(timer);
       }
     },100)
-  },
-  // 选项切换
-  changeTabs(e) {
-    console.log(e.detail.activeKey)
-  },
-  //scroll-view 自定义下拉刷新
-  async refresh() {
-    // console.log('开始刷新')
-    if(!wx.getStorageSync('openid')) {
-      this.setData({
-        refreshBol: false
-      })
-      return false;
-    }
-    this.setData({
-      refreshBol: true
-    })
-    await app.initData();
-    this.getGlobalData();
-  },
-  // 滚动到底部
-  scrollToBottom(e) {
-    console.log(e)
   },
 
   /**
@@ -67,7 +38,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.onLoad();
+    
   },
 
   /**
