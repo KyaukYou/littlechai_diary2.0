@@ -104,7 +104,7 @@
         </l-list>
         <l-list title="消息通知" image="/images/notice.svg" />
         <l-list bindtap="toPick" title="全局配色" image="/images/color.svg" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
-        <l-list title="更新日志" image="/images/ver.svg" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list bindtap="toVersion" title="更新日志" image="/images/ver.svg" tag-content="新版本介绍" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
         <l-list title="问题反馈" image="/images/bug.svg" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
 
         <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-日记开关" image="/images/create.svg">

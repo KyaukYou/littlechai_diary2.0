@@ -1,0 +1,21 @@
+<lc_header header_title='更新日志' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+
+      <!-- <view class="top-cell" wx:if='{{verBol}}'>
+        <view class="up-border-current"></view>
+      </view> -->
+
+      <view style="background: linear-gradient(to right, {{globalData.color}}, {{globalData.colorX}});" class='{{index == 0 ? "current up-cell" : "up-cell" }}' wx:for='{{verData}}' wx:key='index'>
+        
+        <!-- <view class="{{index == 0 ? 'up-border-current' : 'up-border-none' }}"></view> -->
+        <view class='ver'>{{index == 0 ? "当前版本" : "历史版本"}} {{item.text}}</view>
+        <view class="up-show" wx:for='{{item.arr}}' wx:key='index' wx:for-item='tItem'>{{index+1}}.{{tItem}}</view>
+      </view>
+
+    </view>
+  </scroll-view>
+</view>

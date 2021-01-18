@@ -294,6 +294,12 @@ Page({
     }
 
   },
+  //跳转到version
+  toVersion() {
+    wx.navigateTo({
+      url: '/pages/version/version',
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
