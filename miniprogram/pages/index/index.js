@@ -14,6 +14,12 @@ Page({
       url: '/pages/createDiary/createDiary',
     })
   },
+  // 初始化自定义导航栏
+  async firstHeader() {
+    this.setData({
+      globalData: app.globalData
+    })
+  },
   async getGlobalData() {
     let timer = setInterval(() => {
       if(app.globalData.initBol === true) {
@@ -53,6 +59,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.firstHeader();
     this.getGlobalData();
   },
 

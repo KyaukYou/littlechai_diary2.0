@@ -25,6 +25,12 @@ Page({
     ms_show: "",
     maxlength: 16
   },
+  // 初始化自定义导航栏
+  async firstHeader() {
+    this.setData({
+      globalData: app.globalData
+    })
+  },
   //输入一句话
   changeHeadline(e) {
     console.log(e)
@@ -307,6 +313,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.firstHeader();
     this.getGlobalData();
   },
 

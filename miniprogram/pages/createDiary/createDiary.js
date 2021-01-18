@@ -43,6 +43,12 @@ Page({
       }
     ]
   },
+  // 初始化自定义导航栏
+  async firstHeader() {
+    this.setData({
+      globalData: app.globalData
+    })
+  },
   getThisTime() {
     // let timer = new Date().getTime()
     // this.setData({
@@ -192,6 +198,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.firstHeader();
     this.getThisTime();
   },
 

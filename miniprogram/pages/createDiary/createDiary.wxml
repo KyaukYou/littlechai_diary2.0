@@ -1,7 +1,7 @@
 <!--pages/createDiary/createDiary.wxml-->
 <lc_header header_title='创建日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
-<l-calendar show="{{showBeginDate}}" bind:linselect='selectBeginDate' bind:linconfirm='selectBeginDate' />
-<l-calendar show="{{showEndDate}}" bind:linselect='selectEndDate' bind:linconfirm='selectEndDate' min-date="{{minDate2}}"/>
+<l-calendar color="{{globalData.color}}" show="{{showBeginDate}}" bind:linselect='selectBeginDate' bind:linconfirm='selectBeginDate' />
+<l-calendar color="{{globalData.color}}" show="{{showEndDate}}" bind:linselect='selectEndDate' bind:linconfirm='selectEndDate' min-date="{{minDate2}}"/>
 <l-toast
   show="{{toastBol}}"
   title="{{toastTitle}}"
