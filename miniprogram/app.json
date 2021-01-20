@@ -1,12 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/version/version",
     "pages/editVersion/editVersion",
+    
+    "pages/version/version",
+    
     "pages/my/my",
-    
-    
-    
     "pages/createDiary/createDiary"
     
   ],

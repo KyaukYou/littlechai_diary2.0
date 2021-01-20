@@ -79,8 +79,8 @@ Page({
       })
       console.log(res)
       if (res.result.stats.updated === 1) {
-        await app.initData();
-        this.getGlobalData();
+        // await app.initData();
+        // this.getGlobalData();
       }
     } else {
       this.getGlobalData();

@@ -81,6 +81,10 @@
   border-top-right-radius: 8rpx;
   color: #fff;
   font-weight: 400;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .current {
@@ -91,7 +95,7 @@
 
 .my_wrap {
   padding-top: 30rpx;
-  background-color: rgb(247, 247, 247);
+  /* background-color: rgb(247, 247, 247); */
 }
 
 .version_top_border {
@@ -99,13 +103,13 @@
   top: 0;
   left: 6%;
   width: 4rpx;
-  height: 54rpx;
+  height: 232rpx;
   margin-left: -2rpx;
 }
 
 .version_top_circle {
   position: absolute;
-  top: 60rpx;
+  top: 240rpx;
   width: 26rpx;
   height: 26rpx;
   border-radius: 50%;
@@ -181,6 +185,7 @@
   line-height: 58rpx;
   padding-left: 0rpx;
   font-size: 30rpx;
+  position: relative;
 }
 
 .new_version_info {
@@ -210,9 +215,87 @@
 
 .new_itemX {
   display: inline-block;
-  background-color: rgba(0, 0, 0, 0.2);
+  /* background-color: rgba(0, 0, 0, 0.2); */
   padding: 2rpx 12rpx;
   width: auto;
   box-sizing: border-box;
   margin-left: 40rpx;
+}
+
+
+/* 编辑 */
+.editVersion_input {
+  display: inline-block;
+  font-size: 32rpx;
+  width: 380rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  background-color: rgba(255, 255, 255, 1);
+  color: #333;
+  box-sizing: border-box;
+  padding: 0 0 0 10rpx;
+}
+
+.new_version_title input {
+  display: inline-block;
+  width: 90%;
+  font-size: 32rpx;
+  box-sizing: border-box;
+  padding-left: 14rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  background-color: rgba(255, 255, 255, 1);
+  color: #333;
+  box-sizing: border-box;
+  padding: 0 0 0 10rpx;
+}
+
+.new_itemX input {
+  width: 450rpx;
+  background-color: rgba(255, 255, 255, 1);
+  color: #333;
+  box-sizing: border-box;
+  padding: 0 0 0 10rpx;
+}
+
+.editVersion_color {
+  width: 60%;
+  height: 80rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 10rpx;
+  border-radius: 12rpx;
+  color: white;
+  position: relative;
+  left: 12%;
+}
+
+.l-btn-medium {
+  width: 100%!important;
+}
+ 
+
+.add_title {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 0;
+  width: 50rpx;
+  line-height: 50rpx;
+  color: white;
+  font-size: 40rpx;
+}
+
+.add_info {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 0;
+  width: 50rpx;
+  line-height: 50rpx;
+  color: white;
+  font-size: 40rpx;
 }

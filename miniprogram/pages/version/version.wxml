@@ -8,12 +8,12 @@
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
 
-  <scroll-view wx:if="verBol === true" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+  <scroll-view wx:if="{{verBol === true}}" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
     class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
     <view class="my_wrap" >
 
-      <view class="version_top_border" style="background-color: {{globalData.color}}"></view>
-      <view class="version_top_circle" style="border-color: {{globalData.color}};">
+      <view wx:if="{{verBol === true}}" class="version_top_border" style="background-color: {{globalData.color}}"></view>
+      <view wx:if="{{verBol === true}}" class="version_top_circle" style="border-color: {{globalData.color}};">
         <view class="version_top_circle_sm" style="background-color: {{globalData.color}};"></view>
       </view>
 
@@ -29,7 +29,7 @@
           <view class='ver'>{{index == 0 ? "当前版本" : "历史版本"}} {{item.text}}</view>
 
           <view class="new_version" wx:for='{{item.arr}}' wx:key='index' wx:for-item='new_item'>
-              <view class="new_version_title">【{{new_item.title}}】</view>
+              <view class="new_version_title">{{new_item.title}}</view>
               <view class="new_version_info">
                 <view class="new_version_info_list" wx:for="{{new_item.info}}" wx:key="new_item_index" wx:for-item='new_item_list' wx:for-index='new_item_index'>
                   <view class="new_version_titleX">{{new_item_index+1}}.</view>
