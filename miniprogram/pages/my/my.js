@@ -300,6 +300,12 @@ Page({
       url: '/pages/version/version',
     })
   },
+  //跳转到日志管理
+  toEditVersion() {
+    wx.navigateTo({
+      url: '/pages/editVersion/editVersion',
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

@@ -8,7 +8,8 @@ const _ = db.command
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  return await db.collection('versions').where({
+  // let page = Math.max(event.page * 1,1) - 1;
+  return  await db.collection('versions').where({
     _id: 'b00064a760058d190002596d0fff0b4f'
   })
   .field({
@@ -17,5 +18,5 @@ exports.main = async (event, context) => {
     version: true
   })
   .get()
-
+  
 }

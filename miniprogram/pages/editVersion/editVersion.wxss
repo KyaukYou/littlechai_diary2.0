@@ -91,7 +91,7 @@
 
 .my_wrap {
   padding-top: 30rpx;
-  /* background-color: rgb(247, 247, 247); */
+  background-color: rgb(247, 247, 247);
 }
 
 .version_top_border {

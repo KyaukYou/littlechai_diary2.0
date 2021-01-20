@@ -1,16 +1,9 @@
 <lc_header header_title='更新日志' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
-<l-toast
-  show="{{toastBol}}"
-  icon="loading"
-  title="{{toastTitle}}"
-  duration="{{toastDuration}}"
-/>
-
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
 
-  <scroll-view wx:if="verBol === true" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
-    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
-    <view class="my_wrap" >
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
 
       <view class="version_top_border" style="background-color: {{globalData.color}}"></view>
       <view class="version_top_circle" style="border-color: {{globalData.color}};">

@@ -10,13 +10,10 @@ Page({
     verBol: false,
     verData: [],
     refreshBol: false,
-    toastBol: true,
-    toastTitle: '加载中',
-    toastDuration: 999999,
-    page: 1,
-    pageSize: 6,
-    maxPage: 1,
-    allArr: []
+    // 每页有几个
+    perPage: 8,
+    // 第几页
+    page: 1
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -27,7 +24,7 @@ Page({
         data.colorX = `rgba(${colorX[0]},${colorX[1]},${colorX[2]},0.8)`;
         this.setData({
           globalData: data,
-          refreshBol: false,
+          refreshBol: false
         })
         clearInterval(timer);
       }
@@ -35,60 +32,35 @@ Page({
   },
   async getVersion() {
     let version = await wx.cloud.callFunction({
-      name: 'getVersion'
+      name: 'getVersion',
+      data: {
+        page: this.page,
+        perPage: this.perPage
+      }
     })
     console.log(version)
     let arr = JSON.parse(JSON.stringify(version.result.data[0].arr));
-    let num1 = parseInt(arr.length / this.data.pageSize);
-    let num2 = arr.length % this.data.pageSize;
-    num2 <= 0 ? 0 : 1
-    console.log(num1,num2)
-
     this.setData({
       verBol: true,
-      toastBol: false,
-      verData: arr.slice(0,this.data.page * this.data.pageSize),
-      refreshBol: false,
-      maxPage: num1+num2,
-      allArr: arr
+      verData: arr,
+      refreshBol: false
     })
   },
   //scroll-view 自定义下拉刷新
   async refresh() {
     console.log('开始刷新')
     this.setData({
-      toastBol: true,
-      refreshBol: true,
-      page: 1
+      refreshBol: true
     })
     await this.getVersion();
     this.getGlobalData();
-  },
-  // 滑动到底部
-  scrollToBottom(e) {
-    console.log(e)
-    if(this.data.page >= this.data.maxPage) {
-      this.data.page = this.data.maxPage
-    }
-    else {
-      let numX = this.data.page
-      numX++
-      this.setData({
-        page: numX
-      })
-    }
-
-    this.setData({
-      verData: this.data.allArr.slice(0,this.data.page * this.data.pageSize),
-    })
-
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.getGlobalData();
   },
 
   /**
@@ -102,7 +74,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getGlobalData();
     this.getVersion();
   },
 

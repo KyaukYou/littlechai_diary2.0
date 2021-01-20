@@ -114,6 +114,7 @@
         </l-list>  
 
         <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-用户管理" image="/images/user.svg"/>
+        <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-日志管理" image="/images/editVersion.svg" bindtap="toEditVersion" />
 
         
       </view> 

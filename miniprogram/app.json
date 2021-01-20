@@ -2,9 +2,13 @@
   "pages": [
     "pages/index/index",
     "pages/version/version",
+    "pages/editVersion/editVersion",
+    "pages/my/my",
     
-    "pages/createDiary/createDiary",
-    "pages/my/my"
+    
+    
+    "pages/createDiary/createDiary"
+    
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
