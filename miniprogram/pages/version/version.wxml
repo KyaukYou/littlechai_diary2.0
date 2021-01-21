@@ -17,6 +17,7 @@
         <view class="version_top_circle_sm" style="background-color: {{globalData.color}};"></view>
       </view>
 
+      <!-- style="background: linear-gradient(to right, {{globalData.color}}, {{globalData.colorX}});" -->
       <view style="background: linear-gradient(to right, {{globalData.color}}, {{globalData.colorX}});" class='{{index == 0 ? "current up-cell" : "up-cell" }}' wx:for='{{verData}}' wx:key='index' >
         
         <view class="version_top_borderX" style="background-color: {{globalData.color}}"></view>

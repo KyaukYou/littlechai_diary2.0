@@ -85,6 +85,7 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 8rpx;
 }
 
 .current {
@@ -176,16 +177,18 @@
   display: flex;
   flex-flow: column wrap;
   margin-bottom: 4rpx;
+  position: relative;
 }
 
 .new_version_title {
   box-sizing: border-box;
   width: 100%rpx;
-  height: 58rpx;
-  line-height: 58rpx;
+  height: 60rpx;
+  line-height: 60rpx;
   padding-left: 0rpx;
   font-size: 30rpx;
   position: relative;
+  margin-bottom: 8rpx;
 }
 
 .new_version_info {
@@ -193,15 +196,16 @@
   height: auto;
   box-sizing: border-box;
   padding-left: 18rpx;
+  position: relative;
 }
 
 .new_version_info_list {
   display: inline-block;
   width: 100%;
   height: auto;
-  min-height: 46rpx;
+  min-height: 60rpx;
   line-height: 46rpx;
-  margin: 0 0 8rpx 0;
+  margin: 0 0 0 0;
   position: relative;
 }
 
@@ -211,6 +215,11 @@
   position: absolute;
   left: 0;
   top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 32rpx;
 }
 
 .new_itemX {
@@ -227,13 +236,17 @@
 .editVersion_input {
   display: inline-block;
   font-size: 32rpx;
-  width: 380rpx;
-  height: 50rpx;
-  line-height: 50rpx;
-  background-color: rgba(255, 255, 255, 1);
-  color: #333;
+  width: 400rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #000;
   box-sizing: border-box;
   padding: 0 0 0 10rpx;
+  margin-left: 4rpx;
+  border-radius: 10rpx;
+  position: relative;
+  top: 4rpx;
 }
 
 .new_version_title input {
@@ -242,20 +255,24 @@
   font-size: 32rpx;
   box-sizing: border-box;
   padding-left: 14rpx;
-  height: 50rpx;
-  line-height: 50rpx;
-  background-color: rgba(255, 255, 255, 1);
-  color: #333;
+  height: 60rpx;
+  line-height: 60rpx;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #000;
   box-sizing: border-box;
   padding: 0 0 0 10rpx;
+  border-radius: 10rpx;
 }
 
 .new_itemX input {
   width: 450rpx;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.7);
   color: #333;
   box-sizing: border-box;
   padding: 0 0 0 10rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 10rpx;
 }
 
 .editVersion_color {
@@ -282,20 +299,63 @@
   position: absolute;
   right: 0;
   top: 0;
-  height: 0;
+  height: 60rpx;
   width: 50rpx;
-  line-height: 50rpx;
+  line-height: 60rpx;
   color: white;
-  font-size: 40rpx;
+  font-size: 46rpx;
+  opacity: 0.9;
 }
 
 .add_info {
   position: absolute;
   right: 0;
   top: 0;
-  height: 0;
+  height: 60rpx;
   width: 50rpx;
-  line-height: 50rpx;
+  line-height: 60rpx;
   color: white;
+  font-size: 46rpx;
+  opacity: 0.9;
+}
+
+.version_del1 {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 46rpx;
+  color: rgba(0,0,0,0.9);
+  position: absolute;
+  right: -32rpx;
+  top: -30rpx;
+  /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
+  text-align: center;
+}
+
+.version_del2 {
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
   font-size: 40rpx;
+  color: rgba(0,0,0,0.9);
+  position: absolute;
+  left: -22rpx;
+  top: -30rpx;
+  /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
+  text-align: center;
+  z-index: 99;
+}
+
+.version_del3 {
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 30rpx;
+  color: rgba(0,0,0,0.9);
+  position: absolute;
+  left: 32rpx;
+  top: -16rpx;
+  /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
+  text-align: center;
+  z-index: 99;
 }

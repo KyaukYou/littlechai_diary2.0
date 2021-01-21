@@ -34,6 +34,8 @@
 
       <view style="background: linear-gradient(to right, {{globalData.color}}, {{globalData.colorX}});" class='{{index == 0 ? "current up-cell" : "up-cell" }}' wx:for='{{verData}}' wx:key='index' >
         
+        <view class="version_del1">×</view>
+
         <view class="version_top_borderX" style="background-color: {{globalData.color}}"></view>
         <view class="version_top_circleX" style="border-color: {{globalData.color}}; opacity: 0.7">
           <view class="version_top_circle_smX" style="background-color: {{globalData.color}};"></view>
@@ -47,9 +49,12 @@
           </view>
 
           <view class="new_version" wx:for='{{item.arr}}' wx:key='index' wx:for-item='new_item' wx:for-index='new_index'>
+              <view class="version_del2">×</view>
               <view class="new_version_title"><input  bindinput="changeTitle" data-index1="{{index}}" data-index2="{{new_index}}" placeholder="请输入标题名" type="text" value="{{new_item.title}}"/> <view class="add_title"  data-index1="{{index}}" data-index2="{{new_index}}" bindtap="addTitle">＋</view> </view>
               <view class="new_version_info">
+                
                 <view class="new_version_info_list" wx:for="{{new_item.info}}" wx:key="new_item_index" wx:for-item='new_item_list' wx:for-index='new_item_index'>
+                  <view class="version_del3">×</view>
                   <view class="new_version_titleX">{{new_item_index+1}}.</view>
                   <view class="new_itemX">
                     <input placeholder="请输入内容" bindinput="changeInfo" data-index1="{{index}}" data-index2="{{new_index}}" data-index3="{{new_item_index}}" type="text" value="{{new_item_list}}" /><view class="add_info" data-index1="{{index}}" data-index2="{{new_index}}" data-index3="{{new_item_index}}" bindtap="addInfo">＋</view>

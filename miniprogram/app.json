@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/editVersion/editVersion",
-    
     "pages/version/version",
     
     "pages/my/my",
