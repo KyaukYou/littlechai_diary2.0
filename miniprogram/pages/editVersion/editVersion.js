@@ -195,6 +195,35 @@ Page({
     })
   },
 
+  delOne(e) {
+    let index1 = e.currentTarget.dataset.index1;
+    let copy = JSON.parse(JSON.stringify(this.data.verData));
+    copy.splice(index1,1)
+
+    this.setData({
+      verData: copy
+    })
+  },
+  delTwo(e) {
+    let index1 = e.currentTarget.dataset.index1;
+    let index2 = e.currentTarget.dataset.index2;
+    let copy = JSON.parse(JSON.stringify(this.data.verData));
+    copy[index1].arr.splice(index2,1)
+    this.setData({
+      verData: copy
+    })
+  },
+  delThree(e) {
+    let index1 = e.currentTarget.dataset.index1;
+    let index2 = e.currentTarget.dataset.index2;
+    let index3 = e.currentTarget.dataset.index3;
+    let copy = JSON.parse(JSON.stringify(this.data.verData));
+    copy[index1].arr[index2].info.splice(index3,1)
+    this.setData({
+      verData: copy
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

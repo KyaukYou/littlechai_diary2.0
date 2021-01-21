@@ -171,14 +171,14 @@
   height: auto;
   display: flex;
   flex-flow: column wrap;
-  margin-bottom: 4rpx;
+  margin-bottom: 0rpx;
 }
 
 .new_version_title {
   box-sizing: border-box;
   width: 100%rpx;
-  height: 58rpx;
-  line-height: 58rpx;
+  height: 54rpx;
+  line-height: 54rpx;
   padding-left: 0rpx;
   font-size: 30rpx;
 }
@@ -196,7 +196,7 @@
   height: auto;
   min-height: 46rpx;
   line-height: 46rpx;
-  margin: 0 0 8rpx 0;
+  margin: 0 0 4rpx 0;
   position: relative;
 }
 

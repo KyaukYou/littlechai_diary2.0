@@ -86,6 +86,7 @@
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 8rpx;
+  position: relative;
 }
 
 .current {
@@ -104,13 +105,13 @@
   top: 0;
   left: 6%;
   width: 4rpx;
-  height: 232rpx;
+  height: 154rpx;
   margin-left: -2rpx;
 }
 
 .version_top_circle {
   position: absolute;
-  top: 240rpx;
+  top: 160rpx;
   width: 26rpx;
   height: 26rpx;
   border-radius: 50%;
@@ -229,6 +230,7 @@
   width: auto;
   box-sizing: border-box;
   margin-left: 40rpx;
+  /* position: relative; */
 }
 
 
@@ -242,7 +244,7 @@
   background-color: rgba(255, 255, 255, 0.7);
   color: #000;
   box-sizing: border-box;
-  padding: 0 0 0 10rpx;
+  padding: 0 54rpx 0 10rpx;
   margin-left: 4rpx;
   border-radius: 10rpx;
   position: relative;
@@ -260,23 +262,34 @@
   background-color: rgba(255, 255, 255, 0.7);
   color: #000;
   box-sizing: border-box;
-  padding: 0 0 0 10rpx;
+  padding: 0 54rpx 0 10rpx;
   border-radius: 10rpx;
 }
 
 .new_itemX input {
-  width: 450rpx;
+  width: 458rpx;
   background-color: rgba(255, 255, 255, 0.7);
   color: #333;
   box-sizing: border-box;
-  padding: 0 0 0 10rpx;
+  padding: 0 54rpx 0 10rpx;
   height: 60rpx;
   line-height: 60rpx;
   border-radius: 10rpx;
 }
 
+.editVersion_long {
+  width: 87%;
+  height: 100rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+  top: -10rpx;
+}
+
 .editVersion_color {
-  width: 60%;
+  width: 40%;
   height: 80rpx;
   display: flex;
   flex-flow: row nowrap;
@@ -320,27 +333,27 @@
 }
 
 .version_del1 {
-  width: 60rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  font-size: 46rpx;
-  color: rgba(0,0,0,0.9);
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 36rpx;
+  color: white;
   position: absolute;
-  right: -32rpx;
-  top: -30rpx;
+  right: 0rpx;
+  top: 14rpx;
   /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
   text-align: center;
 }
 
 .version_del2 {
-  width: 50rpx;
-  height: 50rpx;
-  line-height: 50rpx;
-  font-size: 40rpx;
-  color: rgba(0,0,0,0.9);
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 36rpx;
+  color: white;
   position: absolute;
-  left: -22rpx;
-  top: -30rpx;
+  right: 60rpx;
+  top: 8rpx;
   /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
   text-align: center;
   z-index: 99;
@@ -350,11 +363,11 @@
   width: 40rpx;
   height: 40rpx;
   line-height: 40rpx;
-  font-size: 30rpx;
-  color: rgba(0,0,0,0.9);
+  font-size: 36rpx;
+  color: white;
   position: absolute;
-  left: 32rpx;
-  top: -16rpx;
+  right: 60rpx;
+  top: 10rpx;
   /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
   text-align: center;
   z-index: 99;
