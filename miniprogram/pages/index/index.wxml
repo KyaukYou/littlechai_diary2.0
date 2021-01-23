@@ -1,9 +1,9 @@
 <!--pages/index.wxml-->
 <!-- <l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="小柴随心记">
 </l-capsule-bar> -->
-<lc_header header_title='小柴随心记' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+<lc_header header_title='小柴随心记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
 
-<view hover-class="opacity_button_pos" class="to_create" style="background-color: {{globalData.color}}" bindtap="toCreate">
+<view hover-class="opacity_button_pos" class="to_create" style="background-color: {{globalData.color}}; right: {{pos.right}}; bottom: {{pos.bottom}}" bindtap="toCreate" bindtouchmove="ballMoveEvent">
   <image src='/images/add.svg'></image>
 </view>
 
@@ -30,7 +30,7 @@
       <!-- 左图 -->
       <view class="diary_main">
         <view class="diary_left">
-          <image mode='aspectFill' src='http://data.littlechai.cn/blog_bg28.jpg'></image>
+          <image mode='aspectFill' src=''></image>
         </view>
         <view class="diary_right">
           <view class="diary_title">关于小柴日记簿</view>
@@ -51,63 +51,7 @@
           <view class="diary_bottom"></view>
         </view>
         <view class="diary_left">
-          <image mode='aspectFill' src='http://data.littlechai.cn/blog_bg28.jpg'></image>
-        </view>
-      </view>
-
-      <!-- 左图 -->
-      <view class="diary_main">
-        <view class="diary_left">
-          <image mode='aspectFill' src='http://data.littlechai.cn/blog_bg28.jpg'></image>
-        </view>
-        <view class="diary_right">
-          <view class="diary_title">关于小柴日记簿</view>
-          <view class="diary_time">2021.01.07 20:05:32</view>
-          <view class="diary_location">江苏省无锡市羊尖镇好几个ID卡就复活更得看个东方航空结构化发动机盖快递费刚发的</view>
-          <view class="diary_more">1天 | 浏览1次</view>
-          <view class="diary_bottom"></view>
-        </view>
-      </view>
-
-      <!-- 右图 -->
-      <view class="diary_main">
-        <view class="diary_right">
-          <view class="diary_title">关于小柴日记簿</view>
-          <view class="diary_time">2021.01.07 20:05:32</view>
-          <view class="diary_location">江苏省无锡市羊尖镇好几个ID卡就复活更得看个东方航空结构化发动机盖快递费刚发的</view>
-          <view class="diary_more">1天 | 浏览1次</view>
-          <view class="diary_bottom"></view>
-        </view>
-        <view class="diary_left">
-          <image mode='aspectFill' src='http://data.littlechai.cn/blog_bg28.jpg'></image>
-        </view>
-      </view>
-
-      <!-- 左图 -->
-      <view class="diary_main">
-        <view class="diary_left">
-          <image mode='aspectFill' src='http://data.littlechai.cn/blog_bg28.jpg'></image>
-        </view>
-        <view class="diary_right">
-          <view class="diary_title">关于小柴日记簿</view>
-          <view class="diary_time">2021.01.07 20:05:32</view>
-          <view class="diary_location">江苏省无锡市羊尖镇好几个ID卡就复活更得看个东方航空结构化发动机盖快递费刚发的</view>
-          <view class="diary_more">1天 | 浏览1次</view>
-          <view class="diary_bottom"></view>
-        </view>
-      </view>
-
-      <!-- 右图 -->
-      <view class="diary_main">
-        <view class="diary_right">
-          <view class="diary_title">关于小柴日记簿</view>
-          <view class="diary_time">2021.01.07 20:05:32</view>
-          <view class="diary_location">江苏省无锡市羊尖镇好几个ID卡就复活更得看个东方航空结构化发动机盖快递费刚发的</view>
-          <view class="diary_more">1天 | 浏览1次</view>
-          <view class="diary_bottom"></view>
-        </view>
-        <view class="diary_left">
-          <image mode='aspectFill' src='http://data.littlechai.cn/blog_bg28.jpg'></image>
+          <image mode='aspectFill' src=''></image>
         </view>
       </view>
 

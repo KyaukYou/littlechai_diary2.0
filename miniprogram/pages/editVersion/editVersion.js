@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    back: true,
     globalData: {},
     verBol: false,
     verData: [],

@@ -7,7 +7,14 @@ Page({
    */
   data: {
     refreshBol: false,
-    globalData: {}
+    back: false,
+    globalData: {},
+    pos: {
+      right: "8%",
+      bottom: "7%"
+    },
+    screenHeight: 0, 
+    screenWidth: 0, 
   },
   toCreate() {
     wx.navigateTo({
@@ -55,10 +62,49 @@ Page({
     console.log(e)
   },
 
+  ballMoveEvent: function (e) { 
+    console.log('我被拖动了....') 
+    var touchs = e.touches[0]; 
+    var pageX = touchs.pageX; 
+    var pageY = touchs.pageY; 
+    console.log('pageX: ' + pageX) 
+    console.log('pageY: ' + pageY) 
+  //防止坐标越界,view宽高的一般 
+    if (pageX < 30) return; 
+    if (pageX > this.data.screenWidth - 30) return; 
+    if (this.data.screenHeight - pageY <= 30) return; 
+    if (pageY <= 30) return;
+  //这里用right和bottom.所以需要将pageX pageY转换 
+    var x = this.data.screenWidth - pageX - 30; 
+    var y = this.data.screenHeight - pageY - 30; 
+    console.log('x: ' + x) 
+    console.log('y: ' + y) 
+    // let timer = setTimeout(() => {
+      
+    // },0)
+    this.setData({ 
+      pos: {
+        right: ((x / this.data.screenWidth) * 100).toFixed(2) + '%',
+        bottom: ((y / this.data.screenHeight) * 100).toFixed(2) + '%'
+      }
+     }); 
+    
+   }, 
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this; 
+    wx.getSystemInfo({ 
+    success: function (res) { 
+      that.setData({ 
+      screenHeight: res.windowHeight, 
+      screenWidth: res.windowWidth, 
+      }); 
+    } 
+    }); 
+
     this.firstHeader();
     this.getGlobalData();
   },

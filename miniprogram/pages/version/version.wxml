@@ -1,4 +1,4 @@
-<lc_header header_title='更新日志' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+<lc_header header_title='更新日志' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
 <l-toast
   show="{{toastBol}}"
   icon="loading"

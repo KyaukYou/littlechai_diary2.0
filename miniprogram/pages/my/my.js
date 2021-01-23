@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    back: false,
     refreshBol: false,
     globalData: {},
     rgb: 'rgb(0,0,0)', //初始值
@@ -23,7 +24,9 @@ Page({
     toastDuration: 999999,
     ms_content: "",
     ms_show: "",
-    maxlength: 16
+    maxlength: 16,
+    version_text: "新版本介绍",
+    version_num: ""
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -147,6 +150,7 @@ Page({
   //scroll-view 自定义下拉刷新
   async refresh() {
     console.log('开始刷新')
+    this.getVersion_one();
     if(!wx.getStorageSync('openid')) {
       this.setData({
         refreshBol: false
@@ -296,6 +300,7 @@ Page({
   },
   //跳转到version
   toVersion() {
+    wx.setStorageSync('version', this.data.version_num)
     wx.navigateTo({
       url: '/pages/version/version',
     })
@@ -305,6 +310,34 @@ Page({
     wx.navigateTo({
       url: '/pages/editVersion/editVersion',
     })
+  },
+  //获取日志版本
+  async getVersion_one() {
+    let version = await wx.cloud.callFunction({
+      name: 'getVersionOne'
+    });
+    let res = version.result.data[0].version
+    if(wx.getStorageSync('version')) {
+      if(wx.getStorageSync('version') === res) {
+        this.setData({
+          version_text: "",
+          version_num: res
+        })
+      }
+      else {
+        this.setData({
+          version_text: "新版本介绍",
+          version_num: res
+        })
+      }
+    }
+    else {
+      this.setData({
+        version_text: "新版本介绍",
+        version_num: res
+      })
+    }
+    console.log(version.result.data[0].version)
   },
 
   /**
@@ -327,6 +360,7 @@ Page({
   onShow: function () {
     this.firstHeader();
     this.getGlobalData();
+    this.getVersion_one();
   },
 
   /**

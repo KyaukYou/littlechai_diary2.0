@@ -1,3 +1,10 @@
-<view class="index-nav" style="top: 0; height: {{(heightInfo.customHeight.height+heightInfo.customHeight.top+12) * 1}}px; background-color:{{header_color}}; background-image:{{blur === true ? 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/dot.png?sign=f6f105901602fb46727be2f82c1b33b4&t=1610067412)' : ''}} ">
+<view class="index-nav"
+  style="top: 0; height: {{(heightInfo.customHeight.height+heightInfo.customHeight.top+12) * 1}}px; background-color:{{header_color}}; background-image:{{blur === true ? 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/dot.png?sign=f6f105901602fb46727be2f82c1b33b4&t=1610067412)' : ''}} ">
 </view>
-<view class="index-header" style="height: {{heightInfo.customHeight.height}}px; top: {{heightInfo.customHeight.top + 4}}px; line-height:{{heightInfo.customHeight.height}}px">{{header_title}}</view>  
+<view class="index-header"
+  style="height: {{heightInfo.customHeight.height}}px; top: {{heightInfo.customHeight.top + 4}}px; line-height:{{heightInfo.customHeight.height}}px">
+  <view wx:if="{{back}}" class="index-header-back" bindtap="backView">
+     <image src='/images/back.svg'></image>
+  </view>
+  {{header_title}}
+</view>

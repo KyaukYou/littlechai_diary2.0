@@ -22,11 +22,21 @@ Component({
       type: Boolean,
       value: ""
     },
+    back: {
+      type: Boolean,
+      value: false
+    }
   },
   ready() {
     this.init();
   },
   methods: {
+    backView(e) {
+      // console.log(e)
+      wx.navigateBack({
+        delta: 1,
+      })
+    },
     init(e) {
       wx.getSystemInfo({
         success: res => {

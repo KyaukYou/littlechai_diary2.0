@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    back: true,
     globalData: {},
     toastTitle: "结束日期超出开始日期，为避免丢失日记信息，请重新选择日期时间段",
     toastDuration: 4500,

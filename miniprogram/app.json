@@ -1,11 +1,13 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/createDiary/createDiary",
+    
     "pages/editVersion/editVersion",
     "pages/version/version",
     
-    "pages/my/my",
-    "pages/createDiary/createDiary"
+    "pages/my/my"
+    
     
   ],
   "window": {
@@ -37,7 +39,7 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于个人信息的页面显示" 
+      "desc": "你的位置信息将用于日记位置的显示" 
     }
   },
   "sitemapLocation": "sitemap.json",

@@ -1,5 +1,5 @@
 <!--pages/createDiary/createDiary.wxml-->
-<lc_header header_title='创建日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+<lc_header header_title='创建日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
 <l-calendar color="{{globalData.color}}" show="{{showBeginDate}}" bind:linselect='selectBeginDate' bind:linconfirm='selectBeginDate' />
 <l-calendar color="{{globalData.color}}" show="{{showEndDate}}" bind:linselect='selectEndDate' bind:linconfirm='selectEndDate' min-date="{{minDate2}}"/>
 <l-toast
@@ -77,5 +77,46 @@
 
 
     </view>
+
+    <view class="create_arr">
+      <view class="create_child">
+        <view class="create_child_top">
+          <view class="create_child_date">
+            <image src='/images/create_date.svg'></image>
+            2021-01-23
+          </view>
+
+          <view class="create_child_show">
+            是否显示
+            <view class="create_switch">
+              <switch  color="{{globalData.color}}" />
+            </view>
+          </view>
+        </view>
+
+        <view class="create_child_center">
+          <textarea placeholder="记录下你的日记吧(500字以内)" maxlength="500"></textarea>
+        </view>
+
+        <view class="create_child_bottom">
+          <view class="create_child_addimg">
+            <image src='/images/add_black.svg'></image>
+          </view>
+
+          <view class="create_child_img">
+            <image></image>
+          </view>
+          <view class="create_child_img">
+            <image></image>
+          </view>
+          <view class="create_child_img">
+            <image></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view style="background-color: {{globalData.color}}" class="create_btn">上传</view>
+    <view class="create_sm_text">请尽量选择2M以内大小的图片进行上传,图片过大可能会造成小程序闪屏。</view>
   </scroll-view>
 </view>
