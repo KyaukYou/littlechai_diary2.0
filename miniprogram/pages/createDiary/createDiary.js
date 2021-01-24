@@ -13,13 +13,17 @@ Page({
     toastBol: false,
     showBeginDate: false,
     showEndDate: false,
-    minDate1: "",
+    minDate1: new Date(2021,0,1).getTime(),
+    default_date: new Date().getTime(),
     maxDate1: "",
     minDate2: new Date().getTime(),
     maxDate2: "",
     info: {
       title: "",
-      title_image: "/images/wx.png",
+      title_image: {
+        type: 'default',
+        url: "/images/wx.png"
+      },
       location: "",
       beginDate: "",
       endDate: "",
@@ -30,18 +34,18 @@ Page({
       updatedTime: "",
     },
     diaryArr: [
-      {
-        date: "",
-        show: true,
-        content: "",
-        imagesArr: [
-          {
-            type: "new",
-            httpUrl: "",
-            fileUrl: ""
-          }
-        ]
-      }
+      // {
+      //   date: "",
+      //   show: true,
+      //   content: "",
+      //   imagesArr: [
+      //     {
+      //       type: "new",
+      //       httpUrl: "",
+      //       fileUrl: ""
+      //     }
+      //   ]
+      // }
     ]
   },
   // 初始化自定义导航栏
@@ -58,14 +62,14 @@ Page({
   },
   async getGlobalData() {
     let timer = setInterval(() => {
-      if(app.globalData.initBol === true) {
+      if (app.globalData.initBol === true) {
         this.setData({
           globalData: app.globalData,
           refreshBol: false
         })
         clearInterval(timer);
       }
-    },100)
+    }, 100)
   },
   // 输入标题
   changeTitle(e) {
@@ -94,8 +98,8 @@ Page({
           info: copy
         })
       },
-      fail: (res)=> {
-        
+      fail: (res) => {
+
       }
     })
   },
@@ -123,23 +127,28 @@ Page({
     let y = trueDate.split('-')[0];
     let m = trueDate.split('-')[1];
     let d = trueDate.split('-')[2];
-    console.log(y,m,d)
+    console.log(y, m, d)
 
     let endDate = 0
     let beginDate = new Date(trueDate).getTime();
-    if(this.data.info.endDate != "") {
+    if (this.data.info.endDate != "") {
       endDate = new Date(this.data.info.endDate).getTime();
     }
     console.log(endDate)
-    if(endDate < beginDate && endDate !== 0) {
+    if (endDate < beginDate && endDate !== 0) {
       // 提示
       this.setData({
         toastBol: true
       })
+    } else {
+      if (e.type === "linconfirm") {
+        let res = await app.getdiffdate(copy.beginDate, copy.endDate)
+        await this.initArr(res)
+      }
     }
     this.setData({
       info: copy,
-      minDate2: new Date(parseInt(y), parseInt(m)-1, parseInt(d)).getTime()
+      minDate2: new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).getTime()
     })
 
   },
@@ -152,6 +161,11 @@ Page({
     this.setData({
       info: copy
     })
+    if (e.type === "linconfirm") {
+      let res = await app.getdiffdate(copy.beginDate, copy.endDate)
+      await this.initArr(res)
+    }
+
   },
 
   // 锁定解锁
@@ -178,6 +192,147 @@ Page({
     copy.sort = e.detail.value;
     this.setData({
       info: copy
+    })
+  },
+
+
+
+
+  // 同步修改日记数组，核心算法
+  async initArr(arr) {
+    console.log(arr)
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr))
+    //判断copy中有没有改日期内的数组
+
+    //原本为空，直接赋值
+    if (copy.length <= 0) {
+      for (var i = 0; i < arr.length; i++) {
+        let obj = {
+          date: arr[i],
+          show: true,
+          content: "",
+          imagesArr: [{
+            type: "new",
+            httpUrl: "",
+            fileUrl: ""
+          }]
+        }
+        copy.push(obj)
+      }
+      this.setData({
+        diaryArr: copy
+      })
+      return;
+    }
+
+    let beginTime1 = await app.dateToTimestamp(copy[0].date);
+    let beginTime2 = await app.dateToTimestamp(arr[0]);
+    let endTime1 = await app.dateToTimestamp(copy[copy.length - 1].date);
+    let endTime2 = await app.dateToTimestamp(arr[arr.length - 1]);
+
+    //开始日期比原来前
+    // 2021-01-24  < 2021-01-26
+    if (beginTime1 < beginTime2) {
+      console.log('开始日期比原来前')
+      let sliceIndex = null;
+      //把前面的截取
+      for (let j = 0; j < copy.length; j++) {
+        if (await app.dateToTimestamp(copy[j].date) === await app.dateToTimestamp(arr[0])) {
+          sliceIndex = j;
+        }
+      }
+      copy = copy.slice(sliceIndex)
+      console.log(copy)
+
+    }
+
+    //开始日期和原来一样
+    // 2021-01-24  === 2021-01-24
+    if (beginTime1 === beginTime2) {
+      console.log('开始日期和原来一样')
+
+      //判断结束日期
+      //比原来早 2021-01-28 > 2021-01-27
+
+      if (endTime1 > endTime2) {
+        let num = null;
+        for (let x = 0; x < copy.length; x++) {
+          if (await app.dateToTimestamp(copy[x].date) === endTime2) {
+            num = x;
+          }
+        }
+        copy.splice(num + 1, copy.length - 1)
+      }
+      //和原来一样
+
+      //比原来晚 2021-01-28 < 2021-01-29
+      if (endTime1 < endTime2) {
+        let num = null;
+        let res = await app.getdiffdate(copy[copy.length - 1].date, arr[arr.length - 1]);
+        console.log(res)
+        for (let x = 1; x < res.length; x++) {
+          let obj = {
+            date: res[x],
+            show: true,
+            content: "",
+            imagesArr: [{
+              type: "new",
+              httpUrl: "",
+              fileUrl: ""
+            }]
+          }
+          copy.push(obj)
+        }
+      }
+
+    }
+
+
+    //开始日期比原来后
+    // 2021-01-24  > 2021-01-22
+    if (beginTime1 > beginTime2) {
+      console.log('开始日期比原来后')
+      let res = await app.getdiffdate(arr[0], copy[0].date);
+      res.reverse();
+      for (let x = 1; x < res.length; x++) {
+        let obj = {
+          date: res[x],
+          show: true,
+          content: "",
+          imagesArr: [{
+            type: "new",
+            httpUrl: "",
+            fileUrl: ""
+          }]
+        }
+        copy.unshift(obj)
+      }
+    }
+
+    this.setData({
+      diaryArr: copy
+    })
+
+
+  },
+
+  // 显示隐藏日记
+  showArr(e) {
+    let index = e.currentTarget.dataset.index;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr))
+    copy[index].show = !copy[index].show
+    this.setData({
+      diaryArr: copy
+    })
+  },
+
+  // 记录日记内容
+  changeTextarea(e) {
+    let index = e.currentTarget.dataset.index;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    copy[index].content = e.detail.value;
+    this.setData({
+      diaryArr: copy
     })
   },
 

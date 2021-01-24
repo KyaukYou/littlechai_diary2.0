@@ -156,7 +156,7 @@
   height: auto;
   margin-bottom: 6rpx;
   background-color: white;
-  margin-bottom: 12rpx;
+  margin-bottom: 16rpx;
 }
 
 .create_child_top {
@@ -207,9 +207,10 @@
   height: auto;
   min-height: 300rpx;
   box-sizing: border-box;
-  padding: 6rpx 20rpx 24rpx 20rpx;
+  padding: 6rpx 20rpx 34rpx 20rpx;
   margin-bottom: 2rpx;
   border-bottom: 2rpx solid rgba(246, 246, 246, 1);
+  position: relative;
 }
 
 .create_child_center textarea {
@@ -219,10 +220,18 @@
   background-color: rgba(246, 246, 246, 0.9);
   border-radius: 10rpx;
   box-sizing: border-box;
-  padding: 8rpx 10rpx;
+  padding: 10rpx 8rpx 10rpx 12rpx;
   font-size: 30rpx;
-  line-height: 30rpx;
+  line-height: 32rpx;
   color: #333;
+}
+
+.create_textarea_length {
+  position: absolute;
+  bottom: 4rpx;
+  right: 20rpx;
+  font-size: 26rpx;
+  color: #ccc;
 }
 
 .create_child_bottom {
@@ -231,7 +240,7 @@
   min-height: 230rpx;
   display: flex;
   box-sizing: border-box;
-  padding: 4rpx 8rpx;
+  padding: 4rpx 8rpx 10rpx 8rpx;
   flex-flow: row wrap;
   align-items: center;
   justify-content: flex-start;

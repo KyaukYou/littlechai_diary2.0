@@ -1,7 +1,9 @@
 <!--pages/createDiary/createDiary.wxml-->
 <lc_header header_title='创建日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
-<l-calendar color="{{globalData.color}}" show="{{showBeginDate}}" bind:linselect='selectBeginDate' bind:linconfirm='selectBeginDate' />
-<l-calendar color="{{globalData.color}}" show="{{showEndDate}}" bind:linselect='selectEndDate' bind:linconfirm='selectEndDate' min-date="{{minDate2}}"/>
+<!-- bind:linselect='selectBeginDate' -->
+<l-calendar color="{{globalData.color}}" show="{{showBeginDate}}"  bind:linconfirm='selectBeginDate' default-date="{{default_date}}" min-date="{{minDate1}}"/>
+<l-calendar color="{{globalData.color}}" show="{{showEndDate}}"  bind:linconfirm='selectEndDate' min-date="{{minDate2}}"/>
+<!-- bind:linselect='selectEndDate' -->
 <l-toast
   show="{{toastBol}}"
   title="{{toastTitle}}"
@@ -12,8 +14,10 @@
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
 
+  <!-- refresher-enabled bindrefresherrefresh='refresh' -->
+  <!-- 关闭下拉刷新 -->
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
-    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    class="my_container" scroll-y  refresher-triggered='{{refreshBol}}'>
     <view class="my_wrap">
       
       <view class="lc_list">
@@ -26,7 +30,7 @@
       <view class="lc_list">
         <view class="lc_list_title">日记封面</view>
         <view class="lc_list_info">
-          <image mode='aspectFill' src='{{info.title_image}}'></image>
+          <image mode='aspectFill' src='{{info.title_image.url}}'></image>
         </view>
       </view>
       
@@ -78,40 +82,38 @@
 
     </view>
 
-    <view class="create_arr">
+    <view class="create_arr" wx:for="{{diaryArr}}" wx:key="index">
       <view class="create_child">
         <view class="create_child_top">
           <view class="create_child_date">
             <image src='/images/create_date.svg'></image>
-            2021-01-23
+            {{item.date}}
           </view>
 
           <view class="create_child_show">
             是否显示
             <view class="create_switch">
-              <switch  color="{{globalData.color}}" />
+              <switch bindchange='showArr' data-index="{{index}}" checked="{{item.show}}" color="{{globalData.color}}" />
             </view>
           </view>
         </view>
 
-        <view class="create_child_center">
-          <textarea placeholder="记录下你的日记吧(500字以内)" maxlength="500"></textarea>
+        <view class="create_child_center" wx:if="{{item.show}}">
+          <textarea wx:if="{{showBeginDate || showEndDate}}" data-index="{{index}}" placeholder="记录下你的日记吧(500字以内)" bindinput="changeTextarea" maxlength="500" value="{{item.content}}"></textarea>
+          <view class="create_textarea_length">{{item.content.length}}/500</view>
         </view>
 
-        <view class="create_child_bottom">
-          <view class="create_child_addimg">
+        <view class="create_child_bottom" wx:if="{{item.show}}">
+          
+          <view class="create_child_img">
+            <image></image>
+          </view>
+
+          <view class="create_child_addimg" data-index="{{index}}">
             <image src='/images/add_black.svg'></image>
           </view>
 
-          <view class="create_child_img">
-            <image></image>
-          </view>
-          <view class="create_child_img">
-            <image></image>
-          </view>
-          <view class="create_child_img">
-            <image></image>
-          </view>
+
         </view>
       </view>
     </view>
