@@ -229,6 +229,24 @@ App({
     return `${y}-${m}-${d}`;
   },
 
+  async timeStampX(time) {
+    let timerX = new Date(time);
+    let y = timerX.getFullYear();
+    let m = timerX.getMonth() + 1;
+    let d = timerX.getDate();
+    let h = timerX.getHours();
+    let m1 = timerX.getMinutes();
+    let s = timerX.getSeconds();
+    y = await this.addZero(y);
+    m = await this.addZero(m);
+    d = await this.addZero(d);
+    h = await this.addZero(h);
+    m1 = await this.addZero(m1);
+    s = await this.addZero(s);
+    return `${y}-${m}-${d} ${h}:${m1}:${s}`;
+    // return `${y}-${m}-${d}`;
+  },
+
   //获取两日期之间日期列表函数
   async getdiffdate(stime,etime){
     //初始化日期列表，数组

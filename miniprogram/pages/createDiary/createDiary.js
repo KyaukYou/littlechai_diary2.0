@@ -32,6 +32,13 @@ Page({
       sort: true,
       createdTime: "",
       updatedTime: "",
+      ifDelete: false,
+      ifTop: false,
+      see: 0,
+      collection: 0,
+      like: 0,
+      dayNum: 0,
+      openid: ""
     },
     diaryArr: [
       // {
@@ -46,7 +53,11 @@ Page({
       //     }
       //   ]
       // }
-    ]
+    ],
+    uploadIcon: "",
+    uploadDuration: 99999,
+    uploadTitle: "",
+    uploadBol: false
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -190,9 +201,19 @@ Page({
   sortFn(e) {
     let copy = JSON.parse(JSON.stringify(this.data.info))
     copy.sort = e.detail.value;
-    this.setData({
-      info: copy
-    })
+    let copyArr = JSON.parse(JSON.stringify(this.data.diaryArr))
+
+    if(e.detail.value === false) {
+      this.setData({
+        info: copy,
+        diaryArr: copyArr.reverse()
+      })
+    }
+    else {
+      this.setData({
+        info: copy
+      })
+    }
   },
 
 
@@ -202,6 +223,9 @@ Page({
   async initArr(arr) {
     console.log(arr)
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr))
+    if(this.data.info.sort === false) {
+      copy.reverse();
+    }
     //判断copy中有没有改日期内的数组
 
     //原本为空，直接赋值
@@ -211,17 +235,21 @@ Page({
           date: arr[i],
           show: true,
           content: "",
-          imagesArr: [{
-            type: "new",
-            httpUrl: "",
-            fileUrl: ""
-          }]
+          imagesArr: []
         }
         copy.push(obj)
       }
-      this.setData({
-        diaryArr: copy
-      })
+      if(this.data.info.sort === false) {
+        this.setData({
+          diaryArr: copy.reverse()
+        })
+      }
+      else {
+        this.setData({
+          diaryArr: copy
+        })
+      }
+      
       return;
     }
 
@@ -275,11 +303,7 @@ Page({
             date: res[x],
             show: true,
             content: "",
-            imagesArr: [{
-              type: "new",
-              httpUrl: "",
-              fileUrl: ""
-            }]
+            imagesArr: []
           }
           copy.push(obj)
         }
@@ -299,19 +323,23 @@ Page({
           date: res[x],
           show: true,
           content: "",
-          imagesArr: [{
-            type: "new",
-            httpUrl: "",
-            fileUrl: ""
-          }]
+          imagesArr: []
         }
         copy.unshift(obj)
       }
     }
 
-    this.setData({
-      diaryArr: copy
-    })
+    if(this.data.info.sort === false) {
+      this.setData({
+        diaryArr: copy.reverse()
+      })
+    }
+    else {
+      this.setData({
+        diaryArr: copy
+      })
+    }
+    
 
 
   },
@@ -334,6 +362,205 @@ Page({
     this.setData({
       diaryArr: copy
     })
+  },
+
+  //选择日记封面
+  async chooseTitleImage() {
+    let res = await wx.chooseImage({
+      count: 1,
+    })
+    console.log(res)
+    let filePath = res.tempFilePaths[0];
+    let copy = JSON.parse(JSON.stringify(this.data.info))
+    copy.title_image = {
+      type: 'new',
+      url: filePath
+    }
+    this.setData({
+      info: copy
+    })
+  },
+
+  //选择日记独立图片
+  async chooseDiaryImage(e) {
+    let index = e.currentTarget.dataset.index;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    let chooseNum = 9 - copy[index].imagesArr.length
+    let res = await wx.chooseImage({
+      count: chooseNum,
+    })
+    let filePathArr = res.tempFilePaths;
+    for (let i = 0; i < filePathArr.length; i++) {
+      let obj = {
+        type: "new",
+        url: filePathArr[i]
+      }
+      copy[index].imagesArr.push(obj)
+    }
+    this.setData({
+      diaryArr: copy
+    })
+  },
+
+  //删除日记独立图片
+  delDiaryImage(e) {
+    let index1 = e.currentTarget.dataset.index;
+    let index2 = e.currentTarget.dataset.index2;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    copy[index1].imagesArr.splice(index2,1);
+    this.setData({
+      diaryArr: copy
+    })
+  },
+
+  //查看大图
+  watchBgImg(e) {
+    let index1 = e.currentTarget.dataset.index;
+    let index2 = e.currentTarget.dataset.index2;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    let list = [];
+    let getArr = copy[index1].imagesArr;
+    for(let i=0; i<getArr.length; i++) {
+      list.push(getArr[i].url)
+    }
+
+    wx.previewImage({
+      current: copy[index1].imagesArr[index2].url, // 当前显示图片的http链接
+      urls: list // 需要预览的图片http链接列表
+    })
+  },
+  //点击上传
+  async upload() {
+    let copy = JSON.parse(JSON.stringify(this.data.info));
+    let copyDiary = JSON.parse(JSON.stringify(this.data.diaryArr));
+    if(copy.title === "" || copy.title_image.type === 'default' || copy.location === "" || copy.beginDate === "" || copy.endDate === "") {
+      this.setData({
+        uploadIcon: "",
+        uploadDuration: 2500,
+        uploadTitle: "请填写完整",
+        uploadBol: true
+      })
+    }
+    else {
+      //上传封面图
+      this.setData({
+        uploadIcon: "loading",
+        uploadDuration: 99999,
+        uploadTitle: "上传封面中",
+        uploadBol: true
+      })
+      let titleImageUrl = await this.uploadTitleImage(copy);
+      // titleImageUrl.fileID
+      console.log(titleImageUrl)
+
+      //上传日记独立封面
+      let diaryImageNum = 0;
+      let diaryImageIndex = 0;
+      let diaryImageArr = []
+      for(let i=0; i<copyDiary.length; i++) {
+        diaryImageNum += copyDiary[i].imagesArr.length;
+        diaryImageArr.push(copyDiary[i].imagesArr.length)
+      }
+
+      if(diaryImageNum === 0) {
+        //直接上传
+        let res = await this.uploadAll(copy,copyDiary)
+      }
+
+      else {
+        //上传图片
+        diaryImageIndex++;
+        this.setData({
+          uploadIcon: "loading",
+          uploadDuration: 99999,
+          uploadTitle: `上传图片中${diaryImageIndex}/${diaryImageNum}`,
+          uploadBol: true
+        })
+
+        for(let i=0; i<copyDiary.length; i++) {
+          for(let j=0; j<copyDiary[i].imagesArr.length; j++) {
+            let res = await this.uploadDiaryImage(copyDiary[i].imagesArr[j].url);
+            copyDiary[i].imagesArr[j].url = res.fileID;
+            copyDiary[i].imagesArr[j].url = 'old';
+            diaryImageIndex++;
+            this.setData({
+              uploadIcon: "loading",
+              uploadDuration: 99999,
+              uploadTitle: `上传图片中${diaryImageIndex}/${diaryImageNum}`,
+              uploadBol: true
+            })
+          }
+        }
+        let res = await this.uploadAll(copy,copyDiary)
+
+      }
+
+      
+
+    }
+  },
+  async uploadTitleImage(val) {
+    let pattern = /\.{1}[a-z]{1,}$/;
+    let cc = val.title_image.url.slice(0, pattern.exec(val.title_image.url).index);
+    cc = cc.slice(11);
+    let openid = wx.getStorageSync('openid');
+    let cloudPath = 'user/' + openid + '/diary/' + cc + val.title_image.url.match(/\.[^.]+?$/)[0];
+    let filePath = val.title_image.url
+    let res = await wx.cloud.uploadFile({
+      cloudPath,
+      filePath,
+    })
+    return res
+  },
+  async uploadDiaryImage(val) {
+    let pattern = /\.{1}[a-z]{1,}$/;
+    let cc = val.slice(0, pattern.exec(val).index);
+    cc = cc.slice(11);
+    let openid = wx.getStorageSync('openid');
+    let cloudPath = 'user/' + openid + '/diary/' + cc + val.match(/\.[^.]+?$/)[0];
+    let filePath = val
+    let res = await wx.cloud.uploadFile({
+      cloudPath,
+      filePath,
+    })
+    return res
+  },
+  async uploadAll(val1,val2) {
+    console.log(val1,val2);
+    this.setData({
+      uploadIcon: "loading",
+      uploadDuration: 99999,
+      uploadTitle: `上传内容中`,
+      uploadBol: true
+    })
+    val1.createdTime = await app.timeStampX(new Date().getTime());
+    val1.updatedTime = await app.timeStampX(new Date().getTime());
+    val1.diaryArr = val2;
+    val1.openid = wx.getStorageSync('openid');
+    val1.dayNum = val2.length;
+    const diarySchema = val1;
+
+    let res = await wx.cloud.callFunction({
+      name: 'createDiary',
+      data: {
+        diary: diarySchema
+      }
+    })
+    if (res.errMsg === "cloud.callFunction:ok") {
+      this.setData({
+        uploadIcon: "success",
+        uploadDuration: 2000,
+        uploadTitle: `上传成功`,
+        uploadBol: true
+      })
+      let timer = setTimeout(() => {
+        wx.navigateBack({
+          delta: 1,
+        })
+        clearTimeout(timer)
+      },2000)
+    }
+
   },
 
   /**

@@ -6,6 +6,7 @@
     "lc_header": "/components/lc_header/lc_header",
     "l-input": "/lin-ui/dist/input",
     "l-calendar": "/lin-ui/dist/calendar",
-    "l-toast": "/lin-ui/dist/toast"
+    "l-toast": "/lin-ui/dist/toast",
+    "l-icon": "/lin-ui/dist/icon"
   }
 }

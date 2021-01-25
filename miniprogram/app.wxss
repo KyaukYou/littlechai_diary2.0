@@ -329,6 +329,7 @@
 /* 公共样式 */
 .opacity_button {
   opacity: 0.72;
+  transition: all .2s ease;
 }
 
 .opacity_button_pos {

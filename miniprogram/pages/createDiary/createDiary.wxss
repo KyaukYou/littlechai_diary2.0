@@ -182,8 +182,8 @@
 }
 
 .create_child_date image {
-  width: 50rpx;
-  height: 50rpx;
+  width: 46rpx;
+  height: 46rpx;
   margin-right: 8rpx;
 }
 
@@ -248,7 +248,7 @@
 
 .create_child_addimg {
   width: 30%;
-  height: 200rpx;
+  height: 204rpx;
   background-color: rgb(245, 245, 245);
   border-radius: 10rpx;
   display: flex;
@@ -268,9 +268,21 @@
   background-color: rgb(245, 245, 245);
   border-radius: 10rpx;
   margin: 14rpx 1.66% 6rpx 1.66%;
+  overflow: hidden;
+  position: relative;
 }
 
 .create_child_img image {
   width: 100%;
   height: 100%;
+}
+
+.create_del_img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
 }
