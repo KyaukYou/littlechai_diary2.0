@@ -138,8 +138,8 @@ App({
     const userSchema = {
       openid: openid,
       userInfo: newUserInfo,
-      created_time: new Date().getTime(),
-      updated_time: new Date().getTime(),
+      created_time: await this.timeStampX(new Date().getTime()),
+      updated_time: await this.timeStampX(new Date().getTime()),
       diary: [],
       diary_num: 0,
       background_url: "https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/default.jpg?sign=a77b8fd58e9edc5b370e7837ea5e7876&t=1610260942",
@@ -183,7 +183,8 @@ App({
     let res = await wx.cloud.callFunction({
       name: 'ifUser',
       data: {
-        openid: openid
+        openid: openid,
+        time: await this.timeStampX(new Date().getTime())
       }
     })
     if (res.errMsg === "cloud.callFunction:ok") {

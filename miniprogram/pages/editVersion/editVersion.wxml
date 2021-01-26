@@ -8,7 +8,7 @@
 
 <l-toast
   show="{{toastBol1}}"
-  icon="loading"
+  icon="{{updateIcon}}"
   title="{{toastTitle1}}"
   duration="{{toastDuration1}}"
 />

@@ -90,6 +90,16 @@ Page({
      }); 
     
    }, 
+   async getDiary() {
+    let res = await wx.cloud.callFunction({
+      name: 'getDiary',
+      data: {
+        page: 1,
+        per_page: 5
+      }
+    })
+    console.log(res)
+   },
 
   /**
    * 生命周期函数--监听页面加载
@@ -104,9 +114,10 @@ Page({
       }); 
     } 
     }); 
-
     this.firstHeader();
     this.getGlobalData();
+
+    
   },
 
   /**
@@ -121,6 +132,7 @@ Page({
    */
   onShow: function () {
     this.onLoad();
+    this.getDiary();
   },
 
   /**

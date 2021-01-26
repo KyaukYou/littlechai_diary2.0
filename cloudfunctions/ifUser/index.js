@@ -13,6 +13,15 @@ exports.main = async (event, context) => {
   }).get()
 
   if(user.data.length > 0) {
+
+    db.collection('users').where({
+      openid: event.openid
+    }).update({
+      data: {
+        updated_time: event.time
+      }
+    })
+
     return {
       status: 'ok',
       data: user.data[0]

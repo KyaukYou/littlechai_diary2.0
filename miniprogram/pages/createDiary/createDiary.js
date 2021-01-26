@@ -549,16 +549,23 @@ Page({
     if (res.errMsg === "cloud.callFunction:ok") {
       this.setData({
         uploadIcon: "success",
-        uploadDuration: 2000,
+        uploadDuration: 1500,
         uploadTitle: `上传成功`,
         uploadBol: true
       })
+      let addRes = await wx.cloud.callFunction({
+        name: 'setUserDiaryNum',
+        data: {
+          openid: wx.getStorageSync('openid')
+        }
+      })
+      console.log(addRes);
       let timer = setTimeout(() => {
         wx.navigateBack({
           delta: 1,
         })
         clearTimeout(timer)
-      },2000)
+      },1500)
     }
 
   },

@@ -20,7 +20,8 @@ Page({
     page: 1,
     pageSize: 6,
     maxPage: 1,
-    allArr: []
+    allArr: [],
+    updateIcon: ""
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -141,7 +142,8 @@ Page({
     this.setData({
       toastBol1: true,
       toastTitle1: "更新中",
-      toastDuration1: 1000000
+      toastDuration1: 1000000,
+      updateIcon: 'loading'
     })
     let res = await wx.cloud.callFunction({
       name: "updateVersion",
@@ -156,14 +158,17 @@ Page({
       this.setData({
         toastBol1: true,
         toastTitle1: "更新成功",
-        toastDuration1: 1500
+        toastDuration1: 1500,
+        updateIcon: 'success'
       })
+      
     }
     else {
       this.setData({
         toastBol1: true,
         toastTitle1: "更新失败",
-        toastDuration1: 1500
+        toastDuration1: 1500,
+        updateIcon: 'error'
       })
     }
   },
