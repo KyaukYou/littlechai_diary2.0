@@ -436,10 +436,16 @@ Page({
     if(copy.title === "" || copy.title_image.type === 'default' || copy.location === "" || copy.beginDate === "" || copy.endDate === "") {
       this.setData({
         uploadIcon: "",
-        uploadDuration: 2500,
+        uploadDuration: 2000,
         uploadTitle: "请填写完整",
         uploadBol: true
       })
+      let maskTimer = setTimeout(() => {
+        this.setData({
+          uploadBol: false
+        })
+        clearTimeout(maskTimer)
+      },2000)
     }
     else {
       //上传封面图

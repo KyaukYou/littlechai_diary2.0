@@ -26,7 +26,10 @@ Page({
     ms_show: "",
     maxlength: 16,
     version_text: "新版本介绍",
-    version_num: ""
+    version_num: "",
+    toastBolX: false,
+    toastTitleX: "",
+    toastDurationX: 0
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -259,7 +262,12 @@ Page({
   //上传背景图-选择图片
   async chooseBackground() {
     if(!wx.getStorageSync('openid')) {
-      return false;
+        this.setData({
+          toastBolX: true,
+          toastTitleX: "请先登录",
+          toastDurationX: 2000
+        })
+        return false;
     }
     let that = this;
     let res = await wx.chooseImage({

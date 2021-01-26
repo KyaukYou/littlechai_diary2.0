@@ -51,6 +51,7 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .diary_left>image {

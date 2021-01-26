@@ -15,11 +15,25 @@ Page({
     },
     screenHeight: 0, 
     screenWidth: 0, 
+    toastBol: false,
+    toastTitle: "",
+    toastDuration: 0,
+    diaryArr: []
   },
   toCreate() {
-    wx.navigateTo({
-      url: '/pages/createDiary/createDiary',
-    })
+    if(wx.getStorageSync('openid')) {
+      wx.navigateTo({
+        url: '/pages/createDiary/createDiary',
+      })
+    }
+    else {
+      this.setData({
+        toastBol: true,
+        toastTitle: "请先登录",
+        toastDuration: 2000
+      })
+    }
+    
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -98,7 +112,15 @@ Page({
         per_page: 5
       }
     })
-    console.log(res)
+    console.log(res.result.data)
+    let arr = res.result.data;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    for(let j=0; j<arr.length; j++) {
+      copy.push(arr[j])
+    }
+    this.setData({
+      diaryArr: arr
+    })
    },
 
   /**

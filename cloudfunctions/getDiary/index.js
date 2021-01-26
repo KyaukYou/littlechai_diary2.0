@@ -15,10 +15,11 @@ exports.main = async (event, context) => {
   // 每页几项
   const perPage = parseInt((page-1) * event.per_page);
 
-  return await db.collection('diarys').where({
+  let res = await db.collection('diarys').where({
     show: true,
     ifDelete: false
   })
+  .orderBy('updatedTime','desc')
   .field({
     updatedTime: true,
     title: true,
@@ -28,10 +29,22 @@ exports.main = async (event, context) => {
     lock: true,
     like: true,
     dayNum: true,
-    collection: true
+    collection: true,
+    openid: true
   })
   .limit(event.per_page)
   .skip(perPage)
   .get()
+
+  for(let i=0; i<res.data.length; i++) {
+    let user = await db.collection('users').where({
+      openid: res.data[i].openid
+    }).field({
+      userInfo: true
+    }).get();
+    res.data[i].userInfo = user.data[0].userInfo
+  }
+
+  return res;
 
 }

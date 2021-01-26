@@ -14,6 +14,12 @@
   duration="{{toastDuration}}"
 />
 
+<l-toast
+  show="{{toastBolX}}"
+  title="{{toastTitleX}}"
+  duration="{{toastDurationX}}"
+/>
+
 <lc_header header_title='我的信息' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header> 
 
 

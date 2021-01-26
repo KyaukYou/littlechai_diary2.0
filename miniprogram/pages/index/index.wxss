@@ -38,3 +38,17 @@
   box-sizing: border-box;
   padding: 30rpx 4rpx 0 4rpx;
 }
+
+.diary_user {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70rpx;
+}
+
+.diary_user image {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
