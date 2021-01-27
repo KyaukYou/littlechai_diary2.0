@@ -11,7 +11,7 @@ Page({
     globalData: {},
     pos: {
       right: "8%",
-      bottom: "7%"
+      bottom: "5.4%"
     },
     screenHeight: 0, 
     screenWidth: 0, 
@@ -164,7 +164,7 @@ Page({
     })
     let arr = res.result.data;
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
-    console.log(copy,arr,'---------------------------------')
+
     for(let j=0; j<arr.length; j++) {
       copy.push(arr[j])
     }
@@ -174,6 +174,60 @@ Page({
 
 
    },
+
+  //  锁定解锁
+  async lockDiary(e) {
+    let that = this;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    let index = e.currentTarget.dataset.index;
+    let openid = e.currentTarget.dataset.openid;
+    if(openid === wx.getStorageSync('openid')) {
+      wx.showModal({
+        title: copy[index].lock === true ? '是否解锁' : '是否锁定',
+        content: copy[index].lock === true ? '解锁后他人将能查看你的日记' : '锁定后他人将不能查看你的日记',
+        success(val) {
+          console.log(val)
+          if(val.confirm === true) {
+            wx.cloud.callFunction({
+              name: 'lockDiary',
+              data: {
+                id: copy[index]._id,
+                lock: !copy[index].lock
+              },
+              success(res) {
+                if (res.result.stats.updated === 1) {
+                  copy[index].lock = !copy[index].lock;
+                  that.setData({
+                    diaryArr: copy
+                  })
+                }
+              }
+            })
+          }
+        }   
+      })
+    }
+    else {
+      console.log('不是本人')
+    }
+  },
+  toDetail(e) {
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    let index = e.currentTarget.dataset.index;
+    let openid = e.currentTarget.dataset.openid;
+    if(copy[index].lock == true) {
+      if(copy[index].openid != wx.getStorageSync('openid')) {
+        this.setData({
+          toastBol: true,
+          toastTitle: "日记被锁定",
+          toastDuration: 2000
+        })
+      }
+      else {
+        // 跳转
+      }
+    }
+  },
 
   /**
    * 生命周期函数--监听页面加载

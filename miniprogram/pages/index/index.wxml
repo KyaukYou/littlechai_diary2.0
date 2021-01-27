@@ -37,11 +37,15 @@
       <block wx:for="{{diaryArr}}" wx:for-index="diary_index" wx:for-item="diary_item" wx:key='diary_index'>
 
         <!-- 左图 -->
-        <view class="diary_main" wx:if="{{diary_index % 2 != 0}}">
+        <view class="diary_main diary_main_left" wx:if="{{diary_index % 2 == 0}}">
           <view class="diary_left">
-            <image mode='aspectFill' src='{{diary_item.title_image.url}}'></image>
+            <image mode='aspectFill' src='{{diary_item.title_image.url}}' data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="toDetail"></image>
             <view class="diary_user">
               <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
+            </view>
+            <view class="diary_lock" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="lockDiary">
+              <image wx:if="{{diary_item.lock === true}}" src='/images/lock.svg'></image>
+              <image wx:if="{{diary_item.lock === false}}" src='/images/unlock.svg'></image>
             </view>
           </view>
           <view class="diary_right">
@@ -54,7 +58,7 @@
         </view>
 
         <!-- 右图 -->
-        <view class="diary_main" wx:if="{{diary_index % 2 == 0}}">
+        <view class="diary_main diary_main_right" wx:if="{{diary_index % 2 != 0}}">
           <view class="diary_right">
             <view class="diary_title">{{diary_item.title}}</view>
             <view class="diary_time">{{diary_item.updatedTime}}</view>
@@ -63,9 +67,13 @@
             <view class="diary_bottom"></view>
           </view>
           <view class="diary_left">
-            <image mode='aspectFill' src='{{diary_item.title_image.url}}'></image>
+            <image mode='aspectFill' src='{{diary_item.title_image.url}}'  data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="toDetail"></image>
             <view class="diary_user">
               <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
+            </view>
+            <view class="diary_lock" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="lockDiary">
+              <image wx:if="{{diary_item.lock === true}}" src='/images/lock.svg'></image>
+              <image wx:if="{{diary_item.lock === false}}" src='/images/unlock.svg'></image>
             </view>
           </view>
         </view>

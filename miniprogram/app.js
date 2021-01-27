@@ -26,6 +26,12 @@ App({
       }
     })
 
+    if(wx.getStorageSync('openid')) {
+      if(!wx.getStorageSync('user')) {
+        wx.removeStorageSync('openid')
+      }
+    }
+
     // 判断有没有openid,没有就是没有登录
     if(!wx.getStorageSync('openid') && !wx.getStorageSync('user')) {
       if(wx.getStorageSync('color')) {
