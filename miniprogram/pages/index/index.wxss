@@ -45,10 +45,24 @@
   left: 0;
   right: 0;
   height: 70rpx;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 26rpx;
 }
 
 .diary_user image {
-  width: 60rpx;
-  height: 60rpx;
+  width: 50rpx;
+  height: 50rpx;
   border-radius: 50%;
+  margin: 0 6rpx 0 10rpx;
+}
+
+.diary_user view {
+  font-size: 24rpx;
+  margin: 0 6rpx;
+  position: relative;
+  top: 2rpx;
 }

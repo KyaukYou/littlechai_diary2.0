@@ -456,6 +456,8 @@ Page({
         uploadBol: true
       })
       let titleImageUrl = await this.uploadTitleImage(copy);
+      copy.title_image.type = 'old';
+      copy.title_image.url = titleImageUrl.fileID;
       // titleImageUrl.fileID
       console.log(titleImageUrl)
 

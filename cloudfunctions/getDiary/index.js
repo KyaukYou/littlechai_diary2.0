@@ -10,10 +10,10 @@ const _ = db.command
 exports.main = async (event, context) => {
 
   // 第几页
-  let page = parseInt(event.page);
+  const page = Math.max(event.page * 1,1) - 1;
 
   // 每页几项
-  const perPage = parseInt((page-1) * event.per_page);
+  const perPage = Math.max(event.per_page * 1,1);
 
   let res = await db.collection('diarys').where({
     show: true,
@@ -32,8 +32,8 @@ exports.main = async (event, context) => {
     collection: true,
     openid: true
   })
-  .limit(event.per_page)
-  .skip(perPage)
+  .limit(perPage)
+  .skip(page * perPage)
   .get()
 
   for(let i=0; i<res.data.length; i++) {

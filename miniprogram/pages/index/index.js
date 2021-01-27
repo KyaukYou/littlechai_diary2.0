@@ -18,7 +18,9 @@ Page({
     toastBol: false,
     toastTitle: "",
     toastDuration: 0,
-    diaryArr: []
+    diaryArr: [],
+    page: 1,
+    per_page: 6
   },
   toCreate() {
     if(wx.getStorageSync('openid')) {
@@ -58,6 +60,11 @@ Page({
   },
   //scroll-view 自定义下拉刷新
   async refresh() {
+    this.setData({
+      page: 1,
+      per_page: 6,
+    })
+    await this.getDiaryX();
     // console.log('开始刷新')
     if(!wx.getStorageSync('openid')) {
       this.setData({
@@ -108,8 +115,8 @@ Page({
     let res = await wx.cloud.callFunction({
       name: 'getDiary',
       data: {
-        page: 1,
-        per_page: 5
+        page: this.data.page,
+        per_page: this.data.per_page
       }
     })
     console.log(res.result.data)
@@ -119,8 +126,53 @@ Page({
       copy.push(arr[j])
     }
     this.setData({
-      diaryArr: arr
+      diaryArr: copy
     })
+   },
+
+   async getDiaryX() {
+    let res = await wx.cloud.callFunction({
+      name: 'getDiary',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page
+      }
+    })
+    console.log(res.result.data)
+    let arr = res.result.data;
+    let copy = [];
+    for(let j=0; j<arr.length; j++) {
+      copy.push(arr[j])
+    }
+    this.setData({
+      diaryArr: copy
+    })
+   },
+  //  滚动到底部
+   async scrollToBottom() {
+    let page = this.data.page;
+    page++;
+    this.setData({
+      page: page
+    })
+    let res = await wx.cloud.callFunction({
+      name: 'getDiary',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page
+      }
+    })
+    let arr = res.result.data;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    console.log(copy,arr,'---------------------------------')
+    for(let j=0; j<arr.length; j++) {
+      copy.push(arr[j])
+    }
+    this.setData({
+      diaryArr: copy
+    })
+
+
    },
 
   /**

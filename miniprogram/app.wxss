@@ -34,18 +34,18 @@
 
 .diary_main {
   width: 95%;
-  height: 320rpx;
+  height: 300rpx;
   background-color: white;
-  box-shadow: 2px 2px 10px #c7ccd7;
+  box-shadow: 2px 2px 8px #c7ccd7;
   display: flex;
   flex-flow: row nowrap;
-  margin: 0 auto 40rpx auto;
+  margin: 0 auto 30rpx auto;
   border-radius: 12rpx;
   overflow: hidden;
 }
 
 .diary_left {
-  width: 55%;
+  width: 58%;
   height: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -61,7 +61,7 @@
 }
 
 .diary_right {
-  width: 45%;
+  width: 43%;
   height: 100%;
   display: flex;
   flex-flow: column wrap;
