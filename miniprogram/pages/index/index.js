@@ -23,7 +23,13 @@ Page({
     per_page: 6,
     openid: "",
     like: [],
-    collection: []
+    collection: [],
+    showBtn: false,
+    noDiary: false,
+    loadingBol: false,
+    loadingIcon: '',
+    loadingTitle: '',
+    loadingDuration: 99999
   },
   toCreate() {
     if(wx.getStorageSync('openid')) {
@@ -55,12 +61,24 @@ Page({
       })
     }
   },
+  //创建日记权限
+  async getAdminX() {
+      let res = await wx.cloud.callFunction({
+        name: 'getAdminX',
+        data: {
+         
+        }
+      })
+      console.log(res)
+      this.setData({
+        showBtn: res.result.data[0].controlDiary === true ? true: false
+      })
+  },
   // 初始化自定义导航栏
   async firstHeader() {
     this.setData({
       globalData: app.globalData
     })
-    await this.getUserArr();
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -127,17 +145,22 @@ Page({
      }); 
     
    }, 
-   async getDiary() {
+   async getDiary(type) {
     let res = await wx.cloud.callFunction({
       name: 'getDiary',
       data: {
         page: this.data.page,
-        per_page: this.data.per_page
+        per_page: this.data.per_page,
+        noDiary: false
       }
     })
-    console.log(res.result.data,this.data.like,'----------------')
+    
     let arr = res.result.data;
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    if(type === 'new') {
+      copy = [];
+    }
+    console.log(this.data.like,'11111111111111111111')
     for(let j=0; j<arr.length; j++) {
       if(this.data.like.includes(arr[j]._id)) {
         arr[j].inLike = true;
@@ -154,7 +177,11 @@ Page({
       copy.push(arr[j])
     }
     this.setData({
-      diaryArr: copy
+      diaryArr: copy,
+      loadingBol: false,
+      loadingIcon: '',
+      loadingTitle: '',
+      loadingDuration: 0
     })
    },
 
@@ -163,7 +190,8 @@ Page({
       name: 'getDiary',
       data: {
         page: this.data.page,
-        per_page: this.data.per_page
+        per_page: this.data.per_page,
+        noDiary: false
       }
     })
     console.log(res.result.data)
@@ -223,6 +251,11 @@ Page({
     this.setData({
       diaryArr: copy
     })
+    if(arr.length < 6) {
+      this.setData({
+        noDiary: true
+      })
+    }
 
 
    },
@@ -295,24 +328,38 @@ Page({
         //还未点赞
         let copyLike = JSON.parse(JSON.stringify(this.data.like));
         copyLike.push(copy[index]._id)
-        let res = await wx.cloud.callFunction({
-          name: 'setUserLikeNum',
+
+        //日记like+1
+        let res1 = await wx.cloud.callFunction({
+          name: 'setDiaryLike',
           data: {
-            openid: wx.getStorageSync('openid'),
-            num: 1,
-            like: copyLike
+            id: copy[index]._id,
+            num: 1
           }
-        })
-        if(res.result.stats.updated === 1) {
+        })  
+
+        if(res1.result.stats.updated === 1) {
           copy[index].inLike = true;
           copy[index].like++;
           this.setData({
             diaryArr: copy,
             like: copyLike
           })  
+
+          let res2 = await wx.cloud.callFunction({
+            name: 'setUserLikeNum',
+            data: {
+              openid: wx.getStorageSync('openid'),
+              num: 1,
+              like: copyLike
+            }
+          })
+
         }
+
+      
       }
-      if(copy[index].inLike === true) {
+      else if(copy[index].inLike === true) {
         //已经点赞
         let spliceIndex = null;
         let copyLike = JSON.parse(JSON.stringify(this.data.like));
@@ -324,22 +371,34 @@ Page({
         if(spliceIndex != null) {
           copyLike.splice(spliceIndex,1)
         }
-        let res = await wx.cloud.callFunction({
-          name: 'setUserLikeNum',
+
+        //日记like-1
+        let res1 = await wx.cloud.callFunction({
+          name: 'setDiaryLike',
           data: {
-            openid: wx.getStorageSync('openid'),
-            num: -1,
-            like: copyLike
+            id: copy[index]._id,
+            num: -1
           }
-        })
-        if(res.result.stats.updated === 1) {
+        })  
+
+        if(res1.result.stats.updated === 1) {
           copy[index].inLike = false;
           copy[index].like--;
           this.setData({
             diaryArr: copy,
             like: copyLike
           })  
+
+          let res2 = await wx.cloud.callFunction({
+            name: 'setUserLikeNum',
+            data: {
+              openid: wx.getStorageSync('openid'),
+              num: -1,
+              like: copyLike
+            }
+          })
         }
+        
       }
 
     }
@@ -352,9 +411,90 @@ Page({
     }
   },
 
-  setCollection() {
+  async setCollection(e) {
     if(wx.getStorageSync('openid')) {
-     
+      let that = this;
+      let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+      let index = e.currentTarget.dataset.index;
+      let openid = e.currentTarget.dataset.openid;
+
+      //判断是否已经点赞
+      if(copy[index].inCollection === false) {
+        //还未点赞
+        let copyCollection = JSON.parse(JSON.stringify(this.data.collection));
+        copyCollection.push(copy[index]._id)
+
+        //日记like+1
+        let res1 = await wx.cloud.callFunction({
+          name: 'setDiaryCollection',
+          data: {
+            id: copy[index]._id,
+            num: 1
+          }
+        })  
+
+        if(res1.result.stats.updated === 1) {
+          copy[index].inCollection = true;
+          copy[index].collection++;
+          this.setData({
+            diaryArr: copy,
+            collection: copyCollection
+          })  
+
+          let res2 = await wx.cloud.callFunction({
+            name: 'setUserCollectionNum',
+            data: {
+              openid: wx.getStorageSync('openid'),
+              num: 1,
+              collection: copyCollection
+            }
+          })
+
+        }
+
+      
+      }
+      else if(copy[index].inCollection === true) {
+        //已经点赞
+        let spliceIndex = null;
+        let copyCollection = JSON.parse(JSON.stringify(this.data.collection));
+        for(let i=0; i<this.data.collection.length; i++) {
+          if(this.data.collection[i] === copy[index]._id) {
+            spliceIndex = i;
+          }
+        }
+        if(spliceIndex != null) {
+          copyCollection.splice(spliceIndex,1)
+        }
+
+        //日记like-1
+        let res1 = await wx.cloud.callFunction({
+          name: 'setDiaryCollection',
+          data: {
+            id: copy[index]._id,
+            num: -1
+          }
+        })  
+
+        if(res1.result.stats.updated === 1) {
+          copy[index].inCollection = false;
+          copy[index].collection--;
+          this.setData({
+            diaryArr: copy,
+            collection: copyCollection
+          })  
+
+          let res2 = await wx.cloud.callFunction({
+            name: 'setUserCollectionNum',
+            data: {
+              openid: wx.getStorageSync('openid'),
+              num: -1,
+              collection: copyCollection
+            }
+          })
+        }
+        
+      }
     }
     else {
       this.setData({
@@ -369,7 +509,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.firstHeader();
+    var that = this; 
+    wx.getSystemInfo({ 
+    success: function (res) { 
+      that.setData({ 
+      screenHeight: res.windowHeight, 
+      screenWidth: res.windowWidth, 
+      loadingBol: true,
+      loadingIcon: 'loading',
+      loadingTitle: '加载中',
+      loadingDuration: 99999
+      }); 
+    } 
+    }); 
+  },
+
+  async init() {
+    this.setData({
+      page: 1
+    })
+    await this.getAdminX();
+    await this.getUserArr();
+    await this.getGlobalData();
+    await this.getDiary('new');
   },
 
   /**
@@ -382,20 +545,8 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    // this.onLoad();
-    var that = this; 
-    wx.getSystemInfo({ 
-    success: function (res) { 
-      that.setData({ 
-      screenHeight: res.windowHeight, 
-      screenWidth: res.windowWidth, 
-      }); 
-    } 
-    }); 
-    this.firstHeader();
-    this.getGlobalData();
-    this.getDiary();
+  onShow: function () {   
+    this.init();
   },
 
   /**
