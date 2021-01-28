@@ -66,6 +66,7 @@
   display: flex;
   flex-flow: column wrap;
   align-items: center;
+  position: relative;
 }
 
 .diary_title {
@@ -113,6 +114,117 @@
   font-weight: 600;
 }
 
+.diary_main_left .diary_user {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 76rpx;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 26rpx;
+}
+
+.diary_main_right .diary_user {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 6rpx;
+  height: 76rpx;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 26rpx;
+}
+
+.diary_user image {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  margin: 0 6rpx 2rpx 10rpx;
+}
+
+.diary_user view {
+  font-size: 24rpx;
+  margin: 0 6rpx;
+  position: relative;
+  top: 2rpx;
+}
+
+.diary_main_left .diary_lock {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 54rpx;
+  height: 54rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diary_main_right .diary_lock {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 54rpx;
+  height: 54rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diary_lock image {
+  width: 82%;
+  height: 82%;
+}
+
+.diary_bottom {
+  width: 100%;
+  height: 58rpx;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 8rpx;
+}
+
+.diary_like {
+  width: 102rpx;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.diary_bottom_view {
+  width: 40px;
+  height: 100%;
+  font-size: 26rpx;
+  text-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 6rpx;
+}
+
+.diary_collection {
+  width: 102rpx;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
 
 
 /* my */

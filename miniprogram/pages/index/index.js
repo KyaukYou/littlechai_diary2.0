@@ -20,7 +20,10 @@ Page({
     toastDuration: 0,
     diaryArr: [],
     page: 1,
-    per_page: 6
+    per_page: 6,
+    openid: "",
+    like: [],
+    collection: []
   },
   toCreate() {
     if(wx.getStorageSync('openid')) {
@@ -37,11 +40,27 @@ Page({
     }
     
   },
+  async getUserArr() {
+    if(wx.getStorageSync('openid') && wx.getStorageSync('user')) {
+      let res = await wx.cloud.callFunction({
+        name: 'getUserArr',
+        data: {
+          openid: wx.getStorageSync('openid')
+        }
+      })
+      console.log(res)
+      this.setData({
+        like: res.result.data[0].like,
+        collection: res.result.data[0].collection
+      })
+    }
+  },
   // 初始化自定义导航栏
   async firstHeader() {
     this.setData({
       globalData: app.globalData
     })
+    await this.getUserArr();
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -60,6 +79,7 @@ Page({
   },
   //scroll-view 自定义下拉刷新
   async refresh() {
+    await this.getUserArr();
     this.setData({
       page: 1,
       per_page: 6,
@@ -77,10 +97,6 @@ Page({
     })
     await app.initData();
     this.getGlobalData();
-  },
-  // 滚动到底部
-  scrollToBottom(e) {
-    console.log(e)
   },
 
   ballMoveEvent: function (e) { 
@@ -119,10 +135,22 @@ Page({
         per_page: this.data.per_page
       }
     })
-    console.log(res.result.data)
+    console.log(res.result.data,this.data.like,'----------------')
     let arr = res.result.data;
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
     for(let j=0; j<arr.length; j++) {
+      if(this.data.like.includes(arr[j]._id)) {
+        arr[j].inLike = true;
+      }
+      else {
+        arr[j].inLike = false;
+      }
+      if(this.data.collection.includes(arr[j]._id)) {
+        arr[j].inCollection = true;
+      }
+      else {
+        arr[j].inCollection = false;
+      }
       copy.push(arr[j])
     }
     this.setData({
@@ -142,6 +170,18 @@ Page({
     let arr = res.result.data;
     let copy = [];
     for(let j=0; j<arr.length; j++) {
+      if(this.data.like.includes(arr[j]._id)) {
+        arr[j].inLike = true;
+      }
+      else {
+        arr[j].inLike = false;
+      }
+      if(this.data.collection.includes(arr[j]._id)) {
+        arr[j].inCollection = true;
+      }
+      else {
+        arr[j].inCollection = false;
+      }
       copy.push(arr[j])
     }
     this.setData({
@@ -166,6 +206,18 @@ Page({
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
 
     for(let j=0; j<arr.length; j++) {
+      if(this.data.like.includes(arr[j]._id)) {
+        arr[j].inLike = true;
+      }
+      else {
+        arr[j].inLike = false;
+      }
+      if(this.data.collection.includes(arr[j]._id)) {
+        arr[j].inCollection = true;
+      }
+      else {
+        arr[j].inCollection = false;
+      }
       copy.push(arr[j])
     }
     this.setData({
@@ -229,23 +281,95 @@ Page({
     }
   },
 
+  //点赞
+  async setLike(e) {
+
+    if(wx.getStorageSync('openid')) {
+      let that = this;
+      let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+      let index = e.currentTarget.dataset.index;
+      let openid = e.currentTarget.dataset.openid;
+
+      //判断是否已经点赞
+      if(copy[index].inLike === false) {
+        //还未点赞
+        let copyLike = JSON.parse(JSON.stringify(this.data.like));
+        copyLike.push(copy[index]._id)
+        let res = await wx.cloud.callFunction({
+          name: 'setUserLikeNum',
+          data: {
+            openid: wx.getStorageSync('openid'),
+            num: 1,
+            like: copyLike
+          }
+        })
+        if(res.result.stats.updated === 1) {
+          copy[index].inLike = true;
+          copy[index].like++;
+          this.setData({
+            diaryArr: copy,
+            like: copyLike
+          })  
+        }
+      }
+      if(copy[index].inLike === true) {
+        //已经点赞
+        let spliceIndex = null;
+        let copyLike = JSON.parse(JSON.stringify(this.data.like));
+        for(let i=0; i<this.data.like.length; i++) {
+          if(this.data.like[i] === copy[index]._id) {
+            spliceIndex = i;
+          }
+        }
+        if(spliceIndex != null) {
+          copyLike.splice(spliceIndex,1)
+        }
+        let res = await wx.cloud.callFunction({
+          name: 'setUserLikeNum',
+          data: {
+            openid: wx.getStorageSync('openid'),
+            num: -1,
+            like: copyLike
+          }
+        })
+        if(res.result.stats.updated === 1) {
+          copy[index].inLike = false;
+          copy[index].like--;
+          this.setData({
+            diaryArr: copy,
+            like: copyLike
+          })  
+        }
+      }
+
+    }
+    else {
+      this.setData({
+        toastBol: true,
+        toastTitle: "请先登录",
+        toastDuration: 2000
+      })
+    }
+  },
+
+  setCollection() {
+    if(wx.getStorageSync('openid')) {
+     
+    }
+    else {
+      this.setData({
+        toastBol: true,
+        toastTitle: "请先登录",
+        toastDuration: 2000
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this; 
-    wx.getSystemInfo({ 
-    success: function (res) { 
-      that.setData({ 
-      screenHeight: res.windowHeight, 
-      screenWidth: res.windowWidth, 
-      }); 
-    } 
-    }); 
-    this.firstHeader();
-    this.getGlobalData();
-
-    
+  
   },
 
   /**
@@ -259,7 +383,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.onLoad();
+    // this.onLoad();
+    var that = this; 
+    wx.getSystemInfo({ 
+    success: function (res) { 
+      that.setData({ 
+      screenHeight: res.windowHeight, 
+      screenWidth: res.windowWidth, 
+      }); 
+    } 
+    }); 
+    this.firstHeader();
+    this.getGlobalData();
     this.getDiary();
   },
 

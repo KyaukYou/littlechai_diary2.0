@@ -161,7 +161,8 @@ App({
       following_num: 0,
       fans: 0,
       roles: ["user"],
-      lock: false
+      lock: false,
+      detail: {}
     }
     let res = await wx.cloud.callFunction({
       name: 'createUser',

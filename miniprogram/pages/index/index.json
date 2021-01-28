@@ -9,6 +9,7 @@
     "l-segment": "/lin-ui/dist/segment",
     "l-segment-item": "/lin-ui/dist/segment-item",
     "l-list": "/lin-ui/dist/list",
-    "l-toast": "/lin-ui/dist/toast"
+    "l-toast": "/lin-ui/dist/toast",
+    "van-icon": "/components/icon/index"
   }
 }
