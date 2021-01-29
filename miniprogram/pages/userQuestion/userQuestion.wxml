@@ -1,0 +1,38 @@
+<!--pages/userQuestion/userQuestion.wxml-->
+<lc_header back="{{back}}" header_title='用户问题列表' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+
+<l-toast
+  show="{{loadingBol}}"
+  title="{{loadingTitle}}"
+  icon="{{loadingIcon}}"
+  duration="{{loadingDuration}}"
+/>
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+ 
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+     
+      <view class="myList-child" wx:for='{{questionArr}}' wx:key='index' data-id='{{item._id}}' bindtap="toDetail">
+        <view class="myList-left">
+          <view class="myList-left-yes" wx:if='{{item.answer == true }}'>已回复</view>
+          <view class="myList-left-no" wx:if='{{item.answer == false }}'>未回复</view>
+        </view>
+        <view class="myList-top-top">
+          <image src='{{item.userInfo.avatarUrl}}'></image>
+          <text>{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="myList-top">
+          <text>{{item.question}}</text>
+        </view>
+        <view class="myList-bottom">
+          提交时间：{{item.updatedTime}}
+        </view>
+      </view>
+
+
+    </view>
+  </scroll-view>
+</view>
+

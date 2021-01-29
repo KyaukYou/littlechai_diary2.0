@@ -29,7 +29,8 @@ Page({
     version_num: "",
     toastBolX: false,
     toastTitleX: "",
-    toastDurationX: 0
+    toastDurationX: 0,
+    answer_text: ""
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -319,6 +320,50 @@ Page({
       url: '/pages/editVersion/editVersion',
     })
   },
+  //跳转到问题反馈列表
+  async toQuestion() {
+    //把users集合的answer true改为false
+    if(wx.getStorageSync('openid')) {
+
+      let res = await wx.cloud.callFunction({
+        name: 'setUserAnswer',
+        data: {
+          openid: wx.getStorageSync('openid')
+        }
+      })
+
+      wx.navigateTo({
+        url: '/pages/myQuestion/myQuestion',
+      })
+    }
+    else {
+      this.setData({
+        toastBolX: true,
+        toastTitleX: "请先登录",
+        toastDurationX: 2000
+      })
+    }
+  },
+
+  //管理员权限：跳转到用户问题列表
+  toUserQuestion() {
+    wx.navigateTo({
+      url: '/pages/userQuestion/userQuestion',
+    })
+  },
+  //管理员权限：跳转到用户列表
+  toUserList() {
+    wx.navigateTo({
+      url: '/pages/userList/userList',
+    })
+  },
+  //管理员权限：跳转到日记列表
+  toDiaryList() {
+    wx.navigateTo({
+      url: '/pages/diaryList/diaryList',
+    })
+  },
+
   //获取日志版本
   async getVersion_one() {
     let version = await wx.cloud.callFunction({
@@ -348,6 +393,27 @@ Page({
     console.log(version.result.data[0].version)
   },
 
+  //获取提交回复
+  async getAnswerBol() {
+    let version = await wx.cloud.callFunction({
+      name: 'getAnswerBol',
+      data: {
+        openid: wx.getStorageSync('openid')
+      }
+    });
+    let res = version.result.data[0].answer
+    if(res === true) {
+      this.setData({
+        answer_text: "新消息回复"
+      })
+    }
+    else {
+      this.setData({
+        answer_text: ""
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -372,7 +438,8 @@ Page({
     this.firstHeader();
     await app.initData();
     this.getGlobalData();
-    this.getVersion_one();
+    await this.getVersion_one();
+    await this.getAnswerBol();
   },
 
   /**

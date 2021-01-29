@@ -1,0 +1,25 @@
+<!--pages/uploadQuestion/uploadQuestion.wxml-->
+<lc_header back="{{back}}" header_title='添加问题' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+
+<l-toast
+  show="{{loadingBol}}"
+  title="{{loadingTitle}}"
+  icon="{{loadingIcon}}"
+  duration="{{loadingDuration}}"
+/>
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+ 
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+     
+    <textarea placeholder='请填写你要反馈的问题' bindinput='changeValue' value='{{textarea}}' maxlength='500'>
+      <view>{{textarea.length}}/500</view>
+    </textarea>
+
+
+    </view>
+  </scroll-view>
+  <view style="background-color: {{globalData.color}}" hover-class="opacity_button" class="add_question_btn" bindtap="uploadQuestion">提交</view>
+</view>

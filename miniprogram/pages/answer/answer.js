@@ -1,31 +1,18 @@
-// pages/index.js
-const app = getApp()
+// pages/answer/answer.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    globalData: {},
-    back: true
-  },
-  async getGlobalData() {
-    let timer = setInterval(() => {
-      if(app.globalData.initBol === true) {
-        this.setData({
-          globalData: app.globalData,
-          refreshBol: false
-        })
-        clearInterval(timer);
-      }
-    },100)
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getGlobalData();
+
   },
 
   /**
@@ -39,7 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**

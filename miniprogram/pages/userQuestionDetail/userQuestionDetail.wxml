@@ -1,0 +1,34 @@
+<!--pages/userQuestionDetail/userQuestionDetail.wxml-->
+<lc_header back="{{back}}" header_title='用户问题回复' header_color="{{globalData.color}}" blur="{{globalData.blur}}">
+</lc_header>
+
+<l-toast show="{{loadingBol}}" title="{{loadingTitle}}" icon="{{loadingIcon}}" duration="{{loadingDuration}}" />
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+
+      <view class="myList-list">
+        <view class="myList-child">
+          <view class="myList-left">
+            <view class="myList-left-yes" wx:if='{{questionDetail.answer === true }}'>已回复</view>
+            <view class="myList-left-no" wx:if='{{questionDetail.answer === false }}'>未回复</view>
+          </view>
+          <view class="myList-top">{{questionDetail.updatedTime}}</view>
+        </view>
+        <text decode class="myList-wrap">{{questionDetail.question}}</text>
+
+        <view class="myList-child-text" style="border-color: {{globalData.color}}">
+          <textarea placeholder="请输入回复内容" bindinput='changeText' value="{{questionDetail.answerInfo.answer}}"></textarea>
+        </view>
+
+      </view>
+
+
+    </view>
+
+  </scroll-view>
+  <view style="background-color: {{globalData.color}}" hover-class="opacity_button" class="add_question_btn" bindtap="uploadUserQuestion">提交回复</view>
+</view>

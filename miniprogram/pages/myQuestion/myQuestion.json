@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "lc_header": "/components/lc_header/lc_header",
+    "l-toast": "/lin-ui/dist/toast"
+  }
+}

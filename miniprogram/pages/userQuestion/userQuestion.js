@@ -1,4 +1,4 @@
-// pages/index.js
+// pages/userQuestion/userQuestion.js
 const app = getApp()
 Page({
 
@@ -7,7 +7,24 @@ Page({
    */
   data: {
     globalData: {},
-    back: true
+    back: true,
+    loadingBol: false,
+    loadingIcon: '',
+    loadingTitle: '',
+    loadingDuration: 99999,
+    questionArr: [
+      
+    ],
+    refreshBol: false,
+    page: 1,
+    per_page: 12
+
+  },
+  refresh() {
+    this.setData({
+      refreshBol: true
+    })
+    this.getQuestion();
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -19,6 +36,33 @@ Page({
         clearInterval(timer);
       }
     },100)
+  },
+  //查看问题详情
+  toDetail(e) {
+    wx.navigateTo({
+      url: '/pages/userQuestionDetail/userQuestionDetail?id='+e.currentTarget.dataset.id,
+    })
+  },
+  //获取问题数据
+  async getQuestion() {
+    let arr = []
+    let res = await wx.cloud.callFunction({
+      name: 'getUserQuestion',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page
+      }
+    })
+
+    arr = res.result.data;
+    this.setData({
+      questionArr: arr,
+      loadingBol: false,
+      loadingIcon: 'success',
+      loadingTitle: '加载成功',
+      loadingDuration: 0,
+      refreshBol: false
+    })
   },
 
   /**
@@ -39,7 +83,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    this.setData({
+      loadingBol: true,
+      loadingIcon: 'loading',
+      loadingTitle: '加载中',
+      loadingDuration: 99999
+    })
+    this.getQuestion()
   },
 
   /**

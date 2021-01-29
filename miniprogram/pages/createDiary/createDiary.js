@@ -557,7 +557,7 @@ Page({
     if (res.errMsg === "cloud.callFunction:ok") {
       this.setData({
         uploadIcon: "success",
-        uploadDuration: 1200,
+        uploadDuration: 800,
         uploadTitle: `上传成功`,
         uploadBol: true
       })
@@ -573,7 +573,7 @@ Page({
           delta: 1,
         })
         clearTimeout(timer)
-      },1200)
+      },800)
     }
 
   },

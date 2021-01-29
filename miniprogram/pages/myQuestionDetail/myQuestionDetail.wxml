@@ -1,0 +1,40 @@
+<!--pages/myQuestionDetail/myQuestionDetail.wxml-->
+<lc_header back="{{back}}" header_title='问题详情' header_color="{{globalData.color}}" blur="{{globalData.blur}}">
+</lc_header>
+
+<l-toast show="{{loadingBol}}" title="{{loadingTitle}}" icon="{{loadingIcon}}" duration="{{loadingDuration}}" />
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+
+      <view class="myList-list">
+        <view class="myList-child">
+          <view class="myList-left">
+            <view class="myList-left-yes" wx:if='{{questionDetail.answer === true }}'>已回复</view>
+            <view class="myList-left-no" wx:if='{{questionDetail.answer === false }}'>未回复</view>
+          </view>
+          <view class="myList-top">{{questionDetail.updatedTime}}</view>
+        </view>
+        <text decode class="myList-wrap">{{questionDetail.question}}</text>
+
+        <view class="myList-child" wx:if='{{questionDetail.answer === true}}'>
+          <view class="myList-left">
+            <view class="myList-left-yes">回复详情</view>
+          </view>
+          <view class="myList-top">{{questionDetail.answerInfo.updatedTime}}</view>
+        </view>
+        <view class="myList-wrap myList-wrap-nomargin" wx:if='{{questionDetail.answer === true}}'>
+          <image src='{{questionDetail.answerInfo.userInfo.avatarUrl}}'></image>
+          {{questionDetail.answerInfo.userInfo.nickName}}
+        </view>
+        <text wx:if='{{questionDetail.answer === true}}' decode class="myList-wrap">{{questionDetail.answerInfo.answer}}</text>
+
+      </view>
+
+
+    </view>
+  </scroll-view>
+</view>

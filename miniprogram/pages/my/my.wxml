@@ -111,7 +111,7 @@
         <l-list title="消息通知" image="/images/notice.svg" />
         <l-list bindtap="toPick" title="全局配色" image="/images/color.svg" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
         <l-list bindtap="toVersion" title="更新日志" image="/images/ver.svg" tag-content="{{version_text}}" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
-        <l-list title="问题反馈" image="/images/bug.svg" tag-content="新回复" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
+        <l-list bindtap="toQuestion" title="问题反馈" image="/images/bug.svg" tag-content="{{answer_text}}" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
 
         <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-日记开关" image="/images/create.svg">
           <view slot="right-section">
@@ -119,7 +119,9 @@
           </view>
         </l-list>  
 
-        <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-用户管理" image="/images/user.svg"/>
+        <l-list bindtap="toUserList" wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-用户管理" image="/images/user.svg"/>
+        <l-list bindtap="toDiaryList" wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-日记列表" image="/images/diaryList.svg"/>
+        <l-list bindtap="toUserQuestion" wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-问题列表" image="/images/userQuestion.svg"/>
         <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-日志管理" image="/images/editVersion.svg" bindtap="toEditVersion" />
 
         

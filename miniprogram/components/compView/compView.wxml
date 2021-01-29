@@ -1,4 +1,4 @@
-<lc_header header_title='创建日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+<lc_header  header_title='创建日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
  
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"

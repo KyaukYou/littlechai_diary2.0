@@ -1,0 +1,141 @@
+/* pages/userQuestion/userQuestion.wxss */
+.my_container {
+  top: 0rpx;
+}
+
+.add_question_btn {
+  position: absolute;
+  bottom: 16rpx;
+  left: 4%;
+  right: 4%;
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 10rpx;
+}
+
+.myList {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.myList-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+}
+
+.myList-list {
+  width: 100%;
+  height: auto;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.myList-child {
+  width: 96%;
+  height: 160rpx;
+  position: relative;
+  background-color: rgb(242, 242, 242);
+  margin: 20rpx auto 20rpx auto;
+  border-radius: 8rpx;
+}
+
+.myList-left {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: 0;
+  width: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.myList-left .myList-left-yes {
+  font-size: 20rpx;
+  display: inline-block;
+  background-color: rgb(83, 216, 83);
+  color: white;
+  padding: 6rpx 6rpx;
+  border-radius: 8rpx;
+}
+
+.myList-left .myList-left-no {
+  font-size: 20rpx;
+  display: inline-block;
+  background-color: rgb(250, 69, 69);
+  color: white;
+  padding: 6rpx 6rpx;
+  border-radius: 8rpx;
+}
+
+.myList-top {
+  position: relative;
+  left: 120rpx;
+  top: 0;
+  right: 0;
+  height: 52rpx;
+  line-height: 52rpx;
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  padding: 0 16rpx 0 4rpx;
+}
+
+.myList-top text {
+  width: 100%;
+  height: 56rpx;
+  line-height: 56rpx;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  position: relative;
+  top: 6rpx;
+}
+
+.myList-bottom {
+  position: relative;
+  left: 120rpx;
+  bottom: 0;
+  right: 0;
+  height: 52rpx;
+  line-height: 52rpx;
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: rgb(88, 88, 88);
+}
+
+.myList-top-top {
+  position: relative;
+  /* left: 120rpx; */
+  top: 6rpx;
+  right: 0;
+  height: 33.33333%;
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  padding: 0 16rpx 0 124rpx;    
+  flex-flow: row nowrap;
+}
+
+.myList-top-top image {
+  width: 38rpx;
+  height: 38rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+  position: relative;
+  top: 2rpx;
+}
