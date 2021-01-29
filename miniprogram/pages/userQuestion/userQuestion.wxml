@@ -11,7 +11,7 @@
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
  
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
-    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
     <view class="my_wrap">
      
       <view class="myList-child" wx:for='{{questionArr}}' wx:key='index' data-id='{{item._id}}' bindtap="toDetail">
@@ -31,7 +31,7 @@
         </view>
       </view>
 
-
+      <view wx:if="{{noQuestion}}" class="diary_none">人家是有底线的呢~</view>
     </view>
   </scroll-view>
 </view>

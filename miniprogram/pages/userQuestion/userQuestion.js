@@ -17,14 +17,16 @@ Page({
     ],
     refreshBol: false,
     page: 1,
-    per_page: 12
+    per_page: 12,
+    noQuestion: false
 
   },
-  refresh() {
+  async refresh() {
     this.setData({
-      refreshBol: true
+      refreshBol: true,
+      page: 1
     })
-    this.getQuestion();
+    await this.getQuestionX();
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -44,8 +46,8 @@ Page({
     })
   },
   //获取问题数据
-  async getQuestion() {
-    let arr = []
+  async getQuestion(type) {
+    let copy = JSON.parse(JSON.stringify(this.data.questionArr));
     let res = await wx.cloud.callFunction({
       name: 'getUserQuestion',
       data: {
@@ -53,16 +55,73 @@ Page({
         per_page: this.data.per_page
       }
     })
+    let arr = res.result.data;
 
-    arr = res.result.data;
+    if(type === 'new') {
+      copy = [];
+    }
+
+    for(let j=0; j<arr.length; j++) {
+      copy.push(arr[j])
+    }
+
     this.setData({
-      questionArr: arr,
+      questionArr: copy,
       loadingBol: false,
       loadingIcon: 'success',
       loadingTitle: '加载成功',
       loadingDuration: 0,
       refreshBol: false
     })
+  },
+  async getQuestionX() {
+    let copy = [];
+    let res = await wx.cloud.callFunction({
+      name: 'getUserQuestion',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page
+      }
+    })
+    let arr = res.result.data;
+    for(let i=0; i<arr.length; i++) {
+      copy.push(arr[i])
+    }
+    this.setData({
+      questionArr: copy,
+      loadingBol: false,
+      loadingIcon: 'success',
+      loadingTitle: '加载成功',
+      loadingDuration: 0,
+      refreshBol: false,
+    })
+  },
+  async scrollToBottom() {
+    let page = this.data.page;
+    page++;
+    this.setData({
+      page: page
+    })
+    let res = await wx.cloud.callFunction({
+      name: 'getUserQuestion',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page
+      }
+    })
+    let arr = res.result.data;
+    let copy = JSON.parse(JSON.stringify(this.data.questionArr));
+    for(let i=0; i<arr.length; i++) {
+      copy.push(arr[i])
+    }
+    this.setData({
+      questionArr: copy
+    })
+    if(arr.length < 6) {
+      this.setData({
+        noQuestion: true
+      })
+    }
   },
 
   /**
@@ -87,9 +146,10 @@ Page({
       loadingBol: true,
       loadingIcon: 'loading',
       loadingTitle: '加载中',
-      loadingDuration: 99999
+      loadingDuration: 99999,
+      page: 1
     })
-    this.getQuestion()
+    this.getQuestion('new')
   },
 
   /**
