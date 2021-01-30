@@ -47,7 +47,7 @@ Component({
               customHeight:wx.getMenuButtonBoundingClientRect()
             }
           })
-          console.log(this.data.heightInfo)
+          // console.log(this.data.heightInfo)
         }, fail(err) {
           console.log(err);
         }

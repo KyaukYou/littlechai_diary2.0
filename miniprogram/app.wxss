@@ -440,7 +440,7 @@
   width: 100%;
   height: auto;
   box-sizing: border-box;
-  padding: 0 12rpx;
+  padding: 0 0rpx;
 }
 
 .login {

@@ -97,7 +97,7 @@
 
     <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
       <view class="my_wrap">
-        <l-list title="个人资料" image="/images/info.svg"  />
+        <l-list title="个人资料" image="/images/info.svg" bindtap="toUserDetail" />
         <l-list title="显示背景" image="/images/image.svg">
           <view slot="right-section">
             <switch checked='{{globalData.background}}' bindchange='changeBackground' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />

@@ -20,7 +20,7 @@ Page({
     toastDuration: 0,
     diaryArr: [],
     page: 1,
-    per_page: 6,
+    per_page: 5,
     openid: "",
     like: [],
     collection: [],
@@ -160,7 +160,7 @@ Page({
     if(type === 'new') {
       copy = [];
     }
-    console.log(this.data.like,'11111111111111111111')
+    // console.log(this.data.like,'11111111111111111111')
     for(let j=0; j<arr.length; j++) {
       if(this.data.like.includes(arr[j]._id)) {
         arr[j].inLike = true;
@@ -531,7 +531,7 @@ Page({
     this.setData({
       page: 1
     })
-    await this.getAdminX();
+    this.getAdminX();
     await this.getUserArr();
     await this.getGlobalData();
     await this.getDiary('new');

@@ -1,13 +1,20 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/my/my",
     "pages/userQuestion/userQuestion",
+    "pages/myQuestion/myQuestion",
+    
+    
+    "pages/userDetail/userDetail",
+    
+    "pages/my/my",
+    
+    
+    
+    
     "pages/userQuestionDetail/userQuestionDetail",
     
     
-    
-    "pages/myQuestion/myQuestion",
     "pages/myQuestionDetail/myQuestionDetail",
     "pages/uploadQuestion/uploadQuestion",
     

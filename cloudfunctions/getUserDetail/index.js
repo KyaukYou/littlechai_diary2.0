@@ -8,16 +8,12 @@ const _ = db.command
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  return await db.collection('questions').where({
-    openid: event.openid,
-    ifDelete: false
+  return  await db.collection('users').where({
+    openid: event.openid
   })
-  .orderBy('updatedTime','desc')
   .field({
-    ifDelete: true,
-    question: true,
-    updatedTime: true,
-    answer: true
+    userDetail:true
   })
   .get()
+  
 }

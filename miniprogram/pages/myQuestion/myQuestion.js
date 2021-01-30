@@ -66,6 +66,43 @@ Page({
       refreshBol: false
     })
   },
+  deleteQuestion(e) {
+    let id = e.currentTarget.dataset.id;
+    let that = this;
+    wx.showModal({
+      title: '是否删除',
+      content: '删除后将无法恢复',
+      success(val) {
+
+        if(val.confirm === true) {
+          that.setData({
+            loadingBol: true,
+            loadingIcon: 'loading',
+            loadingTitle: '删除中',
+            loadingDuration: 99999,
+          })
+          wx.cloud.callFunction({
+            name: 'deleteQuestion',
+            data: {
+              id: id,
+            },
+            success(res) {
+              if (res.result.stats.updated === 1) {
+                that.setData({
+                  loadingBol: true,
+                  loadingIcon: 'success',
+                  loadingTitle: '删除成功',
+                  loadingDuration: 1200,
+                  page: 1
+                })
+                that.getQuestion('new')
+              }
+            }
+          })
+        }
+      }   
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

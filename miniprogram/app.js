@@ -56,21 +56,21 @@ App({
   async initData() {
       let openid = wx.getStorageSync('openid')
       let res = await this.ifUser(openid);
-      console.log('a',res)
+      // console.log('a',res)
       let ifLogin = await wx.getSetting({});
-      console.log(ifLogin)
+      // console.log(ifLogin)
       let forin = ifLogin.authSetting;
       let ifUserInfo = false;
       let arr = [];
       for(var k in forin) {
         arr.push(k)
       }
-      console.log('none',res)
+      // console.log('none',res)
       if(arr.includes('scope.userInfo') && res.res.status !== "err") {
-        console.log('one')
+        // console.log('one')
         let checkInfo = await wx.getUserInfo({})
         if(checkInfo.errMsg === "getUserInfo:ok") {
-          console.log('two',checkInfo)
+          // console.log('two',checkInfo)
           if(checkInfo.userInfo.avatarUrl !== res.res.data.userInfo.avatarUrl || checkInfo.userInfo.nickName !== res.res.data.userInfo.nickName) {
             let newInfo = await wx.cloud.callFunction({
               name: 'updateCustom',
@@ -88,7 +88,7 @@ App({
         }
       }
 
-      console.log(res)
+      // console.log(res)
       if(res.res.status === 'ok') {
         let user = res.res.data;
         this.globalData.color = user.color;
@@ -163,7 +163,18 @@ App({
       roles: ["user"],
       lock: false,
       detail: {},
-      answer: false
+      answer: false,
+      message: false,
+      userDetail: {
+        birth: '1990-01-01',
+        where: { "0": "江苏省", "1": "无锡市", "2": "锡山区" },
+        ifFirst: true,
+        finalLogin: [],
+        updatedTime: '',
+        email: '',
+        info: '',
+        age:[]
+      }
     }
     let res = await wx.cloud.callFunction({
       name: 'createUser',

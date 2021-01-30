@@ -297,7 +297,7 @@ Page({
         }
       }
     })
-    console.log(res2)
+    // console.log(res2)
     if (res2.result.stats.updated === 1) {
       that.setData({
         toastBol1: false
@@ -319,6 +319,22 @@ Page({
     wx.navigateTo({
       url: '/pages/editVersion/editVersion',
     })
+  },
+  //跳转到个人资料
+  toUserDetail() {
+    if(wx.getStorageSync('openid')) {
+
+      wx.navigateTo({
+        url: '/pages/userDetail/userDetail',
+      })
+    }
+    else {
+      this.setData({
+        toastBolX: true,
+        toastTitleX: "请先登录",
+        toastDurationX: 2000
+      })
+    }  
   },
   //跳转到问题反馈列表
   async toQuestion() {
@@ -390,7 +406,7 @@ Page({
         version_num: res
       })
     }
-    console.log(version.result.data[0].version)
+    // console.log(version.result.data[0].version)
   },
 
   //获取提交回复
@@ -438,8 +454,8 @@ Page({
     this.firstHeader();
     await app.initData();
     this.getGlobalData();
-    await this.getVersion_one();
-    await this.getAnswerBol();
+    this.getVersion_one();
+    this.getAnswerBol();
   },
 
   /**

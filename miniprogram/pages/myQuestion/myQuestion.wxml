@@ -15,6 +15,11 @@
     <view class="my_wrap">
      
       <view class="myList-child" wx:for='{{questionArr}}' wx:key='index' data-id='{{item._id}}' bindtap="toDetail">
+
+        <view class="question_delete" catchtap="deleteQuestion" data-id='{{item._id}}'>
+          <l-icon size='30' name="error" color="{{globalData.color}}" />
+        </view>
+
         <view class="myList-left">
           <view class="myList-left-yes" wx:if='{{item.answer == true }}'>已回复</view>
           <view class="myList-left-no" wx:if='{{item.answer == false }}'>未回复</view>

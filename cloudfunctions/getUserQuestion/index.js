@@ -21,7 +21,8 @@ exports.main = async (event, context) => {
     question: true,
     updatedTime: true,
     answer: true,
-    openid: true
+    openid: true,
+    ifDelete: true
   })
   .limit(perPage)
   .skip(page * perPage)

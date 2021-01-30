@@ -10,7 +10,23 @@ const _ = db.command
 exports.main = async (event, context) => {
   const user = await db.collection('users').where({
     openid: event.openid
-  }).get()
+  })
+  .field({
+    background_bol: true,
+    background_Url: true,
+    blur: true,
+    collection_num: true,
+    color: true,
+    diary_num: true,
+    fans:true,
+    following_num: true,
+    hue: true,
+    like_num: true,
+    openid: true,
+    roles: true,
+    userInfo: true
+  })
+  .get()
 
   if(user.data.length > 0) {
 

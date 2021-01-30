@@ -1,0 +1,83 @@
+<!--pages/userDetail/userDetail.wxml-->
+<lc_header back="{{back}}" header_title='个人资料' header_color="{{globalData.color}}" blur="{{globalData.blur}}">
+</lc_header>
+
+<l-toast show="{{loadingBol}}" title="{{loadingTitle}}" icon="{{loadingIcon}}" duration="{{loadingDuration}}" />
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y>
+    <view class="my_wrap">
+
+      <view class='myInfo-wrap'>
+        <view class='myInfo-detail'>
+          <view class='myInfo-detail-list'>
+            <view class='myInfo-left'>
+              <image src='/images/birth.svg'></image>
+              <text>生日</text>
+            </view>
+            <view class='myInfo-input'>
+              <picker mode="date" bindchange="bindBirthChange" value="{{birth}}" custom-item="{{customItem}}">
+                <view class="picker" placeholder='请选择'>
+                  {{birth}}
+                </view>
+              </picker>
+            </view>
+          </view>
+
+          <view class='myInfo-detail-list'>
+            <view class='myInfo-left'>
+              <image src='/images/age.svg'></image>
+              <text>年龄</text>
+            </view>
+            <view class='myInfo-input'>
+              <input placeholder='{{age}}' value='{{agePer}}' placeholder-class='myInfo-color' disabled='true'>
+              </input>
+            </view>
+          </view>
+
+          <view class='myInfo-detail-list'>
+            <view class='myInfo-left'>
+              <image src='/images/email.svg'></image>
+              <text>邮箱</text>
+            </view>
+            <view class='myInfo-input'>
+              <input bindinput="emailChange" placeholder='请输入你的邮箱' value='{{email}}' placeholder-class='myInfo-color'>
+              </input>
+            </view>
+          </view>
+
+          <view class='myInfo-detail-list'>
+            <view class='myInfo-left'>
+              <image src='/images/area.svg'></image>
+              <text>区域</text>
+            </view>
+            <view class='myInfo-input'>
+              <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+                <view class="picker" placeholder='请选择'>
+                  {{region[0]}}-{{region[1]}}-{{region[2]}}
+                </view>
+              </picker>
+            </view>
+          </view>
+
+
+        </view>
+        <view class='myInfo-center'>
+          <textarea placeholder='写点什么吧~' maxlength='500' placeholder-class='textarea-sm' value='{{goodat}}'
+            bindinput='bindTextareaChange'>
+          </textarea>
+          <view class='edit-textarea-length'>{{goodat.length <= 9 ? '0' + goodat.length: goodat.length}} / 500</view>
+        </view>
+
+      </view>
+
+
+    </view>
+  </scroll-view>
+
+
+  <view style="background-color: {{globalData.color}}" hover-class="opacity_button" class="add_question_btn"
+    bindtap="saveDetail">保存</view>
+</view>

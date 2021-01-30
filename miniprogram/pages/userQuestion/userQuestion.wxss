@@ -139,3 +139,23 @@
   position: relative;
   top: 2rpx;
 }
+
+.question_delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  opacity: 0.7;
+}
+
+.question_delete_x {
+  width: 80rpx;
+  font-size: 24rpx;
+  color: #333;
+}
