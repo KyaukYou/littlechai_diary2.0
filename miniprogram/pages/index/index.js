@@ -29,8 +29,183 @@ Page({
     loadingBol: false,
     loadingIcon: '',
     loadingTitle: '',
-    loadingDuration: 99999
+    loadingDuration: 99999,
+    searchValue: "",
+    searchBol: false,
+    tabCurrent: 'tab_one'
   },
+  //获取输入内容
+  changeSearchValue(e) {
+    if(e.detail.value == "") {
+      this.setData({
+        searchValue: e.detail.value,
+        searchBol: false
+      })
+    }
+    else {
+      this.setData({
+        searchValue: e.detail.value,
+        searchBol: true
+      })
+    }
+    
+  },
+  //清空输入内容
+  clearSearchValue() {
+    this.setData({
+      searchValue: "",
+      searchBol: false
+    })
+  },
+  clickSearchFn() {
+    this.setData({
+      loadingBol: true,
+      loadingIcon: 'loading',
+      loadingTitle: '加载中',
+      loadingDuration: 99999
+    })
+    this.searchFn();
+  },
+  //搜索
+  async searchFn() {
+    //有值
+    if(this.data.searchBol === true) {
+      if(this.data.tabCurrent == 'tab_one') {
+        this.getDiary_value(this.data.searchValue,'updatedTimeA','new')
+      }
+      else if(this.data.tabCurrent == 'tab_two') {
+        this.getDiary_value(this.data.searchValue,'updatedTimeB','new')
+      }
+      else if(this.data.tabCurrent == 'tab_three') {
+        this.getDiary_value(this.data.searchValue,'like','new')
+      }
+      else if(this.data.tabCurrent == 'tab_four') {
+        this.getDiary_value(this.data.searchValue,'see','new')
+      }
+    }
+    //没值
+    else if(this.data.searchBol === false) {
+      if(this.data.tabCurrent == 'tab_one') {
+        this.getDiary_noValue('updatedTimeA','new')
+      }
+      else if(this.data.tabCurrent == 'tab_two') {
+        this.getDiary_noValue('updatedTimeB','new')
+      }
+      else if(this.data.tabCurrent == 'tab_three') {
+        this.getDiary_noValue('like','new')
+      }
+      else if(this.data.tabCurrent == 'tab_four') {
+        this.getDiary_noValue('see','new')
+      }
+    }
+  },
+  
+  async searchFnX() {
+    //有值
+    if(this.data.searchBol === true) {
+      if(this.data.tabCurrent == 'tab_one') {
+        this.getDiary_valueX(this.data.searchValue,'updatedTimeA','new')
+      }
+      else if(this.data.tabCurrent == 'tab_two') {
+        this.getDiary_valueX(this.data.searchValue,'updatedTimeB','new')
+      }
+      else if(this.data.tabCurrent == 'tab_three') {
+        this.getDiary_valueX(this.data.searchValue,'like','new')
+      }
+      else if(this.data.tabCurrent == 'tab_four') {
+        this.getDiary_valueX(this.data.searchValue,'see','new')
+      }
+    }
+    //没值
+    else if(this.data.searchBol === false) {
+      if(this.data.tabCurrent == 'tab_one') {
+        this.getDiary_noValueX('updatedTimeA','new')
+      }
+      else if(this.data.tabCurrent == 'tab_two') {
+        this.getDiary_noValueX('updatedTimeB','new')
+      }
+      else if(this.data.tabCurrent == 'tab_three') {
+        this.getDiary_noValueX('like','new')
+      }
+      else if(this.data.tabCurrent == 'tab_four') {
+        this.getDiary_noValueX('see','new')
+      }
+    }
+  },
+
+  async getDiary_value(value,sort,type) {
+    this.setData({
+      page: 1
+    })
+    let res = await wx.cloud.callFunction({
+      name: 'getDiary_value',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page,
+        value: value,
+        sort: sort,
+      }
+    })
+
+    let arr = res.result.data;
+    let copy = [];
+    for(let j=0; j<arr.length; j++) {
+      if(this.data.like.includes(arr[j]._id)) {
+        arr[j].inLike = true;
+      }
+      else {
+        arr[j].inLike = false;
+      }
+      if(this.data.collection.includes(arr[j]._id)) {
+        arr[j].inCollection = true;
+      }
+      else {
+        arr[j].inCollection = false;
+      }
+      copy.push(arr[j])
+    }
+    this.setData({
+      diaryArr: copy,
+      loadingBol: false,
+    })
+    
+  },
+  async getDiary_noValue(sort,type) {
+    this.setData({
+      page: 1
+    })
+    let res = await wx.cloud.callFunction({
+      name: 'getDiary_noValue',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page,
+        sort: sort,
+      }
+    })
+
+    let arr = res.result.data;
+    let copy = [];
+    for(let j=0; j<arr.length; j++) {
+      if(this.data.like.includes(arr[j]._id)) {
+        arr[j].inLike = true;
+      }
+      else {
+        arr[j].inLike = false;
+      }
+      if(this.data.collection.includes(arr[j]._id)) {
+        arr[j].inCollection = true;
+      }
+      else {
+        arr[j].inCollection = false;
+      }
+      copy.push(arr[j])
+    }
+    this.setData({
+      diaryArr: copy,
+      loadingBol: false
+    })
+  },
+
   toCreate() {
     if(wx.getStorageSync('openid')) {
       wx.navigateTo({
@@ -94,6 +269,12 @@ Page({
   // 选项切换
   changeTabs(e) {
     console.log(e.detail.activeKey)
+    this.setData({
+      tabCurrent: e.detail.activeKey
+    })
+
+    this.clickSearchFn();
+
   },
   //scroll-view 自定义下拉刷新
   async refresh() {
@@ -102,8 +283,7 @@ Page({
       page: 1,
       per_page: 6,
     })
-    await this.getDiaryX();
-    // console.log('开始刷新')
+    await this.searchFn();
     if(!wx.getStorageSync('openid')) {
       this.setData({
         refreshBol: false
@@ -223,39 +403,42 @@ Page({
     this.setData({
       page: page
     })
-    let res = await wx.cloud.callFunction({
-      name: 'getDiary',
-      data: {
-        page: this.data.page,
-        per_page: this.data.per_page
-      }
-    })
-    let arr = res.result.data;
-    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
 
-    for(let j=0; j<arr.length; j++) {
-      if(this.data.like.includes(arr[j]._id)) {
-        arr[j].inLike = true;
-      }
-      else {
-        arr[j].inLike = false;
-      }
-      if(this.data.collection.includes(arr[j]._id)) {
-        arr[j].inCollection = true;
-      }
-      else {
-        arr[j].inCollection = false;
-      }
-      copy.push(arr[j])
-    }
-    this.setData({
-      diaryArr: copy
-    })
-    if(arr.length < 6) {
-      this.setData({
-        noDiary: true
-      })
-    }
+    this.searchFnX();
+
+    // let res = await wx.cloud.callFunction({
+    //   name: 'getDiary',
+    //   data: {
+    //     page: this.data.page,
+    //     per_page: this.data.per_page
+    //   }
+    // })
+    // let arr = res.result.data;
+    // let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+
+    // for(let j=0; j<arr.length; j++) {
+    //   if(this.data.like.includes(arr[j]._id)) {
+    //     arr[j].inLike = true;
+    //   }
+    //   else {
+    //     arr[j].inLike = false;
+    //   }
+    //   if(this.data.collection.includes(arr[j]._id)) {
+    //     arr[j].inCollection = true;
+    //   }
+    //   else {
+    //     arr[j].inCollection = false;
+    //   }
+    //   copy.push(arr[j])
+    // }
+    // this.setData({
+    //   diaryArr: copy
+    // })
+    // if(arr.length < 6) {
+    //   this.setData({
+    //     noDiary: true
+    //   })
+    // }
 
 
    },
@@ -534,7 +717,7 @@ Page({
     this.getAdminX();
     await this.getUserArr();
     await this.getGlobalData();
-    await this.getDiary('new');
+    await this.searchFn();
   },
 
   /**

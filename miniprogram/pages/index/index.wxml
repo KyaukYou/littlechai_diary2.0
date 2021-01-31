@@ -23,10 +23,10 @@
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
   <view class="my_header">
     <!-- <view class="index_search"> -->
-    <l-search-bar class="index_search" placeholder="搜索" />
+    <l-search-bar value="{{searchValue}}" class="index_search" placeholder="搜索"  cancel-text="搜索"  clear  bind:lincancel="clickSearchFn"  bind:linclear="clearSearchValue" bind:linchange="changeSearchValue"  />
     <!-- </view> -->
     <view class="index_tab">
-      <l-segment active-color='{{globalData.color}}' bind:linchange="changeTabs">
+      <l-segment active-color='{{globalData.color}}' bind:linchange="changeTabs" active-key="{{tabCurrent}}">
         <l-segment-item tab="最近更新" key="tab_one" />
         <l-segment-item tab="时间正序" key="tab_two" />
         <l-segment-item tab="点赞次数" key="tab_three" />

@@ -22,6 +22,7 @@
   height: 156rpx;
   position: relative;
   top: 12rpx;
+  z-index: 99;
 }
 
 .my_container {
