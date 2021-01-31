@@ -24,7 +24,9 @@ exports.main = async (event, context) => {
     like_num: true,
     openid: true,
     roles: true,
-    userInfo: true
+    userInfo: true,
+    secret: true,
+    answer: true
   })
   .get()
 

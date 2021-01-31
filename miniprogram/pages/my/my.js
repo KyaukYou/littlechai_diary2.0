@@ -17,6 +17,7 @@ Page({
     info: {},
     background_url: "",
     controlDiary_bol: true,
+    controlChat_bol: true,
     toastBol: false,
     toastTitle: '登录中',
     toastBol1: false,
@@ -132,7 +133,9 @@ Page({
               collection_num: res.collection_num,
               following_num: res.following_num,
               fans: res.fans,
-              headline: res.userInfo.headline
+              headline: res.userInfo.headline,
+              secret: res.secret,
+              answer: res.answer
             },
             background_url: res.background_url
           })
@@ -178,6 +181,33 @@ Page({
       blur: e.detail.value,
       hue: wx.getStorageSync('hue') ? wx.getStorageSync('hue') : 347
     })
+  },
+  async changeSecret(e) {
+    if(!wx.getStorageSync('openid')) {
+      this.setData({
+        toastBolX: true,
+        toastTitleX: "请先登录",
+        toastDurationX: 2000
+      })
+    }
+    else {
+      let bol = e.detail.value;
+      let res = await wx.cloud.callFunction({
+        name: 'updateUserSecret',
+        data: {
+          openid: wx.getStorageSync('openid'),
+          secret: bol
+        }
+      })
+      let copy = JSON.parse(JSON.stringify(this.data.info))
+      copy.secret = e.detail.value;
+      this.setData({
+        info: copy
+      })
+      console.log(res)
+    }
+
+    
   },
   changeBackground(e) {
     this.data.globalData.background = e.detail.value;
@@ -245,6 +275,21 @@ Page({
     if (res.result.stats.updated === 1) {}
   },
 
+  //评论控制
+  async controlChat(e) {
+    this.setData({
+      controlChat_bol: e.detail.value
+    })
+    let res = await wx.cloud.callFunction({
+      name: 'controlChat',
+      data: {
+        openid: wx.getStorageSync('openid'),
+        bol: e.detail.value
+      }
+    })
+    if (res.result.stats.updated === 1) {}
+  },
+
   //获取日记开关状态
   async getControlDiary() {
     let res = await wx.cloud.callFunction({
@@ -256,7 +301,8 @@ Page({
     console.log(res)
     if (res.result.errMsg === "collection.get:ok") {
       this.setData({
-        controlDiary_bol: res.result.data[0].controlDiary
+        controlDiary_bol: res.result.data[0].controlDiary,
+        controlChat_bol: res.result.data[0].controlChat
       })
     }
   },

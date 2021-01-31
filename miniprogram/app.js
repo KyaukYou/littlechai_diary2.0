@@ -174,7 +174,8 @@ App({
         email: '',
         info: '',
         age:[]
-      }
+      },
+      secret: true
     }
     let res = await wx.cloud.callFunction({
       name: 'createUser',

@@ -108,6 +108,11 @@
             <switch checked='{{globalData.blur}}' bindchange='changeBlur' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
           </view>
         </l-list>
+        <l-list title="隐私模式" image="/images/secret.svg">
+          <view slot="right-section">
+            <switch checked='{{info.secret}}' bindchange='changeSecret' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
+          </view>
+        </l-list>
         <l-list title="消息通知" image="/images/notice.svg" />
         <l-list bindtap="toPick" title="全局配色" image="/images/color.svg" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
         <l-list bindtap="toVersion" title="更新日志" image="/images/ver.svg" tag-content="{{version_text}}" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
@@ -116,6 +121,12 @@
         <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-日记开关" image="/images/create.svg">
           <view slot="right-section">
             <switch checked='{{controlDiary_bol}}' bindchange='controlDiary' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
+          </view>
+        </l-list>  
+
+        <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="高级权限-评论开关" image="/images/chat.svg">
+          <view slot="right-section">
+            <switch checked='{{controlChat_bol}}' bindchange='controlChat' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
           </view>
         </l-list>  
 

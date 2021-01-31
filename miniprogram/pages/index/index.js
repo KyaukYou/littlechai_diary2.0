@@ -62,7 +62,8 @@ Page({
       loadingBol: true,
       loadingIcon: 'loading',
       loadingTitle: '加载中',
-      loadingDuration: 99999
+      loadingDuration: 99999,
+      noDiary: false
     })
     this.searchFn();
   },
@@ -206,6 +207,83 @@ Page({
     })
   },
 
+  async getDiary_valueX(value,sort,type) {
+    let res = await wx.cloud.callFunction({
+      name: 'getDiary_value',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page,
+        value: value,
+        sort: sort,
+      }
+    })
+
+    let arr = res.result.data;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    for(let j=0; j<arr.length; j++) {
+      if(this.data.like.includes(arr[j]._id)) {
+        arr[j].inLike = true;
+      }
+      else {
+        arr[j].inLike = false;
+      }
+      if(this.data.collection.includes(arr[j]._id)) {
+        arr[j].inCollection = true;
+      }
+      else {
+        arr[j].inCollection = false;
+      }
+      copy.push(arr[j])
+    }
+    this.setData({
+      diaryArr: copy,
+      loadingBol: false,
+    })
+    if(arr.length < 6) {
+      this.setData({
+        noDiary: true
+      })
+    }
+    
+  },
+  async getDiary_noValueX(sort,type) {
+    let res = await wx.cloud.callFunction({
+      name: 'getDiary_noValue',
+      data: {
+        page: this.data.page,
+        per_page: this.data.per_page,
+        sort: sort,
+      }
+    })
+
+    let arr = res.result.data;
+    let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
+    for(let j=0; j<arr.length; j++) {
+      if(this.data.like.includes(arr[j]._id)) {
+        arr[j].inLike = true;
+      }
+      else {
+        arr[j].inLike = false;
+      }
+      if(this.data.collection.includes(arr[j]._id)) {
+        arr[j].inCollection = true;
+      }
+      else {
+        arr[j].inCollection = false;
+      }
+      copy.push(arr[j])
+    }
+    this.setData({
+      diaryArr: copy,
+      loadingBol: false
+    })
+    if(arr.length < 6) {
+      this.setData({
+        noDiary: true
+      })
+    }
+  },
+
   toCreate() {
     if(wx.getStorageSync('openid')) {
       wx.navigateTo({
@@ -282,6 +360,7 @@ Page({
     this.setData({
       page: 1,
       per_page: 6,
+      noDiary: false
     })
     await this.searchFn();
     if(!wx.getStorageSync('openid')) {
