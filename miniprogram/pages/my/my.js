@@ -135,7 +135,8 @@ Page({
               fans: res.fans,
               headline: res.userInfo.headline,
               secret: res.secret,
-              answer: res.answer
+              answer: res.answer,
+              message: res.message
             },
             background_url: res.background_url
           })
@@ -183,6 +184,7 @@ Page({
     })
   },
   async changeSecret(e) {
+    let that = this;
     if(!wx.getStorageSync('openid')) {
       this.setData({
         toastBolX: true,
@@ -191,20 +193,39 @@ Page({
       })
     }
     else {
-      let bol = e.detail.value;
-      let res = await wx.cloud.callFunction({
-        name: 'updateUserSecret',
-        data: {
-          openid: wx.getStorageSync('openid'),
-          secret: bol
-        }
+      let bol = !e.detail.value;
+      wx.showModal({
+        title: bol === true ? '是否关闭' : '是否开启',
+        content: bol === true ? '关闭后他人将不能查看你的日记，收藏，关注、粉丝个人资料。' : '开启后他人将能查看你的日记，收藏，关注、粉丝个人资料。',
+        success(val) {
+  
+          if(val.confirm === true) {
+            wx.cloud.callFunction({
+              name: 'updateUserSecret',
+              data: {
+                openid: wx.getStorageSync('openid'),
+                secret: bol
+              },
+              success(res) {
+                let copy = JSON.parse(JSON.stringify(that.data.info))
+                copy.secret = e.detail.value;
+                that.setData({
+                  info: copy
+                })
+                console.log(res)  
+              }
+            })              
+          }
+          else {
+            let copy = JSON.parse(JSON.stringify(that.data.info))
+            copy.secret = !e.detail.value;
+            that.setData({
+              info: copy
+            })
+          }
+        }   
       })
-      let copy = JSON.parse(JSON.stringify(this.data.info))
-      copy.secret = e.detail.value;
-      this.setData({
-        info: copy
-      })
-      console.log(res)
+
     }
 
     
@@ -466,7 +487,7 @@ Page({
     let res = version.result.data[0].answer
     if(res === true) {
       this.setData({
-        answer_text: "新消息回复"
+        answer_text: "新问题回复"
       })
     }
     else {

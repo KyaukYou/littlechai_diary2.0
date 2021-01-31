@@ -26,7 +26,8 @@ exports.main = async (event, context) => {
     roles: true,
     userInfo: true,
     secret: true,
-    answer: true
+    answer: true,
+    message: true
   })
   .get()
 
