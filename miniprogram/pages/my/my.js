@@ -196,7 +196,7 @@ Page({
       let bol = !e.detail.value;
       wx.showModal({
         title: bol === true ? '是否关闭' : '是否开启',
-        content: bol === true ? '关闭后他人将不能查看你的日记，收藏，关注、粉丝个人资料。' : '开启后他人将能查看你的日记，收藏，关注、粉丝个人资料。',
+        content: bol === true ? '关闭后他人将不能查看你的日记，收藏，关注、粉丝和个人资料。' : '开启后他人将能查看你的日记，收藏，关注、粉丝和个人资料。',
         success(val) {
   
           if(val.confirm === true) {
@@ -495,6 +495,13 @@ Page({
         answer_text: ""
       })
     }
+  },
+
+  //跳转到我的日记
+  toMyDiary() {
+    wx.navigateTo({
+      url: '/pages/myDiary/myDiary',
+    })
   },
 
   /**

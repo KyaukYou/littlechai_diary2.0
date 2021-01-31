@@ -1,6 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/myDiary/myDiary",
+    "pages/editDiary/editDiary",
+    "pages/myCollection/myCollection",
+    
     "pages/userQuestion/userQuestion",
     "pages/myQuestion/myQuestion",
     

@@ -1,3 +1,4 @@
+// pages/editDiary/editDiary.js
 // pages/index.js
 const app = getApp()
 Page({
@@ -34,30 +35,18 @@ Page({
       updatedTime: "",
       ifDelete: false,
       ifTop: false,
-      see: 0,
-      collection: 0,
-      like: 0,
       dayNum: 0,
       openid: ""
     },
     diaryArr: [
-      // {
-      //   date: "",
-      //   show: true,
-      //   content: "",
-      //   imagesArr: [
-      //     {
-      //       type: "new",
-      //       httpUrl: "",
-      //       fileUrl: ""
-      //     }
-      //   ]
-      // }
     ],
+    id: "",
     uploadIcon: "",
     uploadDuration: 99999,
     uploadTitle: "",
-    uploadBol: false
+    uploadBol: false,
+    trueData: {},
+    showCal: false
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -65,11 +54,40 @@ Page({
       globalData: app.globalData
     })
   },
-  getThisTime() {
-    // let timer = new Date().getTime()
-    // this.setData({
-    //   maxDate1: timer
-    // })
+  async getData() {
+    let res = await wx.cloud.callFunction({
+      name: 'getMyDiary',
+      data: {
+        id: this.data.id
+      }
+    })    
+    console.log(res)
+    let result = res.result.data[0]
+    let copyInfo = JSON.parse(JSON.stringify(this.data.info))
+    let copyArr = JSON.parse(JSON.stringify(this.data.diaryArr))
+    copyInfo.title = result.title;
+    copyInfo.title_image = result.title_image;
+    copyInfo.location = result.location;
+    copyInfo.beginDate = result.beginDate;
+    copyInfo.endDate = result.endDate;
+    copyInfo.lock = result.lock;
+    copyInfo.show = result.show;
+    copyInfo.sort = result.sort;
+    copyInfo.createdTime = result.createdTime;
+    copyInfo.updatedTime = result.updatedTime;
+    copyInfo.dayNum = result.dayNum;
+    copyArr = result.diaryArr
+
+    this.setData({
+      trueData: result,
+      info: copyInfo,
+      diaryArr: copyArr
+    })
+    this.sortFn({
+      detail: {
+        value: result.sort
+      }
+    });
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -117,14 +135,16 @@ Page({
   // 显示开始日期框
   showBeginDateBol() {
     this.setData({
-      showBeginDate: true
+      showBeginDate: true,
+      showCal: true
     })
   },
 
   // 显示结束日期框
   showEndDateBol() {
     this.setData({
-      showEndDate: true
+      showEndDate: true,
+      showCal: true
     })
   },
 
@@ -159,6 +179,7 @@ Page({
     }
     this.setData({
       info: copy,
+      showCal: false,
       minDate2: new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).getTime()
     })
 
@@ -170,7 +191,8 @@ Page({
     let trueDate = await app.timeStamp(e.detail)
     copy.endDate = trueDate;
     this.setData({
-      info: copy
+      info: copy,
+      showCal: false,
     })
     if (e.type === "linconfirm") {
       let res = await app.getdiffdate(copy.beginDate, copy.endDate)
@@ -340,7 +362,9 @@ Page({
       })
     }
     
-
+    this.setData({
+      showCal: false
+    })
 
   },
 
@@ -449,26 +473,31 @@ Page({
     }
     else {
       //上传封面图
-      this.setData({
-        uploadIcon: "loading",
-        uploadDuration: 99999,
-        uploadTitle: "上传封面中",
-        uploadBol: true
-      })
-      let titleImageUrl = await this.uploadTitleImage(copy);
-      copy.title_image.type = 'old';
-      copy.title_image.url = titleImageUrl.fileID;
-      // titleImageUrl.fileID
-      console.log(titleImageUrl)
-
-      //上传日记独立封面
-      let diaryImageNum = 0;
-      let diaryImageIndex = 0;
-      let diaryImageArr = []
-      for(let i=0; i<copyDiary.length; i++) {
-        diaryImageNum += copyDiary[i].imagesArr.length;
-        diaryImageArr.push(copyDiary[i].imagesArr.length)
+      if(this.data.info.title_image.type === 'new') {
+        this.setData({
+          uploadIcon: "loading",
+          uploadDuration: 99999,
+          uploadTitle: "更新封面中",
+          uploadBol: true
+        })
+        let titleImageUrl = await this.uploadTitleImage(copy);
+        copy.title_image.type = 'old';
+        copy.title_image.url = titleImageUrl.fileID;
+        // titleImageUrl.fileID
+        console.log(titleImageUrl)
       }
+
+        //上传日记独立封面
+        let diaryImageNum = 0;
+        let diaryImageIndex = 0;
+        for(let i=0; i<copyDiary.length; i++) {
+          for(let x=0; x<copyDiary[i].imagesArr.length; x++) {
+            if(copyDiary[i].imagesArr[x].type === 'new') {
+              diaryImageNum ++;
+             }
+          }
+        }
+      
 
       if(diaryImageNum === 0) {
         //直接上传
@@ -481,22 +510,24 @@ Page({
         this.setData({
           uploadIcon: "loading",
           uploadDuration: 99999,
-          uploadTitle: `上传图片中${diaryImageIndex}/${diaryImageNum}`,
+          uploadTitle: `更新图片中${diaryImageIndex}/${diaryImageNum}`,
           uploadBol: true
         })
 
         for(let i=0; i<copyDiary.length; i++) {
           for(let j=0; j<copyDiary[i].imagesArr.length; j++) {
-            let res = await this.uploadDiaryImage(copyDiary[i].imagesArr[j].url);
-            copyDiary[i].imagesArr[j].url = res.fileID;
-            copyDiary[i].imagesArr[j].type = 'old';
-            diaryImageIndex++;
-            this.setData({
-              uploadIcon: "loading",
-              uploadDuration: 99999,
-              uploadTitle: `上传图片中${diaryImageIndex}/${diaryImageNum}`,
-              uploadBol: true
-            })
+            if(copyDiary[i].imagesArr[j].type === 'new') {
+              let res = await this.uploadDiaryImage(copyDiary[i].imagesArr[j].url);
+              copyDiary[i].imagesArr[j].url = res.fileID;
+              copyDiary[i].imagesArr[j].type = 'old';
+              diaryImageIndex++;
+              this.setData({
+                uploadIcon: "loading",
+                uploadDuration: 99999,
+                uploadTitle: `更新图片中${diaryImageIndex}/${diaryImageNum}`,
+                uploadBol: true
+              })
+            }
           }
         }
         let res = await this.uploadAll(copy,copyDiary)
@@ -538,9 +569,10 @@ Page({
     this.setData({
       uploadIcon: "loading",
       uploadDuration: 99999,
-      uploadTitle: `上传内容中`,
+      uploadTitle: `更新内容中`,
       uploadBol: true
     })
+    val1.createdTime = await app.timeStampX(new Date().getTime());
     val1.updatedTime = await app.timeStampX(new Date().getTime());
     val1.diaryArr = val2;
     val1.openid = wx.getStorageSync('openid');
@@ -548,30 +580,25 @@ Page({
     const diarySchema = val1;
 
     let res = await wx.cloud.callFunction({
-      name: 'createDiary',
+      name: 'updateDiary',
       data: {
-        diary: diarySchema
+        diary: diarySchema,
+        id: this.data.id
       }
     })
     if (res.errMsg === "cloud.callFunction:ok") {
       this.setData({
         uploadIcon: "success",
-        uploadDuration: 800,
-        uploadTitle: `上传成功`,
+        uploadDuration: 1000,
+        uploadTitle: `更新成功`,
         uploadBol: true
       })
-      wx.cloud.callFunction({
-        name: 'setUserDiaryNum',
-        data: {
-          openid: wx.getStorageSync('openid')
-        }
-      })
       let timer = setTimeout(() => {
-        wx.navigateBack({
-          delta: 1,
+        this.setData({
+          uploadBol: false
         })
-        clearTimeout(timer)
-      },800)
+        clearTimeout(timer);
+      },1000)
     }
 
   },
@@ -580,7 +607,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      id: options.id
+    })
     this.getGlobalData();
+    this.getData();
   },
 
   /**
@@ -594,8 +625,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.firstHeader();
-    this.getThisTime();
+    
   },
 
   /**

@@ -57,7 +57,7 @@
             <view class="my_info_list_border my_info_list_border2"></view>
             <view class="my_info_list_border my_info_list_border3"></view>
 
-            <view class="my_info_list">
+            <view class="my_info_list" bindtap="toMyDiary">
               <view class="my_info_list_text">
                 我的日记
               </view>

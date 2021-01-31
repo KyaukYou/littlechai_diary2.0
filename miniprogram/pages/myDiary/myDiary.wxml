@@ -1,0 +1,116 @@
+<!--pages/myDiary/myDiary.wxml-->
+<lc_header header_title='我的日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
+
+<view wx:if="{{showBtn}}" hover-class="opacity_button_pos" class="to_create" style="background-color: {{globalData.color}}; right: {{pos.right}}; bottom: {{pos.bottom}}" bindtap="toCreate" bindtouchmove="ballMoveEvent">
+  <image src='/images/add.svg'></image>
+</view>
+
+<l-toast
+  show="{{toastBol}}"
+  title="{{toastTitle}}"
+  duration="{{toastDuration}}"
+/>
+
+<l-toast
+  show="{{loadingBol}}"
+  title="{{loadingTitle}}"
+  icon="{{loadingIcon}}"
+  duration="{{loadingDuration}}"
+/>
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
+  <view class="my_header">
+    <!-- <view class="index_search"> -->
+    <l-search-bar value="{{searchValue}}" class="index_search" placeholder="搜索"  cancel-text="搜索"  clear  bind:lincancel="clickSearchFn"  bind:linclear="clearSearchValue" bind:linchange="changeSearchValue"  />
+    <!-- </view> -->
+    <view class="index_tab">
+      <l-segment active-color='{{globalData.color}}' bind:linchange="changeTabs" active-key="{{tabCurrent}}">
+        <l-segment-item tab="最近更新" key="tab_one" />
+        <l-segment-item tab="时间正序" key="tab_two" />
+        <l-segment-item tab="点赞次数" key="tab_three" />
+        <l-segment-item tab="浏览次数" key="tab_four" />
+      </l-segment>
+    </view>
+  </view>
+
+
+
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
+    <view class="my_wrap">
+      
+      <block wx:for="{{diaryArr}}" wx:for-index="diary_index" wx:for-item="diary_item" wx:key='diary_index'>
+
+        <!-- 左图 -->
+        <view class="diary_main diary_main_left" wx:if="{{diary_index % 2 == 0}}">
+          <view class="diary_left">
+            <image class="diary_title_image" mode='aspectFill' src='/images/load.svg'></image>
+            <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}' data-index="{{diary_index}}" data-id="{{diary_item._id}}" bindtap="toEditDiary"></image>
+            <view class="diary_user">
+              <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
+            </view>
+            <view class="diary_lock" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="lockDiary">
+              <image wx:if="{{diary_item.lock === true}}" src='/images/lock.svg'></image>
+              <image wx:if="{{diary_item.lock === false}}" src='/images/unlock.svg'></image>
+            </view>
+          </view>
+          <view class="diary_right">
+            <view class="diary_title">{{diary_item.title}}</view>
+            <view class="diary_time">{{diary_item.updatedTime}}</view>
+            <view class="diary_location">{{diary_item.location}}</view>
+            <view class="diary_more">{{diary_item.dayNum}}天 | 浏览{{diary_item.see}}次</view>
+            <view class="diary_bottom">
+              <view class="diary_like" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" data-id="{{diary_index._id}}" bindtap="setLike">
+                <van-icon wx:if="{{diary_item.inLike  === false}}" name="good-job-o" color="#999"  size="38rpx"/>
+                <van-icon wx:if="{{diary_item.inLike  === true}}" name="good-job" color="{{globalData.color}}"  size="38rpx"/>
+                <view class="diary_bottom_view" style="color: {{diary_item.inLike  === false ? '#999' : globalData.color}}">{{diary_item.like}}</view>
+              </view>
+              <view class="diary_collection" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" data-id="{{diary_index._id}}" bindtap="setCollection">
+                <van-icon wx:if="{{diary_item.inCollection  === false}}" name="star-o" color="#999" size="38rpx"/>
+                <van-icon wx:if="{{diary_item.inCollection  === true}}" name="star" color="{{globalData.color}}" size="38rpx"/>
+                <view class="diary_bottom_view" style="color: {{diary_item.inCollection  === false ? '#999' : globalData.color}}">{{diary_item.collection}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 右图 -->
+        <view class="diary_main diary_main_right" wx:if="{{diary_index % 2 != 0}}">
+          <view class="diary_right">
+            <view class="diary_title">{{diary_item.title}}</view>
+            <view class="diary_time">{{diary_item.updatedTime}}</view>
+            <view class="diary_location">{{diary_item.location}}</view>
+            <view class="diary_more">{{diary_item.dayNum}}天 | 浏览{{diary_item.see}}次</view>
+            <view class="diary_bottom">
+              <view class="diary_like" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" data-id="{{diary_index._id}}" bindtap="setLike">
+                <van-icon wx:if="{{diary_item.inLike  === false}}" name="good-job-o" color="#999"  size="38rpx"/>
+                <van-icon wx:if="{{diary_item.inLike  === true}}" name="good-job" color="{{globalData.color}}"  size="38rpx"/>
+                <view class="diary_bottom_view" style="color: {{diary_item.inLike  === false ? '#999' : globalData.color}}">{{diary_item.like}}</view>
+              </view>
+              <view class="diary_collection" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" data-id="{{diary_index._id}}" bindtap="setCollection">
+                <van-icon wx:if="{{diary_item.inCollection  === false}}" name="star-o" color="#999" size="38rpx"/>
+                <van-icon wx:if="{{diary_item.inCollection  === true}}" name="star" color="{{globalData.color}}" size="38rpx"/>
+                <view class="diary_bottom_view" style="color: {{diary_item.inCollection  === false ? '#999' : globalData.color}}">{{diary_item.collection}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="diary_left">
+            <image class="diary_title_image" mode='aspectFill' src='/images/load.svg'></image>
+            <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}'  data-index="{{diary_index}}" data-id="{{diary_item._id}}" bindtap="toEditDiary"></image>
+            <view class="diary_user">
+              <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
+            </view>
+            <view class="diary_lock" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="lockDiary">
+              <image wx:if="{{diary_item.lock === true}}" src='/images/lock.svg'></image>
+              <image wx:if="{{diary_item.lock === false}}" src='/images/unlock.svg'></image>
+            </view>
+          </view>
+        </view>
+
+      </block>
+
+      <view wx:if="{{noDiary}}" class="diary_none">人家是有底线的呢~</view>
+
+    </view>
+  </scroll-view>
+</view>
