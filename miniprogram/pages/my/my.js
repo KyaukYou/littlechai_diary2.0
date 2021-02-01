@@ -408,13 +408,6 @@ Page({
     //把users集合的answer true改为false
     if(wx.getStorageSync('openid')) {
 
-      let res = await wx.cloud.callFunction({
-        name: 'setUserAnswer',
-        data: {
-          openid: wx.getStorageSync('openid')
-        }
-      })
-
       wx.navigateTo({
         url: '/pages/myQuestion/myQuestion',
       })

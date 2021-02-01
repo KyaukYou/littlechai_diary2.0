@@ -31,7 +31,8 @@ Page({
     loadingDuration: 99999,
     searchValue: "",
     searchBol: false,
-    tabCurrent: 'tab_one'
+    tabCurrent: 'tab_one',
+    bottomLoading: false
   },
   //获取输入内容
   changeSearchValue(e) {
@@ -241,6 +242,7 @@ Page({
     this.setData({
       diaryArr: copy,
       loadingBol: false,
+      bottomLoading: false
     })
     if(arr.length < 6) {
       this.setData({
@@ -280,7 +282,8 @@ Page({
     }
     this.setData({
       diaryArr: copy,
-      loadingBol: false
+      loadingBol: false,
+      bottomLoading: false
     })
     if(arr.length < 6) {
       this.setData({
@@ -359,7 +362,9 @@ Page({
     let page = this.data.page;
     page++;
     this.setData({
-      page: page
+      page: page,
+      noDiary: false,
+      bottomLoading: true
     })
 
     this.searchFnX();
@@ -429,10 +434,7 @@ Page({
         //日记like+1
         copy[index].inLike = true;
         copy[index].like++;
-        this.setData({
-          diaryArr: copy,
-          like: copyLike
-        })  
+     
         let res1 = await wx.cloud.callFunction({
           name: 'setDiaryLike',
           data: {
@@ -442,6 +444,10 @@ Page({
         })  
 
         if(res1.result.stats.updated === 1) {
+          this.setData({
+            diaryArr: copy,
+            like: copyLike
+          }) 
           let res2 = await wx.cloud.callFunction({
             name: 'setUserLikeNum',
             data: {
@@ -471,10 +477,7 @@ Page({
         //日记like-1
         copy[index].inLike = false;
         copy[index].like--;
-        this.setData({
-          diaryArr: copy,
-          like: copyLike
-        })
+        
         let res1 = await wx.cloud.callFunction({
           name: 'setDiaryLike',
           data: {
@@ -484,8 +487,10 @@ Page({
         })  
 
         if(res1.result.stats.updated === 1) {
-            
-
+          this.setData({
+            diaryArr: copy,
+            like: copyLike
+          })  
           let res2 = await wx.cloud.callFunction({
             name: 'setUserLikeNum',
             data: {
@@ -524,10 +529,7 @@ Page({
         //日记like+1
         copy[index].inCollection = true;
         copy[index].collection++;
-        this.setData({
-          diaryArr: copy,
-          collection: copyCollection
-        })  
+  
         let res1 = await wx.cloud.callFunction({
           name: 'setDiaryCollection',
           data: {
@@ -537,8 +539,10 @@ Page({
         })  
 
         if(res1.result.stats.updated === 1) {
-          
-
+          this.setData({
+            diaryArr: copy,
+            collection: copyCollection
+          })  
           let res2 = await wx.cloud.callFunction({
             name: 'setUserCollectionNum',
             data: {
@@ -568,11 +572,6 @@ Page({
         //日记like-1
         copy[index].inCollection = false;
         copy[index].collection--;
-        
-        this.setData({
-          diaryArr: copy,
-          collection: copyCollection
-        })  
         let res1 = await wx.cloud.callFunction({
           name: 'setDiaryCollection',
           data: {
@@ -582,7 +581,10 @@ Page({
         })  
 
         if(res1.result.stats.updated === 1) {
-        
+          this.setData({
+            diaryArr: copy,
+            collection: copyCollection
+          })  
           let res2 = await wx.cloud.callFunction({
             name: 'setUserCollectionNum',
             data: {

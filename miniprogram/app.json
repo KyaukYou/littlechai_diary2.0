@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/editVersion/editVersion",
     "pages/myCollection/myCollection",
-    
+    "pages/diaryDetail/diaryDetail",
     "pages/myDiary/myDiary",
     "pages/editDiary/editDiary",
     "pages/userQuestion/userQuestion",

@@ -109,6 +109,9 @@
 
       </block>
 
+      <view wx:if="{{bottomLoading}}" class="diary_none" style="display: flex;align-items: center;justify-content: center;">
+        <l-loading show size="mini" type="change" color="{{globalData.color}}"></l-loading>
+      </view>
       <view wx:if="{{noDiary}}" class="diary_none">人家是有底线的呢~</view>
 
     </view>

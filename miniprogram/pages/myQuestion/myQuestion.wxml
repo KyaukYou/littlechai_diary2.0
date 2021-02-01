@@ -32,7 +32,6 @@
         </view>
       </view>
 
-
     </view>
   </scroll-view>
   <view style="background-color: {{globalData.color}}" hover-class="opacity_button" class="add_question_btn" bindtap="toAddQuestion">添加问题</view>

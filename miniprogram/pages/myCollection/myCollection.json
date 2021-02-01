@@ -10,6 +10,8 @@
     "l-segment-item": "/lin-ui/dist/segment-item",
     "l-list": "/lin-ui/dist/list",
     "l-toast": "/lin-ui/dist/toast",
-    "van-icon": "/components/icon/index"
+    "van-icon": "/components/icon/index",
+    "l-icon": "/lin-ui/dist/icon",
+    "l-loading": "/lin-ui/dist/loading"
   }
 }
