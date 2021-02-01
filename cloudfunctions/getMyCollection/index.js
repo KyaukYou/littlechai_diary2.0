@@ -19,7 +19,6 @@ exports.main = async (event, context) => {
     openid: event.openid
   })
   .field({
-    userInfo: true,
     collection: true
   })
   .get();
@@ -47,7 +46,14 @@ exports.main = async (event, context) => {
     })
     .get()
     if(resX.data.length != 0) {
-      resX.data[0].userInfo = res.data[0].userInfo
+      let user = await db.collection('users').where({
+        openid: resX.data[0].openid
+      })
+      .field({
+        userInfo: true
+      })
+      .get();
+      resX.data[0].userInfo = user.data[0].userInfo
       arr.push(resX.data[0])
     }
   }  

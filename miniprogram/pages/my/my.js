@@ -504,6 +504,13 @@ Page({
     })
   },
 
+  //跳转到我的收藏
+  toMyCollection() {
+    wx.navigateTo({
+      url: '/pages/myCollection/myCollection',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

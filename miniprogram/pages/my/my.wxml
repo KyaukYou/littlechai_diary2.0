@@ -65,7 +65,7 @@
                 {{info.diary_num || 0}}
               </view>
             </view>
-            <view class="my_info_list">
+            <view class="my_info_list" bindtap="toMyCollection">
               <view class="my_info_list_text">
                 我的收藏
               </view>
