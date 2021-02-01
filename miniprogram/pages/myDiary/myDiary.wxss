@@ -1,9 +1,4 @@
 /* pages/myDiary/myDiary.wxss */
-/* pages/index.wxss */
-.index_search {
-  /* height: 80rpx; */
-}
-
 .index {
   position: fixed;
   bottom: 0;

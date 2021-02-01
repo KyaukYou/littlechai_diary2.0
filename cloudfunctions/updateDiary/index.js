@@ -11,7 +11,8 @@ exports.main = async (event, context) => {
 
   try {
     return await db.collection('diarys').where({
-      _id: event.id
+      _id: event.id,
+      openid: event.openid
     })
     .update({
       data: event.diary

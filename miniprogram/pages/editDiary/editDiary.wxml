@@ -115,7 +115,7 @@
           <view class="create_child_img" wx:for="{{item.imagesArr}}" wx:for-item="item_child" wx:for-index="index_child" wx:key='index_child'>
             <image mode='aspectFill' src='{{item_child.url}}' bindtap="watchBgImg" data-index="{{index}}" data-index2="{{index_child}}"></image>
             <view class="create_del_img" data-index="{{index}}" data-index2="{{index_child}}" bindtap="delDiaryImage">
-              <l-icon name="error" color="{{globalData.color}}" />
+              <l-icon size='28' name="error" color="{{globalData.color}}" />
             </view>
           </view>
 

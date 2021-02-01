@@ -44,7 +44,7 @@
       <block wx:for="{{diaryArr}}" wx:for-index="diary_index" wx:for-item="diary_item" wx:key='diary_index'>
 
         <!-- 左图 -->
-        <view class="diary_main diary_main_left" wx:if="{{diary_index % 2 == 0}}">
+        <view class="diary_main diary_main_left" wx:if="{{diary_index % 2 == 0}}" style="{{diary_index+1 === diaryArr.length ? 'margin-bottom: 16rpx' : ''}}">
           <view class="diary_left">
             <image class="diary_title_image" mode='aspectFill' src='/images/load.svg'></image>
             <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}' data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="toDetail"></image>
@@ -77,7 +77,7 @@
         </view>
 
         <!-- 右图 -->
-        <view class="diary_main diary_main_right" wx:if="{{diary_index % 2 != 0}}">
+        <view class="diary_main diary_main_right" wx:if="{{diary_index % 2 != 0}}" style="{{diary_index+1 === diaryArr.length ? 'margin-bottom: 16rpx' : ''}}">
           <view class="diary_right">
             <view class="diary_title">{{diary_item.title}}</view>
             <view class="diary_time">{{diary_item.updatedTime}}</view>

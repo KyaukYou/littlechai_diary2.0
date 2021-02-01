@@ -150,7 +150,8 @@ Page({
       data: {
         openid: wx.getStorageSync('openid'),
         arr: this.data.verData,
-        version: this.data.verData[0].text
+        version: this.data.verData[0].text,
+        updatedTime: await app.timeStampX(new Date().getTime())
       }
     })
     console.log(res)

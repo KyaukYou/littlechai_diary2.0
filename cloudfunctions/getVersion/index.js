@@ -15,7 +15,8 @@ exports.main = async (event, context) => {
   .field({
     _id: false,
     arr: true,
-    version: true
+    version: true,
+    updatedTime: true
   })
   .get()
   

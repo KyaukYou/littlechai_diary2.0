@@ -1,38 +1,22 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/myDiary/myDiary",
-    "pages/editDiary/editDiary",
+    "pages/editVersion/editVersion",
     "pages/myCollection/myCollection",
     
+    "pages/myDiary/myDiary",
+    "pages/editDiary/editDiary",
     "pages/userQuestion/userQuestion",
     "pages/myQuestion/myQuestion",
-    
-    
-    "pages/userDetail/userDetail",
-    
+    "pages/userDetail/userDetail", 
     "pages/my/my",
-    
-    
-    
-    
     "pages/userQuestionDetail/userQuestionDetail",
-    
-    
     "pages/myQuestionDetail/myQuestionDetail",
     "pages/uploadQuestion/uploadQuestion",
-    
-    
     "pages/answer/answer",
-    
     "pages/createDiary/createDiary",
     
-    "pages/editVersion/editVersion",
     "pages/version/version"
-    
-    
-    
-    
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

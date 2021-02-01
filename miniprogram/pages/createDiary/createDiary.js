@@ -202,18 +202,21 @@ Page({
     let copy = JSON.parse(JSON.stringify(this.data.info))
     copy.sort = e.detail.value;
     let copyArr = JSON.parse(JSON.stringify(this.data.diaryArr))
-
-    if(e.detail.value === false) {
-      this.setData({
-        info: copy,
-        diaryArr: copyArr.reverse()
-      })
-    }
-    else {
-      this.setData({
-        info: copy
-      })
-    }
+    this.setData({
+      info: copy,
+      diaryArr: copyArr.reverse()
+    })
+    // if(e.detail.value === false) {
+    //   this.setData({
+    //     info: copy,
+    //     diaryArr: copyArr.reverse()
+    //   })
+    // }
+    // else {
+    //   this.setData({
+    //     info: copy
+    //   })
+    // }
   },
 
 

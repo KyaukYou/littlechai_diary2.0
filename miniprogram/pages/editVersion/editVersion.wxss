@@ -133,7 +133,7 @@
 .version_top_borderX {
   position: absolute;
   top: 62rpx;
-  left: -9%;
+  left: -7%;
   width: 4rpx;
   bottom: -60rpx;
   margin-left: -2rpx;
@@ -150,7 +150,7 @@
   height: 26rpx;
   border-radius: 50%;
   border: 4rpx solid rgb(255,255,255);
-  left: -9%;
+  left: -7%;
   margin-left: -17rpx;
 }
 
@@ -230,7 +230,7 @@
   width: auto;
   box-sizing: border-box;
   margin-left: 40rpx;
-  /* position: relative; */
+  position: relative;
 }
 
 
@@ -310,7 +310,7 @@
 .add_title {
   display: inline-block;
   position: absolute;
-  right: 0;
+  right: 0rpx;
   top: 0;
   height: 60rpx;
   width: 50rpx;
@@ -322,7 +322,7 @@
 
 .add_info {
   position: absolute;
-  right: 0;
+  right: -66rpx;
   top: 0;
   height: 60rpx;
   width: 50rpx;
@@ -339,7 +339,7 @@
   font-size: 36rpx;
   color: white;
   position: absolute;
-  right: 0rpx;
+  right: 6rpx;
   top: 14rpx;
   /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
   text-align: center;
@@ -366,7 +366,7 @@
   font-size: 36rpx;
   color: white;
   position: absolute;
-  right: 60rpx;
+  right: 10rpx;
   top: 10rpx;
   /* -webkit-text-stroke: 2rpx rgba(0,0,0,0.6); */
   text-align: center;

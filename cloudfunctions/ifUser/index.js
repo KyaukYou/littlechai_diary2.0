@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
   })
   .field({
     background_bol: true,
-    background_Url: true,
+    background_url: true,
     blur: true,
     collection_num: true,
     color: true,

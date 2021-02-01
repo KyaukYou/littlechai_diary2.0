@@ -17,7 +17,8 @@ exports.main = async (event, context) => {
       .update({
         data: {
           arr: event.arr,
-          version: event.version
+          version: event.version,
+          updatedTime: event.updatedTime
         }
       })
 

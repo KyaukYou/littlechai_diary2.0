@@ -12,12 +12,19 @@
     class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
     <view class="my_wrap" >
 
-      <view wx:if="{{verBol === true}}" class="version_top_border" style="background-color: {{globalData.color}}"></view>
+      <!-- <view wx:if="{{verBol === true}}" class="version_top_border" style="background-color: {{globalData.color}}"></view>
       <view wx:if="{{verBol === true}}" class="version_top_circle" style="border-color: {{globalData.color}};">
         <view class="version_top_circle_sm" style="background-color: {{globalData.color}};"></view>
+      </view> -->
+
+      <view style="height: 80rpx; opacity: 1; box-shadow: none; color: #333; margin-bottom: 20rpx; line-height: 80rpx; box-sizing:border-box; padding-left:18rpx;" class='up-cell' >
+        <view class="version_top_borderX" style="background-color: {{globalData.color}}; top: -40rpx; bottom: -44rpx"></view>
+        <view class="version_top_circleX" style="border-color: {{globalData.color}}; opacity: 1; bottom: -82rpx">
+          <view class="version_top_circle_smX" style="background-color: {{globalData.color}};"></view>
+        </view>
+        更新时间：{{updatedTime}}
       </view>
 
-      <!-- style="background: linear-gradient(to right, {{globalData.color}}, {{globalData.colorX}});" -->
       <view style="background: linear-gradient(to right, {{globalData.color}}, {{globalData.colorX}});" class='{{index == 0 ? "current up-cell" : "up-cell" }}' wx:for='{{verData}}' wx:key='index' >
         
         <view class="version_top_borderX" style="background-color: {{globalData.color}}"></view>

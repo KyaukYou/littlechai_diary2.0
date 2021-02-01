@@ -17,7 +17,8 @@ Page({
     page: 1,
     pageSize: 6,
     maxPage: 1,
-    allArr: []
+    allArr: [],
+    updatedTime: ""
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -51,7 +52,8 @@ Page({
       verData: arr.slice(0,this.data.page * this.data.pageSize),
       refreshBol: false,
       maxPage: num1+num2,
-      allArr: arr
+      allArr: arr,
+      updatedTime: version.result.data[0].updatedTime
     })
   },
   //scroll-view 自定义下拉刷新

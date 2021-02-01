@@ -90,7 +90,7 @@
 }
 
 .my_wrap {
-  padding-top: 30rpx;
+  padding-top: 6rpx;
   /* background-color: rgb(247, 247, 247); */
 }
 
@@ -127,7 +127,7 @@
 .version_top_borderX {
   position: absolute;
   top: 62rpx;
-  left: -9%;
+  left: -7%;
   width: 4rpx;
   bottom: -60rpx;
   margin-left: -2rpx;
@@ -144,7 +144,7 @@
   height: 26rpx;
   border-radius: 50%;
   border: 4rpx solid rgb(255,255,255);
-  left: -9%;
+  left: -7%;
   margin-left: -17rpx;
 }
 

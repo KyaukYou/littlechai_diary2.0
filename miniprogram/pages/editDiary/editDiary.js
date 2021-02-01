@@ -58,7 +58,8 @@ Page({
     let res = await wx.cloud.callFunction({
       name: 'getMyDiary',
       data: {
-        id: this.data.id
+        id: this.data.id,
+        openid: wx.getStorageSync('openid')
       }
     })    
     console.log(res)
@@ -83,11 +84,11 @@ Page({
       info: copyInfo,
       diaryArr: copyArr
     })
-    this.sortFn({
-      detail: {
-        value: result.sort
-      }
-    });
+    // this.sortFn({
+    //   detail: {
+    //     value: result.sort
+    //   }
+    // });
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -224,18 +225,21 @@ Page({
     let copy = JSON.parse(JSON.stringify(this.data.info))
     copy.sort = e.detail.value;
     let copyArr = JSON.parse(JSON.stringify(this.data.diaryArr))
-
-    if(e.detail.value === false) {
-      this.setData({
-        info: copy,
-        diaryArr: copyArr.reverse()
-      })
-    }
-    else {
-      this.setData({
-        info: copy
-      })
-    }
+    this.setData({
+      info: copy,
+      diaryArr: copyArr.reverse()
+    })
+    // if(e.detail.value === false) {
+    //   this.setData({
+    //     info: copy,
+    //     diaryArr: copyArr.reverse()
+    //   })
+    // }
+    // else {
+    //   this.setData({
+    //     info: copy
+    //   })
+    // }
   },
 
 
@@ -583,7 +587,8 @@ Page({
       name: 'updateDiary',
       data: {
         diary: diarySchema,
-        id: this.data.id
+        id: this.data.id,
+        openid: wx.getStorageSync('openid')
       }
     })
     if (res.errMsg === "cloud.callFunction:ok") {
