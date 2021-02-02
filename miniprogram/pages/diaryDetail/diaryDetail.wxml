@@ -1,2 +1,79 @@
 <!--pages/diaryDetail/diaryDetail.wxml-->
-<text>pages/diaryDetail/diaryDetail.wxml</text>
+<lc_header back="{{back}}" header_title='{{info.title}}' header_color="{{globalData.color}}" blur="{{globalData.blur}}">
+</lc_header>
+
+<!-- <l-toast
+  show="{{loadingBol}}"
+  title="{{loadingTitle}}"
+  icon="{{loadingIcon}}"
+  duration="{{loadingDuration}}"
+/> -->
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+
+      <view wx:if="{{loadingBol}}" class="diary_loading"
+        style="display: flex;align-items: center;justify-content: center; top: 8rpx;">
+        <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
+      </view>
+
+      <view class='detail-bigImg'>
+        <image src='/images/load.svg' mode='aspectFill'></image>
+        <image mode="aspectFill" src='{{info.title_image.url}}' bindtap='showBgImg'></image>
+      </view>
+
+      <view class='detail-header'>
+        <view class='detail-touxiang' bindtap='touserDetail'>
+          <image src='{{info.userInfo.avatarUrl}}'></image>
+        </view>
+        <view class='detail-title'>
+          <view class='detail-heart'>
+            <wux-icon type='{{likeArr[0] == 1 ? "md-heart" : "md-heart-empty" }}' catchtap='addLike' size='26' />
+            <wux-icon catchtap="changePaixu" class="paixu"
+              type='{{paixu == "shun" ? "ios-arrow-dropdown" : "ios-arrow-dropup" }}' size="26" />
+          </view>
+          <view class='detail-title-top'>{{info.userInfo.nickName}}</view>
+          <view class='detail-title-bottom'>
+            <text decode='true'>{{info.updatedTime}}&emsp;{{info.like}}人点赞&emsp;{{info.see}}浏览</text>
+          </view>
+        </view>
+      </view>
+
+      <view class='detail-container'>
+        <view class='detail-list' wx:if='{{item.show}}' wx:for='{{diaryArr}}' wx:for-index='allIndex'
+          wx:key='index'>
+          <view class='contact-border'>
+          </view>
+
+          <view class='detail-time'>
+            <wux-icon type='md-radio-button-on' size='20' />
+            <view class='detail-times'>{{item.date}} 第{{paixu =='shun'?allIndex+1:travelObj.data.list.length-allIndex}}天
+            </view>
+
+            <!-- <view class='detail-contact'></view> -->
+          </view>
+          <view class='detail-info'>
+            <view class='detail-list-img'>
+              <view data-index='{{allIndex}}' data-url='{{image_item.url}}'
+                class='{{item.imagesArr.length > 1 ? "detail-img-load detail-img-more" : "detail-img-load detail-img-one" }}'
+                wx:for='{{item.imagesArr}}' wx:for-index='image_index' data-smIndex='{{image_index}}' wx:key='image_index'
+                wx:for-item='image_item' src='{{image_item.url}}' bindtap='showImg'>
+                <image src='/images/load.svg'  mode='aspectFill'></image>
+                <image src='{{image_item.url}}'  mode='aspectFill'></image>
+              </view>
+
+            </view>
+            <view class='detail-list-text'>
+              <text decode='true' class='detail-list-top'>{{item.content == '' ? '木有内容啦~~~' : item.content}}</text>
+            </view>
+          </view>
+        </view>
+        <wux-icon size='21' type='md-funnel' class='contact-border-footer' />
+      </view>
+
+    </view>
+  </scroll-view>
+</view>

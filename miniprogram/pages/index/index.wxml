@@ -51,7 +51,7 @@
         <view class="diary_main diary_main_left" wx:if="{{diary_index % 2 == 0}}" style="{{diary_index+1 === diaryArr.length ? 'margin-bottom: 16rpx' : ''}}">
           <view class="diary_left">
             <image class="diary_title_image" mode='aspectFill' src='/images/load.svg'></image>
-            <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}' data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="toDetail"></image>
+            <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}' data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" data-id="{{diary_item._id}}"  bindtap="toDetail"></image>
             <view class="diary_user">
               <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
             </view>
@@ -102,7 +102,7 @@
           </view>
           <view class="diary_left">
             <image class="diary_title_image" mode='aspectFill' src='/images/load.svg'></image>
-            <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}'  data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="toDetail"></image>
+            <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}'  data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" data-id="{{diary_item._id}}" bindtap="toDetail"></image>
             <view class="diary_user">
               <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
             </view>

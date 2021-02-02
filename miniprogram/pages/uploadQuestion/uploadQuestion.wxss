@@ -26,7 +26,7 @@ textarea {
   box-sizing: border-box;
   padding: 20rpx;
   position: relative;
-  margin: 14rpx auto 0 auto;
+  margin: 0rpx auto 0 auto;
   border-radius: 10rpx;
 }
 

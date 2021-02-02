@@ -1,3 +1,12 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "lc_header": "/components/lc_header/lc_header",
+    "l-toast": "/lin-ui/dist/toast",
+    "l-icon": "/lin-ui/dist/icon",
+    "l-loading": "/lin-ui/dist/loading",
+    "wux-icon": "/components/icon/index"
+  }  
 }

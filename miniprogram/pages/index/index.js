@@ -567,6 +567,7 @@ Page({
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
     let index = e.currentTarget.dataset.index;
     let openid = e.currentTarget.dataset.openid;
+    let id = e.currentTarget.dataset.id;
     if(copy[index].lock == true) {
       if(copy[index].openid != wx.getStorageSync('openid')) {
         this.setData({
@@ -577,7 +578,15 @@ Page({
       }
       else {
         // 跳转
+        wx.navigateTo({
+          url: '/pages/diaryDetail/diaryDetail?id='+id,
+        })
       }
+    }
+    else {
+      wx.navigateTo({
+        url: '/pages/diaryDetail/diaryDetail?id='+id,
+      })
     }
   },
 
