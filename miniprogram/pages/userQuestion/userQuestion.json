@@ -5,6 +5,7 @@
   "usingComponents": {
     "lc_header": "/components/lc_header/lc_header",
     "l-toast": "/lin-ui/dist/toast",
-    "l-icon": "/lin-ui/dist/icon"
+    "l-icon": "/lin-ui/dist/icon",
+    "l-loading": "/lin-ui/dist/loading"
   }
 }

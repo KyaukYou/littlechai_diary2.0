@@ -1,12 +1,16 @@
 <lc_header header_title='更新日志' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
-<l-toast
+<!-- <l-toast
   show="{{toastBol}}"
   icon="loading"
   title="{{toastTitle}}"
   duration="{{toastDuration}}"
-/>
+/> -->
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+
+  <view wx:if="{{toastBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center; top: 10rpx;">
+      <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
+  </view>
 
   <scroll-view wx:if="{{verBol === true}}" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
     class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>

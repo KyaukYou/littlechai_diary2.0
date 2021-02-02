@@ -11,12 +11,12 @@
   duration="{{toastDuration}}"
 />
 
-<l-toast
+<!-- <l-toast
   show="{{loadingBol}}"
   title="{{loadingTitle}}"
   icon="{{loadingIcon}}"
   duration="{{loadingDuration}}"
-/>
+/> -->
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
   <view class="my_header">
@@ -38,6 +38,10 @@
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;"
     class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
     <view class="my_wrap">
+
+      <view wx:if="{{loadingBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center;">
+        <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
+      </view>
       
       <block wx:for="{{diaryArr}}" wx:for-index="diary_index" wx:for-item="diary_item" wx:key='diary_index'>
 

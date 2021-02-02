@@ -60,7 +60,6 @@ Page({
   async refresh() {
     console.log('开始刷新')
     this.setData({
-      toastBol: true,
       refreshBol: true,
       page: 1
     })

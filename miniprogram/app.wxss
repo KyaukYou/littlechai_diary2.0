@@ -239,6 +239,18 @@
   margin-bottom: 10rpx;
 }
 
+.diary_loading {
+  font-size: 24rpx;
+  color: #ccc;
+  text-align: center;
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  margin-bottom: 10rpx;
+  position: relative;
+  top: -12rpx;
+}
+
 /* my */
 .my {
   position: fixed;
