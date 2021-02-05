@@ -7,6 +7,7 @@
     "l-toast": "/lin-ui/dist/toast",
     "l-icon": "/lin-ui/dist/icon",
     "l-loading": "/lin-ui/dist/loading",
-    "wux-icon": "/components/icon/index"
+    "wux-icon": "/components/icon/index",
+    "van-icon": "/components/icon/index"
   }  
 }

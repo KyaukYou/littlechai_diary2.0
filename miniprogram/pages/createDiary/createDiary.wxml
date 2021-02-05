@@ -31,7 +31,7 @@
       <view class="lc_list">
         <view class="lc_list_title">日记标题</view>
         <view class="lc_list_info">
-          <input maxlength="20" placeholder="请输入日记标题(20字以内)" value="{{info.title}}" bindinput='changeTitle' type="text" />
+          <input maxlength="15" placeholder="请输入日记标题(15字以内)" value="{{info.title}}" bindinput='changeTitle' type="text" />
         </view>
       </view>
 

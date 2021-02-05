@@ -578,12 +578,27 @@ Page({
       }
       else {
         // 跳转
+        wx.cloud.callFunction({
+          name: 'addDiarySee',
+          data: {
+            id: id
+          }
+        })
+
         wx.navigateTo({
           url: '/pages/diaryDetail/diaryDetail?id='+id,
         })
       }
     }
     else {
+
+      wx.cloud.callFunction({
+        name: 'addDiarySee',
+        data: {
+          id: id
+        }
+      })
+
       wx.navigateTo({
         url: '/pages/diaryDetail/diaryDetail?id='+id,
       })
@@ -687,6 +702,7 @@ Page({
     }
   },
 
+  //收藏
   async setCollection(e) {
     if(wx.getStorageSync('openid')) {
       let that = this;

@@ -193,10 +193,10 @@ Page({
       })
     }
     else {
-      let bol = !e.detail.value;
+      let bol = e.detail.value;
       wx.showModal({
-        title: bol === true ? '是否关闭' : '是否开启',
-        content: bol === true ? '关闭后他人将不能查看你的日记，收藏，关注、粉丝和个人资料。' : '开启后他人将能查看你的日记，收藏，关注、粉丝和个人资料。',
+        title: bol === true ? '是否开启' : '是否关闭',
+        content: bol === true ? '开启后他人将不能查看你的日记，收藏，关注、粉丝和个人资料。' : '关闭后他人将能查看你的日记，收藏，关注、粉丝和个人资料。',
         success(val) {
   
           if(val.confirm === true) {

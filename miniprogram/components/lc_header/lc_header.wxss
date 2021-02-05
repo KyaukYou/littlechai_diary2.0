@@ -7,6 +7,7 @@
   color: white;
   box-sizing: border-box;
   padding: 0 62rpx;
+  font-size: 30rpx;
 }
 
 .index-nav {

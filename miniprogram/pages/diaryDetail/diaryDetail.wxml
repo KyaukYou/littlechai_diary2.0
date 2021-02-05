@@ -2,13 +2,6 @@
 <lc_header back="{{back}}" header_title='{{info.title}}' header_color="{{globalData.color}}" blur="{{globalData.blur}}">
 </lc_header>
 
-<!-- <l-toast
-  show="{{loadingBol}}"
-  title="{{loadingTitle}}"
-  icon="{{loadingIcon}}"
-  duration="{{loadingDuration}}"
-/> -->
-
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
 
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
@@ -30,36 +23,50 @@
           <image src='{{info.userInfo.avatarUrl}}'></image>
         </view>
         <view class='detail-title'>
-          <view class='detail-heart'>
-            <wux-icon type='{{likeArr[0] == 1 ? "md-heart" : "md-heart-empty" }}' catchtap='addLike' size='26' />
-            <wux-icon catchtap="changePaixu" class="paixu"
-              type='{{paixu == "shun" ? "ios-arrow-dropdown" : "ios-arrow-dropup" }}' size="26" />
-          </view>
           <view class='detail-title-top'>{{info.userInfo.nickName}}</view>
           <view class='detail-title-bottom'>
             <text decode='true'>{{info.updatedTime}}&emsp;{{info.like}}人点赞&emsp;{{info.see}}浏览</text>
           </view>
         </view>
+
+        <view class="detail_bottomx">
+          <view class="diary_like" bindtap="setLike">
+            <van-icon wx:if="{{info.inLike  === false}}" name="good-job-o" color="#999" size="38rpx" />
+            <van-icon wx:if="{{info.inLike  === true}}" name="good-job" color="{{globalData.color}}" size="38rpx" />
+            <view class="diary_bottom_view" style="color: {{info.inLike  === false ? '#999' : globalData.color}}">
+              {{info.like}}</view>
+          </view>
+          <view class="diary_collection" bindtap="setCollection">
+            <van-icon wx:if="{{info.inCollection  === false}}" name="star-o" color="#999" size="38rpx" />
+            <van-icon wx:if="{{info.inCollection  === true}}" name="star" color="{{globalData.color}}" size="38rpx" />
+            <view class="diary_bottom_view" style="color: {{info.inCollection  === false ? '#999' : globalData.color}}">
+              {{info.collection}}</view>
+          </view>
+        </view>
+
       </view>
 
       <view class='detail-container'>
         <view class='detail-list' wx:if='{{item.show}}' wx:for='{{diaryArr}}' wx:for-index='allIndex'
           wx:key='index'>
-          <view class='contact-border'>
+          <view class='contact-border' style="background-color: {{globalData.color}}">
           </view>
 
-          <view class='detail-time'>
-            <wux-icon type='md-radio-button-on' size='20' />
-            <view class='detail-times'>{{item.date}} 第{{paixu =='shun'?allIndex+1:travelObj.data.list.length-allIndex}}天
+          <view class='detail-time' style="color: {{globalData.color}}">
+            <view class="detail-times-icon">
+              <view style="border-color: {{globalData.color}}" class="detail-times-icon-bg"></view>
+              <view style="background-color: {{globalData.color}}" class="detail-times-icon-sm"></view>
+            </view>
+            <view class='detail-times'>{{item.date}} 第{{paixu == true ?allIndex+1:diaryArr.length-allIndex}}天
             </view>
 
             <!-- <view class='detail-contact'></view> -->
           </view>
           <view class='detail-info'>
             <view class='detail-list-img'>
-              <view data-index='{{allIndex}}' data-url='{{image_item.url}}'
+              <view data-index='{{allIndex}}'
                 class='{{item.imagesArr.length > 1 ? "detail-img-load detail-img-more" : "detail-img-load detail-img-one" }}'
-                wx:for='{{item.imagesArr}}' wx:for-index='image_index' data-smIndex='{{image_index}}' wx:key='image_index'
+                wx:for='{{item.imagesArr}}' wx:for-index='image_index' data-smindex='{{image_index}}' wx:key='image_index'
                 wx:for-item='image_item' src='{{image_item.url}}' bindtap='showImg'>
                 <image src='/images/load.svg'  mode='aspectFill'></image>
                 <image src='{{image_item.url}}'  mode='aspectFill'></image>
@@ -72,6 +79,71 @@
           </view>
         </view>
         <wux-icon size='21' type='md-funnel' class='contact-border-footer' />
+      </view>
+
+
+        <!-- 评论 -->
+      <view class='chat' style='display: {{showAdd}}'>
+        <view class='chat-header'>
+          <wux-icon type='md-text' size='26' />
+          <view class='chat-header-text'>评论列表 共{{travelObj.data.chat.length-0 + travelObj.data.chats.length-0}}条评论</view>
+        </view>
+        <view class='chat-container'>
+          <view class='chat-wrap' wx:if='{{travelObj.data.chat.length == 0 ? false : true}}'>
+            <view class='chat-wrap-lists' wx:for='{{travelObj.data.chat}}' wx:key='index'>
+              <view class='chat-wrap-list'>
+                <view class='chat-wrap-avatar' data-openid='{{item.openid}}' bindtap='toUsers'>
+                  <image src='{{item.avatar}}'></image>
+                </view>
+                <view class='chat-wrap-top'>
+                  <text>{{item.name}}</text> <text class='chat-wrap-time'>{{item.time}}</text>
+                </view>
+                <view class='chat-wrap-center'>
+                  {{item.text}} <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat'
+                    hover-class='huifuHover' data-name='{{item.name}}' data-index='{{index}}'>回复</view>
+                </view>
+      
+                <!-- 楼中楼 -->
+                <view class='chat-wrap-child' wx:if='{{sItem.index == index ? true : false}}'
+                  wx:for='{{travelObj.data.chats}}' wx:for-index='sIndex' wx:for-item='sItem' wx:key='index'>
+                  <view class='chat-wrap-avatar chat-wrap-avatar1' data-openid='{{sItem.openid}}' bindtap='toUsers'>
+                    <image src='{{sItem.avatar}}'></image>
+                  </view>
+                  <view class='chat-wrap-top chat-wrap-top1'>
+                    <text>{{sItem.name}}</text> <text class='chat-wrap-time'>{{sItem.time}}</text>
+                  </view>
+                  <view class='chat-wrap-center chat-wrap-center1'>
+                    回复 <text class='chat-wrap-center-ctoc'>{{sItem.chatName}}：</text>
+                    {{sItem.text}}
+                    <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat' hover-class='huifuHover'
+                      data-name='{{sItem.name}}' data-index='{{index}}'>回复</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class='chat-nowrap' wx:if='{{travelObj.data.chat.length == 0 ? true : false}}'>
+            一条评论也没有呀~
+          </view>
+        </view>
+        <view class='chat-write'>
+          <view class='chat-write-header'>
+            <wux-icon type='md-paper-plane' size='26' />
+            <view class='chat-write-header-text'>发表评论</view>
+          </view>
+          <view class='chat-write-textarea'>
+            <textarea cursor-spacing='120' maxlength='100' value='{{chatData}}' placeholder='{{pText}}' bindinput='getChat'>
+      
+                <view class='chat-write-footer'>
+                  <view class='chat-write-num'>{{chatData.length}}/100</view>
+                  <view class='chat-write-header-btn' type="light" bindtap='cancelChats' >取消</view>
+                  <view class='chat-write-btn'>
+                    <view hover-class='chooseBtn-hover' bindtap='uploadChat' style="background-color: {{globalData.color}}">提交</view>
+                  </view>
+                </view>
+              </textarea>
+          </view>
+        </view>
       </view>
 
     </view>
