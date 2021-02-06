@@ -26,8 +26,8 @@
           </view>
           <view class="myList-top">{{questionDetail.answerInfo.updatedTime}}</view>
         </view>
-        <view class="myList-wrap myList-wrap-nomargin" wx:if='{{questionDetail.answer === true}}'>
-          <image src='{{questionDetail.answerInfo.userInfo.avatarUrl}}'></image>
+        <view data-openid='{{questionDetail.answerInfo.userInfo.openid}}' catchtap='toUsers' class="myList-wrap myList-wrap-nomargin" wx:if='{{questionDetail.answer === true}}'>
+          <image  src='{{questionDetail.answerInfo.userInfo.avatarUrl}}'></image>
           {{questionDetail.answerInfo.userInfo.nickName}}
         </view>
         <text wx:if='{{questionDetail.answer === true}}' decode class="myList-wrap">{{questionDetail.answerInfo.answer}}</text>

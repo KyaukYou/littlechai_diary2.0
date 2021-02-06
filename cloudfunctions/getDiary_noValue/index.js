@@ -60,9 +60,12 @@ exports.main = async (event, context) => {
     let user = await db.collection('users').where({
       openid: res.data[i].openid
     }).field({
-      userInfo: true
-    }).get();
+      'userInfo.nickName': true,
+      'userInfo.avatarUrl': true,
+      openid: true
+    }).get(); 
     res.data[i].userInfo = user.data[0].userInfo
+    res.data[i].userInfo.openid = user.data[0].openid
   }
 
   return res;

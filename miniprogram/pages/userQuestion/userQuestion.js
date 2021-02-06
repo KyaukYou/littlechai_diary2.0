@@ -21,6 +21,11 @@ Page({
     noQuestion: false
 
   },
+  toUsers(e) {
+    wx.navigateTo({
+      url: '../userInfo/userInfo?id=' + e.currentTarget.dataset.openid,
+    })
+  },
   async refresh() {
     this.setData({
       refreshBol: true,

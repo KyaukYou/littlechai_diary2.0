@@ -21,9 +21,11 @@ exports.main = async (event, context) => {
       openid: res.data[0].answerInfo.openid
     }).field({
       'userInfo.nickName': true,
-      'userInfo.avatarUrl': true
+      'userInfo.avatarUrl': true,
+      openid: true
     }).get();
-    res.data[0].answerInfo.userInfo = user.data[0].userInfo
+    res.data[0].answerInfo.userInfo = user.data[0].userInfo;
+    res.data[0].answerInfo.userInfo.openid = user.data[0].openid
     return res;
   }
 

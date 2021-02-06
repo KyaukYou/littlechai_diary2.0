@@ -580,6 +580,8 @@
   box-sizing: border-box;
   border: 2rpx solid rgb(223, 223, 223);
   font-size: 26rpx;
+  border-radius: 10rpx;
+  box-shadow: 0px 1px 3px #e7e7e7;
 }
 
 .chat-write-textarea textarea {
@@ -673,7 +675,7 @@
   width: 64rpx;
   height: 64rpx;
   border-radius: 50%;
-  background-color: gray;
+  background-color: transparent;
   overflow: hidden;
   position: absolute;
   left: 2rpx;
@@ -720,7 +722,7 @@
   padding-left: 76rpx;
   font-size: 26rpx;
   line-height: 40rpx;
-  color: rgb(155, 155, 155);
+  color: #333;
   margin-bottom: 10rpx;
 }
 
@@ -748,14 +750,14 @@
 .chat-wrap-top .chat-wrap-time {
   float: right;
   font-size: 20rpx;
-  font-weight: bold;
+  font-weight: 600;
   color: rgb(155, 155, 155);
   transition: all .2s ease;
 }
 
 .chat-wrap-huifu {
   font-size: 24rpx;
-  color: #f47695;
+  color: #64ace7;
   margin-left: 10rpx;
 }
 

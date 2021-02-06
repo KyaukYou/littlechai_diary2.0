@@ -1,7 +1,10 @@
 {
   "pages": [
-    "pages/diaryDetail/diaryDetail",
     "pages/index/index",
+    "pages/userInfo/userInfo",
+    
+    "pages/diaryDetail/diaryDetail",
+    
     "pages/editVersion/editVersion",
     "pages/myCollection/myCollection",
     

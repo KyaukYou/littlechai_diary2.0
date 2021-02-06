@@ -50,7 +50,7 @@
           <view class="diary_left">
             <image class="diary_title_image" mode='aspectFill' src='/images/load.svg'></image>
             <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}' data-index="{{diary_index}}" data-id="{{diary_item._id}}" bindtap="toEditDiary"></image>
-            <view class="diary_user">
+            <view class="diary_user" data-openid='{{diary_item.userInfo.openid}}' catchtap='toUsers'>
               <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
             </view>
             <view class="diary_lock" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="lockDiary">
@@ -101,7 +101,7 @@
           <view class="diary_left">
             <image class="diary_title_image" mode='aspectFill' src='/images/load.svg'></image>
             <image class="diary_title_image" mode='aspectFill' src='{{diary_item.title_image.url}}'  data-index="{{diary_index}}" data-id="{{diary_item._id}}" bindtap="toEditDiary"></image>
-            <view class="diary_user">
+            <view class="diary_user" data-openid='{{diary_item.userInfo.openid}}' catchtap='toUsers'>
               <image src='{{diary_item.userInfo.avatarUrl}}'></image> by <view>{{diary_item.userInfo.nickName}}</view>
             </view>
             <view class="diary_lock" data-index="{{diary_index}}" data-openid="{{diary_item.openid}}" bindtap="lockDiary">

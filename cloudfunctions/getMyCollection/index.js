@@ -50,10 +50,13 @@ exports.main = async (event, context) => {
         openid: resX.data[0].openid
       })
       .field({
-        userInfo: true
+        'userInfo.nickName': true,
+        'userInfo.avatarUrl': true,
+        openid: true
       })
       .get();
       resX.data[0].userInfo = user.data[0].userInfo
+      resX.data[0].userInfo.openid = user.data[0].openid
       arr.push(resX.data[0])
     }
   }  

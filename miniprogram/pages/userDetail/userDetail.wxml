@@ -25,7 +25,7 @@
               </picker>
             </view>
           </view>
-
+      
           <view class='myInfo-detail-list'>
             <view class='myInfo-left'>
               <image src='/images/age.svg'></image>
@@ -36,7 +36,7 @@
               </input>
             </view>
           </view>
-
+      
           <view class='myInfo-detail-list'>
             <view class='myInfo-left'>
               <image src='/images/email.svg'></image>
@@ -47,7 +47,7 @@
               </input>
             </view>
           </view>
-
+      
           <view class='myInfo-detail-list'>
             <view class='myInfo-left'>
               <image src='/images/area.svg'></image>
@@ -61,16 +61,15 @@
               </picker>
             </view>
           </view>
-
-
+      
+      
         </view>
         <view class='myInfo-center'>
           <textarea placeholder='写点什么吧~' maxlength='500' placeholder-class='textarea-sm' value='{{goodat}}'
             bindinput='bindTextareaChange'>
-          </textarea>
+            </textarea>
           <view class='edit-textarea-length'>{{goodat.length <= 9 ? '0' + goodat.length: goodat.length}} / 500</view>
         </view>
-
       </view>
 
 

@@ -137,10 +137,12 @@
   width: 4rpx;
   bottom: -60rpx;
   margin-left: -2rpx;
+  border-radius: 6rpx;
 }
 
 .current .version_top_borderX {
   top: 70rpx;
+  border-radius: 6rpx;
 }
 
 .version_top_circleX {

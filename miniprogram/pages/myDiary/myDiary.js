@@ -414,6 +414,12 @@ Page({
     
   },
 
+  toUsers(e) {
+    wx.navigateTo({
+      url: '../userInfo/userInfo?id=' + e.currentTarget.dataset.openid,
+    })
+  },
+
   //点赞
   async setLike(e) {
 

@@ -1,5 +1,5 @@
 <!--pages/myQuestion/myQuestion.wxml-->
-<lc_header back="{{back}}" header_title='问题列表' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
+<lc_header back="{{back}}" header_title='问题反馈' header_color="{{globalData.color}}" blur="{{globalData.blur}}"></lc_header>
 
 <!-- <l-toast
   show="{{loadingBol}}"

@@ -54,6 +54,12 @@ Page({
     })
   },
 
+  toUsers(e) {
+    wx.navigateTo({
+      url: '../userInfo/userInfo?id=' + e.currentTarget.dataset.openid,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

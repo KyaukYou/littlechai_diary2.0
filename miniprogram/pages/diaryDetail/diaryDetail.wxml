@@ -2,6 +2,13 @@
 <lc_header back="{{back}}" header_title='{{info.title}}' header_color="{{globalData.color}}" blur="{{globalData.blur}}">
 </lc_header>
 
+<l-toast
+  show="{{loginBol}}"
+  title="{{loginTitle}}"
+  icon="{{loginIcon}}"
+  duration="{{loginDuration}}"
+/>
+
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
 
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
@@ -19,7 +26,7 @@
       </view>
 
       <view class='detail-header'>
-        <view class='detail-touxiang' bindtap='touserDetail'>
+        <view class='detail-touxiang' bindtap='touserDetail' data-openid='{{info.userInfo.openid}}' bindtap='toUsers'>
           <image src='{{info.userInfo.avatarUrl}}'></image>
         </view>
         <view class='detail-title'>
@@ -74,62 +81,66 @@
 
             </view>
             <view class='detail-list-text'>
-              <text decode='true' class='detail-list-top'>{{item.content == '' ? '木有内容啦~~~' : item.content}}</text>
+              <text decode='true' class='detail-list-top'>{{item.content == '' ? '这里还是空空如也呢~' : item.content}}</text>
             </view>
           </view>
         </view>
-        <wux-icon size='21' type='md-funnel' class='contact-border-footer' />
+        <view class='contact-border-footer' >
+          <view style="background-color: {{globalData.color}}" class="detail-footer-child1"></view>
+          <view style="background-color: {{globalData.color}}" class="detail-footer-child2"></view>
+          <view style="background-color: {{globalData.color}}" class="detail-footer-child3"></view>
+        </view>
       </view>
 
 
-        <!-- 评论 -->
-      <view class='chat' style='display: {{showAdd}}'>
+      <!-- 评论 -->
+      <view class='chat' wx:if="{{commentBol}}">
         <view class='chat-header'>
-          <wux-icon type='md-text' size='26' />
-          <view class='chat-header-text'>评论列表 共{{travelObj.data.chat.length-0 + travelObj.data.chats.length-0}}条评论</view>
+          <van-icon class="detail_comment_icon" name="chat" color="{{globalData.color}}" size="38rpx" />
+          <view class='chat-header-text' style="color: {{globalData.color}}">评论列表 共{{commentNum}}条评论</view>
         </view>
         <view class='chat-container'>
           <view class='chat-wrap' wx:if='{{travelObj.data.chat.length == 0 ? false : true}}'>
-            <view class='chat-wrap-lists' wx:for='{{travelObj.data.chat}}' wx:key='index'>
+            <view class='chat-wrap-lists' wx:for='{{commentArr}}' wx:key='index'>
               <view class='chat-wrap-list'>
                 <view class='chat-wrap-avatar' data-openid='{{item.openid}}' bindtap='toUsers'>
-                  <image src='{{item.avatar}}'></image>
+                  <image src='{{item.userInfo.avatarUrl}}'></image>
                 </view>
                 <view class='chat-wrap-top'>
-                  <text>{{item.name}}</text> <text class='chat-wrap-time'>{{item.time}}</text>
+                  <text style="color: {{globalData.color}}">{{item.userInfo.nickName}}</text> <text class='chat-wrap-time'>{{item.updatedTime}}</text>
                 </view>
                 <view class='chat-wrap-center'>
-                  {{item.text}} <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat'
-                    hover-class='huifuHover' data-name='{{item.name}}' data-index='{{index}}'>回复</view>
+                  {{item.content}} <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat'
+                    data-name='{{item.userInfo.nickName}}' data-index='{{index}}' data-openid='{{item.userInfo.openid}}' >回复</view>
                 </view>
       
                 <!-- 楼中楼 -->
-                <view class='chat-wrap-child' wx:if='{{sItem.index == index ? true : false}}'
-                  wx:for='{{travelObj.data.chats}}' wx:for-index='sIndex' wx:for-item='sItem' wx:key='index'>
-                  <view class='chat-wrap-avatar chat-wrap-avatar1' data-openid='{{sItem.openid}}' bindtap='toUsers'>
-                    <image src='{{sItem.avatar}}'></image>
+                <view class='chat-wrap-child' wx:if='{{item.arr.length === 0 ? false : true}}'
+                  wx:for='{{item.arr}}' wx:for-index='sIndex' wx:for-item='sItem' wx:key='sIndex'>
+                  <view class='chat-wrap-avatar chat-wrap-avatar1' data-openid='{{sItem.userInfo.openid}}' bindtap='toUsers'>
+                    <image src='{{sItem.userInfo.avatarUrl}}'></image>
                   </view>
                   <view class='chat-wrap-top chat-wrap-top1'>
-                    <text>{{sItem.name}}</text> <text class='chat-wrap-time'>{{sItem.time}}</text>
+                    <text>{{sItem.userInfo.nickName}}</text> <text class='chat-wrap-time'>{{sItem.updatedTime}}</text>
                   </view>
                   <view class='chat-wrap-center chat-wrap-center1'>
-                    回复 <text class='chat-wrap-center-ctoc'>{{sItem.chatName}}：</text>
-                    {{sItem.text}}
-                    <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat' hover-class='huifuHover'
-                      data-name='{{sItem.name}}' data-index='{{index}}'>回复</view>
+                    回复 <text class='chat-wrap-center-ctoc'>{{sItem.comment.nickName}}：</text>
+                    {{sItem.content}}
+                    <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat' 
+                      data-name='{{sItem.userInfo.nickName}}' data-index='{{index}}' data-openid='{{sItem.userInfo.openid}}'>回复</view>
                   </view>
                 </view>
               </view>
             </view>
           </view>
-          <view class='chat-nowrap' wx:if='{{travelObj.data.chat.length == 0 ? true : false}}'>
-            一条评论也没有呀~
+          <view class='chat-nowrap' wx:if='{{commentArr.length == 0 ? true : false}}'>
+            一条评论也没有呢~
           </view>
         </view>
         <view class='chat-write'>
           <view class='chat-write-header'>
-            <wux-icon type='md-paper-plane' size='26' />
-            <view class='chat-write-header-text'>发表评论</view>
+            <van-icon name="smile-comment" color="{{globalData.color}}" size="38rpx" />
+            <view class='chat-write-header-text' style="color: {{globalData.color}}">发表评论</view>
           </view>
           <view class='chat-write-textarea'>
             <textarea cursor-spacing='120' maxlength='100' value='{{chatData}}' placeholder='{{pText}}' bindinput='getChat'>

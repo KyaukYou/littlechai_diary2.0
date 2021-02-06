@@ -371,6 +371,12 @@ Page({
 
    },
 
+   toUsers(e) {
+    wx.navigateTo({
+      url: '../userInfo/userInfo?id=' + e.currentTarget.dataset.openid,
+    })
+  },
+
   //  锁定解锁
   async lockDiary(e) {
     let that = this;

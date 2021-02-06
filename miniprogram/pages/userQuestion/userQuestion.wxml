@@ -32,8 +32,8 @@
           <view class="myList-left-no" wx:if='{{item.answer == false }}'>未回复</view>
         </view>
         <view class="myList-top-top">
-          <image src='{{item.userInfo.avatarUrl}}'></image>
-          <text>{{item.userInfo.nickName}}</text>
+          <image src='{{item.userInfo.avatarUrl}}' data-openid='{{item.userInfo.openid}}' catchtap='toUsers'></image>
+          <text data-openid='{{item.userInfo.openid}}' catchtap='toUsers'>{{item.userInfo.nickName}}</text>
         </view>
         <view class="myList-top">
           <text>{{item.question}}</text>

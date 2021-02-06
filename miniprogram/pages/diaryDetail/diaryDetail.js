@@ -25,11 +25,20 @@ Page({
     chatsBol: false,
     chatsIndex: 0,
     chatsName: '',
+    chatsOpenid: '',
+    loginBol: false,
+    loginTitle: '',
+    loginDuration: 0,
+    loginIcon: '',
+    commentArr: [],
+    commentNum: 0,
+    commentBol: false
   },
-  refresh() {
+  async refresh() {
     this.setData({
       refreshBol: true
     })
+    this.init();
     
   },
 
@@ -309,7 +318,7 @@ Page({
   // 评论头像点击
   toUsers(e) {
     wx.navigateTo({
-      url: '../userDetail/userDetail?id=' + e.currentTarget.dataset.openid,
+      url: '../userInfo/userInfo?id=' + e.currentTarget.dataset.openid,
     })
   },
   // 评论内容
@@ -319,114 +328,124 @@ Page({
     })
   },
   //回复评论
-  uploadChat() {
+  async uploadChat() {
     let that = this;
     if (!wx.getStorageSync('openid')) {
-      $wuxToptips().error({
-        hidden: true,
-        text: '请先登录',
-        duration: 2500,
-        success() { },
+      this.setData({
+        loginBol: true,
+        loginTitle: '请先登录',
+        loginDuration: 1500
       })
       return;
     }
 
     if (this.data.chatData == '') {
-      wx.showToast({
-        image: '../../images/error.png',
-        title: '请输入内容',
+      this.setData({
+        loginBol: true,
+        loginTitle: '请输入内容',
+        loginDuration: 2000
       })
     } 
     else {
-      wx.showLoading({
-        mask: true,
-        title: '正在评论',
+      this.setData({
+        loginBol: true,
+        loginIcon: 'loading',
+        loginTitle: '评论中',
+        loginDuration: 99999
       })
-      let info = wx.getStorageSync('userInfo');
-      let thisTime = this.getThisTime();
-
+  
       //楼中楼
-      if(this.data.chatsBol) {
-        let val = {
-          index: this.data.chatsIndex,
-          name: info.nickName,
-          avatar: info.avatarUrl,
-          text: this.data.chatData,
-          time: thisTime,
-          chatName: this.data.chatsName,
-          openid: wx.getStorageSync('openid')
-        }
-        wx.cloud.callFunction({
-          name: 'uploadChats',
+      if(this.data.chatsBol) {  
+        let time = await app.timeStampX(new Date().getTime());
+
+        let res = await wx.cloud.callFunction({
+          name: 'uploadComment',
           data: {
-            id: that.data.travelId,
-            val: val
-          },
-          success(res) {
-            // console.log(res)
-            wx.hideLoading();
-            wx.showToast({
-              title: '评论成功'
-            })
-            that.setData({
-              chatData: ''
-            })
-          },
-          fail(res) {
-            // console.log(res)
-          },
-          complete(res) {
-            // console.log(res);
-            that.initData(that.data.travelId);
-            that.initUser();
+            diary_id: this.data.id,
+            updatedTime: time,
+            openid: wx.getStorageSync('openid'),
+            comment_openid: this.data.chatsOpenid,
+            comment_index: this.data.chatsIndex,
+            bol: true,
+            content: this.data.chatData
           }
-        })    
+        })
+        console.log(res)
+        if(res.result.errMsg === "collection.update:ok") {
+          this.setData({
+            loginBol: true,
+            loginIcon: 'success',
+            loginTitle: '评论成功',
+            loginDuration: 1500,
+            chatData: '',
+            chatsName: '',
+            chatsOpenid: '',
+            pText: '留下你的评论呀~',
+            chatsBol: false
+          })
+
+          this.getComment();
+        }
+
       }
       //正常评论
       else {
-        let val = {
-          name: info.nickName,
-          avatar: info.avatarUrl,
-          text: this.data.chatData,
-          time: thisTime,
-          openid: wx.getStorageSync('openid'),
-        }
+        let time = await app.timeStampX(new Date().getTime());
 
-        wx.cloud.callFunction({
-          name: 'uploadChat',
+        let res = await wx.cloud.callFunction({
+          name: 'uploadComment',
           data: {
-            id: that.data.travelId,
-            val: val
-          },
-          success(res) {
-            // console.log(res)
-            wx.hideLoading();
-            wx.showToast({
-              title: '评论成功'
-            })
-            that.setData({
-              chatData: ''
-            })
-          },
-          fail(res) {
-            // console.log(res)
-          },
-          complete(res) {
-            // console.log(res);
-            that.initData(that.data.travelId);
-            that.initUser();
+            diary_id: this.data.id,
+            updatedTime: time,
+            createdTime: time,
+            openid: wx.getStorageSync('openid'),
+            bol: false,
+            content: this.data.chatData
           }
-        })        
+        })
+
+        if(res.result.errMsg === "collection.update:ok") {
+          this.setData({
+            loginBol: true,
+            loginIcon: 'success',
+            loginTitle: '评论成功',
+            loginDuration: 1500,
+            chatData: ""
+          })
+
+          this.getComment();
+        }
+         
       }
     }
 
   },
 
+  //获得评论内容
+  async getComment() {
+    console.log(this.data.id)
+    let res = await wx.cloud.callFunction({
+      name: 'getComment',
+      data: {
+        diary_id: this.data.id
+      }
+    })
+    console.log(res)
+    let num = 0;
+    for(let i=0; i<res.result.length; i++) {
+      num++;
+      for(let j=0; j<res.result[i].arr.length; j++) {
+        num++
+      }
+    }
+    this.setData({
+      commentArr: res.result,
+      commentNum: num
+    })
+  },
+
   //楼中楼
   chattochat(e) {
-    // wx.showToast({
-    //   title: '即将开放',
-    // })
     let index = e.currentTarget.dataset.index;
     let name = e.currentTarget.dataset.name;
     this.setData({
@@ -434,18 +453,38 @@ Page({
       chatsName: name,
       chatData: '',
       pText: '回复：'+ name,
-      chatsBol: true
+      chatsBol: true,
+      chatsOpenid: e.currentTarget.dataset.openid
     })
-
   },
 
   //取消楼中楼
   cancelChats() {
     this.setData({
       chatData: '',
+      chatsName: '',
+      chatsOpenid: '',
       pText: '留下你的评论呀~',
       chatsBol: false
     })
+  },
+
+  //获得评论权限
+  async getCommentBol() {
+    let res = await wx.cloud.callFunction({
+      name: 'getCommentBol'
+    })
+    console.log(res)
+    if(res.result.errMsg === "collection.get:ok") {
+      this.setData({
+        commentBol: res.result.data[0].controlChat,
+        refreshBol: false
+      })
+
+      if(res.result.data[0].controlChat === true) {
+        this.getComment();
+      }
+    }
   },
   
   /**
@@ -453,8 +492,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      // id: options.id
-      id: '1526e12a6016b30b019533d22860cb09'
+      id: options.id
     })  
     this.setData({
       loadingBol: true,
@@ -468,7 +506,8 @@ Page({
 
   async init() {
     await this.getUserArr();
-    this.getDiaryDetail();
+    await this.getDiaryDetail();
+    await this.getCommentBol();
   },
 
   /**

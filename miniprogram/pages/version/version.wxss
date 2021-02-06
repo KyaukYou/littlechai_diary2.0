@@ -129,12 +129,14 @@
   top: 62rpx;
   left: -7%;
   width: 4rpx;
-  bottom: -60rpx;
+  bottom: -62rpx;
   margin-left: -2rpx;
+  border-radius: 6rpx;
 }
 
 .current .version_top_borderX {
   top: 70rpx;
+  border-radius: 6rpx;
 }
 
 .version_top_circleX {
