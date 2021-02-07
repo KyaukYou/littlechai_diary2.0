@@ -430,13 +430,13 @@ Page({
   //管理员权限：跳转到用户列表
   toUserList() {
     wx.navigateTo({
-      url: '/pages/userList/userList',
+      url: '/pages/adminUser/adminUser',
     })
   },
   //管理员权限：跳转到日记列表
   toDiaryList() {
     wx.navigateTo({
-      url: '/pages/diaryList/diaryList',
+      url: '/pages/adminDiary/adminDiary',
     })
   },
 
@@ -503,6 +503,29 @@ Page({
       url: '/pages/myCollection/myCollection',
     })
   },
+
+    //跳转到他的关注
+    toMyWatch() {
+      let id = wx.getStorageSync('openid')
+      wx.navigateTo({
+        url: '/pages/myWatch/myWatch?id='+id,
+      })
+    },
+  
+    //跳转到他的粉丝
+    toMyFans() {
+      let id = wx.getStorageSync('openid')
+      wx.navigateTo({
+        url: '/pages/myFans/myFans?id='+id,
+      })
+    },
+
+    //跳转到用户列表
+    toAdminUser() {
+      wx.navigateTo({
+        url: '/pages/adminUser/adminUser'
+      })
+    },
 
   /**
    * 生命周期函数--监听页面加载

@@ -1,0 +1,36 @@
+<lc_header  header_title='{{name}}的粉丝' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
+
+<l-toast
+  show="{{toastBol}}"
+  icon="{{toastIcon}}"
+  title="{{toastTitle}}"
+  duration="{{toastDuration}}"
+/>
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+ 
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
+    <view class="my_wrap">
+      <view wx:if="{{loadingBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center;">
+        <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
+      </view>
+    <view class='list' wx:for='{{info}}' wx:key='index'>
+      <view class='list-img' data-openid='{{item.openid}}' bindtap='toUsers'>
+        <image src='{{item.userInfo.avatarUrl}}'></image>
+      </view>
+      <view class='list-name' data-openid='{{item.openid}}' bindtap='toUsers'>
+        <view class='list-text'>{{item.userInfo.nickName}}
+          <view class='list-gender'>
+            <image src='{{item.userInfo.gender == 1 ? "/images/man.svg" : "/images/woman.svg" }}'></image>
+          </view>
+        </view>
+      </view>
+      <view style="border-color: {{globalData.color}}; color: white; background-color: {{globalData.color}}" class='guanzhu' bindtap='watchUser' data-index='{{index}}' data-openid='{{item.openid}}'>{{item.watchText}}
+        <l-loading show='{{item.watchloading}}' size="mini" type="circle" color="white" style="transform: scale(0.5)"></l-loading>
+      </view>
+    </view>
+
+    </view>
+  </scroll-view>
+</view>

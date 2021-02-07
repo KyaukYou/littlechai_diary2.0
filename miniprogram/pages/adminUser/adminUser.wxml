@@ -1,0 +1,37 @@
+<lc_header  header_title='用户列表' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
+
+<l-toast
+  show="{{toastBol}}"
+  icon="{{toastIcon}}"
+  title="{{toastTitle}}"
+  duration="{{toastDuration}}"
+/>
+
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
+ 
+  <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
+    class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
+    <view class="my_wrap">
+  
+    <view class='list' wx:for='{{info}}' wx:key='index'>
+      <view class='list-img' data-openid='{{item.openid}}' bindtap='toUsers'>
+        <image src='{{item.userInfo.avatarUrl}}'></image>
+      </view>
+      <view class='list-name' data-openid='{{item.openid}}' bindtap='toUsers'>
+        <view class='list-text'>{{item.userInfo.nickName}}
+          <view class='list-gender'>
+            <image src='{{item.userInfo.gender == 1 ? "/images/man.svg" : "/images/woman.svg" }}'></image>
+          </view>
+        </view>
+        <view class="list_time">创建时间：<text>{{item.created_time}}</text></view>
+        <view class="list_time">登录时间：<text>{{item.updated_time}}</text></view>
+      </view>
+    </view>
+    <view wx:if="{{loadingBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center;">
+        <l-loading show size="mini" type="change" color="{{globalData.color}}"></l-loading>
+      </view>
+    <view wx:if="{{bottomBol}}" class="diary_none">人家是有底线的呢~</view>
+
+    </view>
+  </scroll-view>
+</view>

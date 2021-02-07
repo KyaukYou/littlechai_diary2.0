@@ -1,25 +1,30 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/my/my",
+    "pages/adminDiary/adminDiary",
+    "pages/adminUser/adminUser",
     "pages/userInfo/userInfo",
-    
+    "pages/userWatch/userWatch",
+    "pages/userFans/userFans",
+    "pages/myWatch/myWatch",
+    "pages/myFans/myFans",
+    "pages/adminEditDiary/adminEditDiary",
+    "pages/userDiary/userDiary",
+    "pages/userCollection/userCollection",
     "pages/diaryDetail/diaryDetail",
-    
     "pages/editVersion/editVersion",
     "pages/myCollection/myCollection",
-    
     "pages/myDiary/myDiary",
     "pages/editDiary/editDiary",
     "pages/userQuestion/userQuestion",
     "pages/myQuestion/myQuestion",
     "pages/userDetail/userDetail", 
-    "pages/my/my",
     "pages/userQuestionDetail/userQuestionDetail",
     "pages/myQuestionDetail/myQuestionDetail",
     "pages/uploadQuestion/uploadQuestion",
     "pages/answer/answer",
     "pages/createDiary/createDiary",
-    
     "pages/version/version"
   ],
   "window": {

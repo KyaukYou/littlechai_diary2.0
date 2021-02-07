@@ -73,7 +73,7 @@
                 {{info.collection_num || 0}}
               </view>
             </view>
-            <view class="my_info_list">
+            <view class="my_info_list" bindtap="toMyWatch">
               <view class="my_info_list_text">
                 我的关注
               </view>
@@ -81,7 +81,7 @@
                 {{info.following_num || 0}}
               </view>
             </view>
-            <view class="my_info_list">
+            <view class="my_info_list" bindtap="toMyFans">
               <view class="my_info_list_text">
                 我的粉丝
               </view>
@@ -113,7 +113,7 @@
             <switch checked='{{info.secret}}' bindchange='changeSecret' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />
           </view>
         </l-list>
-        <l-list title="消息通知" image="/images/notice.svg" />
+        <!-- <l-list title="消息通知" image="/images/notice.svg" /> -->
         <l-list bindtap="toPick" title="全局配色" image="/images/color.svg" tag-content="点击修改"  tag-position="right" tag-color="{{globalData.color}}" />
         <l-list bindtap="toVersion" title="更新日志" image="/images/ver.svg" tag-content="{{version_text}}" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>
         <l-list bindtap="toQuestion" title="问题反馈" image="/images/bug.svg" tag-content="{{answer_text}}" tagShape="circle" tag-position="right" tag-color="{{globalData.color}}"/>

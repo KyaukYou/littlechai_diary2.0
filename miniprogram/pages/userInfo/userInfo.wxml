@@ -1,7 +1,7 @@
 <!--pages/userInfo/userInfo.wxml-->
 <l-toast
   show="{{toastBol}}"
-  icon="loading"
+  icon="{{toastIcon}}"
   title="{{toastTitle}}"
   duration="{{toastDuration}}"
 />
@@ -23,6 +23,13 @@
           
 
           <view class="my_info_top">
+
+            <view  catchtap="watchUser" class="info_watch" style="background-color: {{globalData.color}}; opacity: {{ifWatch === true ? 1 : 0.8}}">
+              {{watchText}}
+              <l-loading show='{{watchBol}}' size="mini" type="circle" color="white" style="transform: scale(0.5)"></l-loading>
+              
+            </view>
+
             <view class="my_info_left">
               <button style="background-image: {{info.userInfo.avatarUrl ? 'url('+info.userInfo.avatarUrl+')' : 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/wx.png?sign=2a8dbe026ad644fdbce891f4b2109f87&t=1610211284)'}}"  class="login"></button>
             </view>
@@ -59,7 +66,7 @@
                 {{info.collection_num || 0}}
               </view>
             </view>
-            <view class="my_info_list">
+            <view class="my_info_list" bindtap="toMyWatch">
               <view class="my_info_list_text">
                 他的关注
               </view>
@@ -67,7 +74,7 @@
                 {{info.following_num || 0}}
               </view>
             </view>
-            <view class="my_info_list">
+            <view class="my_info_list" bindtap="toMyFans">
               <view class="my_info_list_text">
                 他的粉丝
               </view>
@@ -108,9 +115,13 @@
                 <text>年龄</text>
               </view>
               <view class='myInfo-input'>
-                <input  wx:if="{{info.secret === false}}" disabled placeholder='{{age}}' value='{{info.userDetail.age[0]}}岁,属{{info.userDetail.age[1]}}'
+                <input  wx:if="{{info.secret === false && info.userDetail.age.length > 0}}" disabled placeholder='{{age}}' value='{{info.userDetail.age[0]}}岁,属{{info.userDetail.age[1]}}'
                   placeholder-class='myInfo-color' disabled='true'>
                 </input>
+                <input  wx:if="{{info.secret === false && info.userDetail.age.length <= 0}}" disabled placeholder='暂无'
+                  placeholder-class='myInfo-color' disabled='true'>
+                </input>
+
               </view>
             </view>
       
@@ -131,8 +142,11 @@
                 <text>区域</text>
               </view>
               <view  wx:if="{{info.secret === false}}" class='myInfo-input'>
-                <view class="picker" placeholder='暂无'>
+                <view class="picker" wx:if="{{info.userDetail.region}}">
                   {{info.userDetail.region[0]}}-{{info.userDetail.region[1]}}-{{info.userDetail.region[2]}}
+                </view>
+                <view class="picker" wx:if="{{!info.userDetail.region}}">
+                  暂无
                 </view>
               </view>
             </view>
