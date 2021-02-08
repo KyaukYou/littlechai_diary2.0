@@ -11,9 +11,7 @@
 
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
-
-
-    <view wx:if="{{showBol}}" class="my_header"  style="background-color: {{info.color}}; background-image:{{info.blur === true ? 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/dot.png?sign=f6f105901602fb46727be2f82c1b33b4&t=1610067412)' : ''}};">
+    <view class="my_header"  style="background-color: {{info.color}}; background-image:{{info.blur === true ? 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/dot.png?sign=f6f105901602fb46727be2f82c1b33b4&t=1610067412)' : ''}};">
       
       <!-- 自定义背景图 -->
       <view wx:if="{{info.background_bol}}" style="top: -{{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_bg">
@@ -21,7 +19,7 @@
       </view>
 
       <!-- 头像区域 -->
-      <view class="my_info">
+      <view wx:if="{{showBol}}" class="my_info">
           
 
           <view class="my_info_top">
@@ -92,9 +90,9 @@
 
     <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
       <view class="my_wrap">
-        <view style="color: {{info.color}}; width: 100%; text-align: center; font-size: 34rpx; height: 60rpx; line-height: 60rpx" class='myInfo-nowrap' wx:if="{{info.secret === true}}">
-          哎呀呀，没有查看权限呢~
-        </view>
+        <!-- <view style="color: {{info.color}}; width: 100%; text-align: center; font-size: 34rpx;" class='myInfo-nowrap' wx:if="{{info.secret === true}}">
+          暂无权限查看
+        </view> -->
 
         <view wx:if="{{!showBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center;">
           <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
@@ -102,7 +100,7 @@
 
         <view wx:if="{{showBol}}" class='myInfo-wrap'>
       
-          <view wx:if="{{info.secret === false}}" class='myInfo-detail'>
+          <view class='myInfo-detail'>
             <view class='myInfo-detail-list'>
               <view class='myInfo-left'>
                 <image src='/images/birth.svg'></image>
@@ -159,7 +157,7 @@
       
           </view>
       
-          <view wx:if="{{info.secret === false}}" class='myInfo-center'>
+          <view class='myInfo-center'>
             <textarea disabled placeholder='什么都没有呢~' maxlength='500' placeholder-class='textarea-sm'
               value='{{info.userDetail.goodat}}'>
                 </textarea>

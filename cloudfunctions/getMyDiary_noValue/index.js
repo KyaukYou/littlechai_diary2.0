@@ -35,8 +35,6 @@ exports.main = async (event, context) => {
 
   let res = await db.collection('diarys').where(
     {
-      show: true,
-      ifDelete: false,
       openid: event.openid
     }
   )

@@ -51,8 +51,6 @@ exports.main = async (event, context) => {
   )
   .and([
     {
-      show: true,
-      ifDelete: false,
       openid: event.openid
     }
   ])

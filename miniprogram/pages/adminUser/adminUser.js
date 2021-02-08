@@ -105,7 +105,7 @@ Page({
 
   toUsers(e) {
     wx.navigateTo({
-      url: '../userInfo/userInfo?id=' + e.currentTarget.dataset.openid,
+      url: '../adminUserInfo/adminUserInfo?id=' + e.currentTarget.dataset.openid,
     })
   },
 

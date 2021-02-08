@@ -23,7 +23,7 @@ Page({
     startDate: '',
     endDate: '',
     shenxiao: ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'],
-
+    showBol: true
   },
   async getGlobalData() {
     let timer = setInterval(() => {
@@ -219,7 +219,7 @@ Page({
 
 
     that.setData({
-      loadingBol: false,
+      showBol: true,
       age: [cha, sx],
       agePer: cha + '岁' + ', 属' + sx
     })
@@ -308,10 +308,7 @@ Page({
    */
   onShow: function () {
     this.setData({
-      loadingBol: true,
-      loadingIcon: 'loading',
-      loadingTitle: '加载中',
-      loadingDuration: 99999
+      showBol: false,
     })
     this.getData();
   },

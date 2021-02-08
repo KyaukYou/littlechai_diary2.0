@@ -169,3 +169,7 @@
   color: rgb(182, 182, 182);
   font-size: 24rpx;
 }
+
+.diary_loading  {
+  top: 8rpx;
+}

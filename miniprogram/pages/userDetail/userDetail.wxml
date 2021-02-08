@@ -8,7 +8,12 @@
 
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
     class="my_container" scroll-y>
-    <view class="my_wrap">
+
+    <view wx:if="{{!showBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center;">
+      <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
+    </view>
+
+    <view wx:if="{{showBol}}" class="my_wrap">
 
       <view class='myInfo-wrap'>
         <view class='myInfo-detail'>

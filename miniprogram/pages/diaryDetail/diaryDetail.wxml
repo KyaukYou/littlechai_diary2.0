@@ -20,12 +20,12 @@
         <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
       </view>
 
-      <view class='detail-bigImg'>
+      <view wx:if="{{!loadingBol}}" class='detail-bigImg'>
         <image src='/images/load.svg' mode='aspectFill'></image>
         <image mode="aspectFill" src='{{info.title_image.url}}' bindtap='showBgImg'></image>
       </view>
 
-      <view class='detail-header'>
+      <view wx:if="{{!loadingBol}}" class='detail-header'>
         <view class='detail-touxiang' bindtap='touserDetail' data-openid='{{info.userInfo.openid}}' bindtap='toUsers'>
           <image src='{{info.userInfo.avatarUrl}}'></image>
         </view>
@@ -53,7 +53,7 @@
 
       </view>
 
-      <view class='detail-container'>
+      <view wx:if="{{!loadingBol}}" class='detail-container'>
         <view class='detail-list' wx:if='{{item.show}}' wx:for='{{diaryArr}}' wx:for-index='allIndex'
           wx:key='index'>
           <view class='contact-border' style="background-color: {{globalData.color}}">

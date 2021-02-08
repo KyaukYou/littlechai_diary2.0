@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/my/my",
+    "pages/adminUserInfo/adminUserInfo",
     "pages/adminDiary/adminDiary",
     "pages/adminUser/adminUser",
     "pages/userInfo/userInfo",

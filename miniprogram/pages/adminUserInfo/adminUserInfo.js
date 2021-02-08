@@ -69,11 +69,13 @@ Page({
 
   async getUserInfo() {
       let res = await wx.cloud.callFunction({
-        name: 'getUserInfo',
+        name: 'almightyApi',
         data: {
+          type: 'adminGetUserInfo',
           openid: this.data.id
         }
       })
+      res.result.secret = false;
       this.setData({
         info: res.result,
         refreshBol: false,

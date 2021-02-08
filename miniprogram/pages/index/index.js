@@ -830,7 +830,6 @@ Page({
     })
     this.getAdminX();
     await this.getUserArr();
-    await this.getGlobalData();
     await this.searchFn();
   },
 
@@ -845,7 +844,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {   
-    
+    this.getGlobalData();
   },
 
   /**
