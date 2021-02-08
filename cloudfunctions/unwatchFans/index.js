@@ -11,6 +11,11 @@ const _ = db.command
 exports.main = async (event, context) => {
 
   try {
+
+    if(event.openid === '') {
+      return false;
+    }
+
     let fArr = await db.collection('users').where({
       openid: event.openid
     })
@@ -18,13 +23,6 @@ exports.main = async (event, context) => {
       following: true
     }).get();
 
-    // let arr = JSON.parse(JSON.stringify(fArr.data[0].following));
-    // let arrIndex = null;
-    // for(let i=0; i<arr; i++) {
-    //   if(arr[i] === event.userOpenid) {
-    //     arrIndex = i;
-    //   }
-    // }
 
     await db.collection('users').where({
       openid: event.openid

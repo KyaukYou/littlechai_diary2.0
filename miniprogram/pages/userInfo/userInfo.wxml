@@ -6,6 +6,12 @@
   duration="{{toastDuration}}"
 />
 
+<l-toast
+  show="{{openidBol}}"
+  title="请先登录 "
+  duration="{{openidDuration}}"
+/>
+
 
 <lc_header header_title='{{info.userInfo.nickName}}的资料' header_color="{{info.color}}" blur="{{info.blur}}" back="{{back}}"></lc_header> 
 

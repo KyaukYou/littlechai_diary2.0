@@ -417,7 +417,7 @@ Page({
     let id = e.currentTarget.dataset.id;
     
     wx.navigateTo({
-      url: '/pages/editDiary/editDiary?id='+id,
+      url: '/pages/diaryDetail/diaryDetail?id='+id,
     })
     
   },

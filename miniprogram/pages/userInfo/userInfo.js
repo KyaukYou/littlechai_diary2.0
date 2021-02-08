@@ -19,7 +19,9 @@ Page({
     watchText: '关注',
     watchBol: false,
     ifWatch: false,
-    showBol: false
+    showBol: false,
+    openidBol: false,
+    openidDuration: 1500
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -108,6 +110,15 @@ Page({
 
   //关注 || 取消关注
   async watchUser() {
+
+    if(!wx.getStorageSync('openid')) {
+      this.setData({
+        openidBol: true,
+        openidDuration: 1500
+      })
+      return false;
+    }
+
     //关注
     if(wx.getStorageSync('openid') === this.data.id) {
       this.setData({

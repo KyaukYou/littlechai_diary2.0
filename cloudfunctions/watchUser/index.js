@@ -11,6 +11,11 @@ const _ = db.command
 exports.main = async (event, context) => {
 
   try {
+
+    if(event.openid === '') {
+      return false;
+    }
+
     await db.collection('users').where({
       openid: event.openid
     })
