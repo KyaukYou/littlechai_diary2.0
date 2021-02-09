@@ -16,6 +16,13 @@
   icon="{{uploadIcon}}"
 />
 
+<l-toast
+  show="{{loginBol}}"
+  title="{{loginTitle}}"
+  icon="{{loginIcon}}"
+  duration="{{loginDuration}}"
+/>
+
 <l-mask show="{{uploadBol}}" opacity="0.2"> </l-mask>
 
 
@@ -89,7 +96,10 @@
 
     </view>
 
-    <view class="create_arr" wx:for="{{diaryArr}}" wx:key="index">
+    <view wx:if="{{!getBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center;">
+        <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
+    </view>
+    <view wx:if="{{getBol}}" class="create_arr" wx:for="{{diaryArr}}" wx:key="index">
       <view class="create_child">
         <view class="create_child_top">
           <view class="create_child_date">
@@ -130,5 +140,70 @@
 
     <view style="background-color: {{globalData.color}}" hover-class="opacity_button" class="create_btn" bindtap="upload">更新</view>
     <view class="create_sm_text">请尽量选择2M以内大小的图片进行上传,图片过大可能会造成小程序闪屏。</view>
+
+    <!-- 评论 -->
+    <view class='chat' wx:if="{{getBol}}">
+        <view class='chat-header'>
+          <van-icon class="detail_comment_icon" name="chat" color="{{globalData.color}}" size="38rpx" />
+          <view class='chat-header-text' style="color: {{globalData.color}}">评论列表 共{{commentNum}}条评论</view>
+        </view>
+        <view class='chat-container'>
+          <view class='chat-wrap' wx:if='{{travelObj.data.chat.length == 0 ? false : true}}'>
+            <view class='chat-wrap-lists' wx:for='{{commentArr}}' wx:key='index'>
+              <view class='chat-wrap-list'>
+                <view class='chat-wrap-avatar' data-openid='{{item.openid}}' bindtap='toUsers'>
+                  <image src='{{item.userInfo.avatarUrl}}'></image>
+                </view>
+                <view class='chat-wrap-top'>
+                  <text style="color: {{globalData.color}}">{{item.userInfo.nickName}}</text> <text class='chat-wrap-time'>{{item.updatedTime}}</text>
+                </view>
+                <view class='chat-wrap-center'>
+                  {{item.content}} <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat'
+                    data-name='{{item.userInfo.nickName}}' data-index='{{index}}' data-openid='{{item.userInfo.openid}}' >回复</view>
+                </view>
+      
+                <!-- 楼中楼 -->
+                <view class='chat-wrap-child' wx:if='{{item.arr.length === 0 ? false : true}}'
+                  wx:for='{{item.arr}}' wx:for-index='sIndex' wx:for-item='sItem' wx:key='sIndex'>
+                  <view class='chat-wrap-avatar chat-wrap-avatar1' data-openid='{{sItem.userInfo.openid}}' bindtap='toUsers'>
+                    <image src='{{sItem.userInfo.avatarUrl}}'></image>
+                  </view>
+                  <view class='chat-wrap-top chat-wrap-top1'>
+                    <text>{{sItem.userInfo.nickName}}</text> <text class='chat-wrap-time'>{{sItem.updatedTime}}</text>
+                  </view>
+                  <view class='chat-wrap-center chat-wrap-center1'>
+                    回复 <text class='chat-wrap-center-ctoc'>{{sItem.comment.nickName}}：</text>
+                    {{sItem.content}}
+                    <view style='display: inline-block' class='chat-wrap-huifu' bindtap='chattochat' 
+                      data-name='{{sItem.userInfo.nickName}}' data-index='{{index}}' data-openid='{{sItem.userInfo.openid}}'>回复</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class='chat-nowrap' wx:if='{{commentArr.length == 0 ? true : false}}'>
+            一条评论也没有呢~
+          </view>
+        </view>
+        <view class='chat-write'>
+          <view class='chat-write-header'>
+            <van-icon name="smile-comment" color="{{globalData.color}}" size="38rpx" />
+            <view class='chat-write-header-text' style="color: {{globalData.color}}">发表评论</view>
+          </view>
+          <view class='chat-write-textarea'>
+            <textarea cursor-spacing='120' maxlength='100' value='{{chatData}}' placeholder='{{pText}}' bindinput='getChat'>
+      
+                <view class='chat-write-footer'>
+                  <view class='chat-write-num'>{{chatData.length}}/100</view>
+                  <view class='chat-write-header-btn' type="light" bindtap='cancelChats' >取消</view>
+                  <view class='chat-write-btn'>
+                    <view hover-class='chooseBtn-hover' bindtap='uploadChat' style="background-color: {{globalData.color}}">提交</view>
+                  </view>
+                </view>
+              </textarea>
+          </view>
+        </view>
+    </view>
+
   </scroll-view>
 </view>

@@ -286,3 +286,7 @@
   line-height: 40rpx;
   text-align: center;
 }
+
+.diary_loading {
+  top: -4rpx;
+}

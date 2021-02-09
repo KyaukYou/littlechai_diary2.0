@@ -8,6 +8,9 @@
     "l-calendar": "/lin-ui/dist/calendar",
     "l-toast": "/lin-ui/dist/toast",
     "l-icon": "/lin-ui/dist/icon",
-    "l-mask": "/lin-ui/dist/mask"
+    "l-mask": "/lin-ui/dist/mask",
+    "wux-icon": "/components/icon/index",
+    "van-icon": "/components/icon/index",
+    "l-loading": "/lin-ui/dist/loading"
   }
 }
