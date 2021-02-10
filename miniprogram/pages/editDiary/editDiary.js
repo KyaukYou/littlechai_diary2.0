@@ -10,7 +10,7 @@ Page({
     back: true,
     globalData: {},
     toastTitle: "结束日期超出开始日期，为避免丢失日记信息，请重新选择日期时间段",
-    toastDuration: 4500,
+    toastDuration: 1600,
     toastBol: false,
     showBeginDate: false,
     showEndDate: false,
@@ -133,6 +133,7 @@ Page({
   },
   // 选择位置
   chooseLocation() {
+    let that = this;
     wx.chooseLocation({
       success: (res) => {
         console.log(res)
@@ -142,8 +143,64 @@ Page({
           info: copy
         })
       },
-      fail: (res) => {
-
+      fail: function () {
+        wx.getSetting({
+          success: function (res) {
+            var statu = res.authSetting;
+            if (!statu['scope.userLocation']) {
+              wx.showModal({
+                title: '是否授权当前位置',
+                content: '需要获取您的地理位置，请确认授权，否则地图功能将无法使用',
+                success: function (tip) {
+                  if (tip.confirm) {
+                    wx.openSetting({
+                      success: function (data) {
+                        if (data.authSetting["scope.userLocation"] === true) {
+                          that.setData({
+                            uploadDuration: 1600,
+                            uploadTitle: "授权成功",
+                            uploadBol: true
+                          })
+                          let maskTimer = setTimeout(() => {
+                            that.setData({
+                              uploadBol: false
+                            })
+                            clearTimeout(maskTimer)
+                          }, 1600)
+                        } else {
+                          that.setData({
+                            uploadDuration: 1600,
+                            uploadTitle: "授权失败",
+                            uploadBol: true
+                          })
+                          let maskTimer = setTimeout(() => {
+                            that.setData({
+                              uploadBol: false
+                            })
+                            clearTimeout(maskTimer)
+                          }, 1600)
+                        }
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          },
+          fail: function (res) {
+            that.setData({
+              uploadDuration: 1600,
+              uploadTitle: "调用授权窗口失败",
+              uploadBol: true
+            })
+            let maskTimer = setTimeout(() => {
+              that.setData({
+                uploadBol: false
+              })
+              clearTimeout(maskTimer)
+            }, 1600)
+          }
+        })
       }
     })
   },
@@ -478,7 +535,7 @@ Page({
     if(copy.title === "" || copy.title_image.type === 'default' || copy.location === "" || copy.beginDate === "" || copy.endDate === "") {
       this.setData({
         uploadIcon: "",
-        uploadDuration: 2000,
+        uploadDuration: 1600,
         uploadTitle: "请填写完整",
         uploadBol: true
       })
@@ -487,9 +544,25 @@ Page({
           uploadBol: false
         })
         clearTimeout(maskTimer)
-      },2000)
+      },1600)
     }
     else {
+
+      if(await app.dateToTimestamp(this.data.info.beginDate) > await app.dateToTimestamp(this.data.info.endDate)) {
+        this.setData({
+          uploadDuration: 1600,
+          uploadTitle: "日期时间段错误",
+          uploadBol: true
+        })
+        let maskTimer = setTimeout(() => {
+          this.setData({
+            uploadBol: false
+          })
+          clearTimeout(maskTimer)
+        },1600)
+        return false;
+      }
+
       //上传封面图
       if(this.data.info.title_image.type === 'new') {
         this.setData({

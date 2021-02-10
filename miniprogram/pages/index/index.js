@@ -359,6 +359,7 @@ Page({
   },
   //scroll-view 自定义下拉刷新
   async refresh() {
+    this.getAdminX();
     await this.getUserArr();
     this.setData({
       page: 1,
@@ -828,7 +829,6 @@ Page({
     this.setData({
       page: 1
     })
-    this.getAdminX();
     await this.getUserArr();
     await this.searchFn();
   },
@@ -845,6 +845,7 @@ Page({
    */
   onShow: function () {   
     this.getGlobalData();
+    this.getAdminX();
   },
 
   /**

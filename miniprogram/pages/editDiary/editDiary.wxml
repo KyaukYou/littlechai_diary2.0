@@ -23,7 +23,7 @@
   duration="{{loginDuration}}"
 />
 
-<l-mask show="{{uploadBol}}" opacity="0.2"> </l-mask>
+<l-mask show="{{uploadBol}}" opacity="0.01"> </l-mask>
 
 
 <view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">

@@ -9,11 +9,11 @@ Page({
     back: true,
     globalData: {},
     toastTitle: "结束日期超出开始日期，为避免丢失日记信息，请重新选择日期时间段",
-    toastDuration: 4500,
+    toastDuration: 1600,
     toastBol: false,
     showBeginDate: false,
     showEndDate: false,
-    minDate1: new Date(2021,0,1).getTime(),
+    minDate1: new Date(2021, 0, 1).getTime(),
     default_date: new Date().getTime(),
     maxDate1: "",
     minDate2: new Date().getTime(),
@@ -100,6 +100,7 @@ Page({
   },
   // 选择位置
   chooseLocation() {
+    let that = this;
     wx.chooseLocation({
       success: (res) => {
         console.log(res)
@@ -109,11 +110,69 @@ Page({
           info: copy
         })
       },
-      fail: (res) => {
-
+      fail: function () {
+        wx.getSetting({
+          success: function (res) {
+            var statu = res.authSetting;
+            if (!statu['scope.userLocation']) {
+              wx.showModal({
+                title: '是否授权当前位置',
+                content: '需要获取您的地理位置，请确认授权，否则地图功能将无法使用',
+                success: function (tip) {
+                  if (tip.confirm) {
+                    wx.openSetting({
+                      success: function (data) {
+                        if (data.authSetting["scope.userLocation"] === true) {
+                          that.setData({
+                            uploadDuration: 1600,
+                            uploadTitle: "授权成功",
+                            uploadBol: true
+                          })
+                          let maskTimer = setTimeout(() => {
+                            that.setData({
+                              uploadBol: false
+                            })
+                            clearTimeout(maskTimer)
+                          }, 1600)
+                        } else {
+                          that.setData({
+                            uploadDuration: 1600,
+                            uploadTitle: "授权失败",
+                            uploadBol: true
+                          })
+                          let maskTimer = setTimeout(() => {
+                            that.setData({
+                              uploadBol: false
+                            })
+                            clearTimeout(maskTimer)
+                          }, 1600)
+                        }
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          },
+          fail: function (res) {
+            that.setData({
+              uploadDuration: 1600,
+              uploadTitle: "调用授权窗口失败",
+              uploadBol: true
+            })
+            let maskTimer = setTimeout(() => {
+              that.setData({
+                uploadBol: false
+              })
+              clearTimeout(maskTimer)
+            }, 1600)
+          }
+        })
       }
     })
   },
+
+
   // 显示开始日期框
   showBeginDateBol() {
     this.setData({
@@ -226,7 +285,7 @@ Page({
   async initArr(arr) {
     console.log(arr)
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr))
-    if(this.data.info.sort === false) {
+    if (this.data.info.sort === false) {
       copy.reverse();
     }
     //判断copy中有没有改日期内的数组
@@ -242,17 +301,16 @@ Page({
         }
         copy.push(obj)
       }
-      if(this.data.info.sort === false) {
+      if (this.data.info.sort === false) {
         this.setData({
           diaryArr: copy.reverse()
         })
-      }
-      else {
+      } else {
         this.setData({
           diaryArr: copy
         })
       }
-      
+
       return;
     }
 
@@ -332,17 +390,16 @@ Page({
       }
     }
 
-    if(this.data.info.sort === false) {
+    if (this.data.info.sort === false) {
       this.setData({
         diaryArr: copy.reverse()
       })
-    }
-    else {
+    } else {
       this.setData({
         diaryArr: copy
       })
     }
-    
+
 
 
   },
@@ -410,7 +467,7 @@ Page({
     let index1 = e.currentTarget.dataset.index;
     let index2 = e.currentTarget.dataset.index2;
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
-    copy[index1].imagesArr.splice(index2,1);
+    copy[index1].imagesArr.splice(index2, 1);
     this.setData({
       diaryArr: copy
     })
@@ -423,7 +480,7 @@ Page({
     let copy = JSON.parse(JSON.stringify(this.data.diaryArr));
     let list = [];
     let getArr = copy[index1].imagesArr;
-    for(let i=0; i<getArr.length; i++) {
+    for (let i = 0; i < getArr.length; i++) {
       list.push(getArr[i].url)
     }
 
@@ -436,10 +493,10 @@ Page({
   async upload() {
     let copy = JSON.parse(JSON.stringify(this.data.info));
     let copyDiary = JSON.parse(JSON.stringify(this.data.diaryArr));
-    if(copy.title === "" || copy.title_image.type === 'default' || copy.location === "" || copy.beginDate === "" || copy.endDate === "") {
+    if (copy.title === "" || copy.title_image.type === 'default' || copy.location === "" || copy.beginDate === "" || copy.endDate === "") {
       this.setData({
         uploadIcon: "",
-        uploadDuration: 2000,
+        uploadDuration: 1600,
         uploadTitle: "请填写完整",
         uploadBol: true
       })
@@ -448,9 +505,26 @@ Page({
           uploadBol: false
         })
         clearTimeout(maskTimer)
-      },2000)
-    }
-    else {
+      }, 1600)
+    } else {
+
+      if (await app.dateToTimestamp(this.data.info.beginDate) > await app.dateToTimestamp(this.data.info.endDate)) {
+        this.setData({
+          uploadDuration: 1600,
+          uploadTitle: "日期时间段错误",
+          uploadBol: true
+        })
+        let maskTimer = setTimeout(() => {
+          this.setData({
+            uploadBol: false
+          })
+          clearTimeout(maskTimer)
+        }, 1600)
+        return false;
+      }
+      // console.log(app.dateToTimestamp(this.data.info.beginDate) , app.dateToTimestamp(this.data.info.endDate)) 
+      // return false;
+
       //上传封面图
       this.setData({
         uploadIcon: "loading",
@@ -468,17 +542,15 @@ Page({
       let diaryImageNum = 0;
       let diaryImageIndex = 0;
       let diaryImageArr = []
-      for(let i=0; i<copyDiary.length; i++) {
+      for (let i = 0; i < copyDiary.length; i++) {
         diaryImageNum += copyDiary[i].imagesArr.length;
         diaryImageArr.push(copyDiary[i].imagesArr.length)
       }
 
-      if(diaryImageNum === 0) {
+      if (diaryImageNum === 0) {
         //直接上传
-        let res = await this.uploadAll(copy,copyDiary)
-      }
-
-      else {
+        let res = await this.uploadAll(copy, copyDiary)
+      } else {
         //上传图片
         diaryImageIndex++;
         this.setData({
@@ -488,8 +560,8 @@ Page({
           uploadBol: true
         })
 
-        for(let i=0; i<copyDiary.length; i++) {
-          for(let j=0; j<copyDiary[i].imagesArr.length; j++) {
+        for (let i = 0; i < copyDiary.length; i++) {
+          for (let j = 0; j < copyDiary[i].imagesArr.length; j++) {
             let res = await this.uploadDiaryImage(copyDiary[i].imagesArr[j].url);
             copyDiary[i].imagesArr[j].url = res.fileID;
             copyDiary[i].imagesArr[j].type = 'old';
@@ -502,11 +574,11 @@ Page({
             })
           }
         }
-        let res = await this.uploadAll(copy,copyDiary)
+        let res = await this.uploadAll(copy, copyDiary)
 
       }
 
-      
+
 
     }
   },
@@ -536,8 +608,8 @@ Page({
     })
     return res
   },
-  async uploadAll(val1,val2) {
-    console.log(val1,val2);
+  async uploadAll(val1, val2) {
+    console.log(val1, val2);
     this.setData({
       uploadIcon: "loading",
       uploadDuration: 99999,
@@ -574,7 +646,7 @@ Page({
           delta: 1,
         })
         clearTimeout(timer)
-      },800)
+      }, 800)
     }
 
   },
