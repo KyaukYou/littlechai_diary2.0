@@ -8,7 +8,7 @@ Page({
   data: {
     back: true,
     globalData: {},
-    toastTitle: "结束日期超出开始日期，为避免丢失日记信息，请重新选择日期时间段",
+    toastTitle: "结束日期超出开始日期，为避免丢失日记信息，请重新选择日期时间段,若下次设置的时间段仍然不符合规则，内容将会清空",
     toastDuration: 1600,
     toastBol: false,
     showBeginDate: false,
@@ -38,7 +38,7 @@ Page({
       collection: 0,
       like: 0,
       dayNum: 0,
-      openid: ""
+      openid: "",
     },
     diaryArr: [
       // {
@@ -57,7 +57,9 @@ Page({
     uploadIcon: "",
     uploadDuration: 99999,
     uploadTitle: "",
-    uploadBol: false
+    uploadBol: false,
+    showTextarea: true,
+    wrongNum: 0
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -178,6 +180,12 @@ Page({
     this.setData({
       showBeginDate: true
     })
+    let timer = setTimeout(() => {
+      this.setData({
+        showTextarea: false
+      })
+      clearTimeout(timer)
+    },200)
   },
 
   // 显示结束日期框
@@ -185,6 +193,12 @@ Page({
     this.setData({
       showEndDate: true
     })
+    let timer = setTimeout(() => {
+      this.setData({
+        showTextarea: false
+      })
+      clearTimeout(timer)
+    },200)
   },
 
   //选择开始日期
@@ -206,10 +220,26 @@ Page({
     }
     console.log(endDate)
     if (endDate < beginDate && endDate !== 0) {
-      // 提示
+      
       this.setData({
-        toastBol: true
+        wrongNum: 0,
+        diaryArr: []
       })
+
+      // if(this.data.wrongNum === 1) {
+      //   this.setData({
+      //     wrongNum: 0,
+      //     diaryArr: []
+      //   })
+      // }
+      // else {
+      //   this.setData({
+      //     toastBol: true,
+      //     wrongNum: 1
+      //   })
+      // }
+
+      
     } else {
       if (e.type === "linconfirm") {
         let res = await app.getdiffdate(copy.beginDate, copy.endDate)
@@ -218,7 +248,9 @@ Page({
     }
     this.setData({
       info: copy,
-      minDate2: new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).getTime()
+      minDate2: new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).getTime(),
+      showBeginDate: false,
+      showTextarea: true
     })
 
   },
@@ -233,8 +265,16 @@ Page({
     })
     if (e.type === "linconfirm") {
       let res = await app.getdiffdate(copy.beginDate, copy.endDate)
-      await this.initArr(res)
+      if(this.data.info.beginDate !== '') {
+        await this.initArr(res)
+      }
+      
     }
+
+    this.setData({
+      showEndDate: false,
+      showTextarea: true
+    })
 
   },
 
@@ -656,6 +696,9 @@ Page({
    */
   onLoad: function (options) {
     this.getGlobalData();
+    let timerr = setInterval(() => {
+      console.log(this.data.showBeginDate)
+    },1000)
   },
 
   /**

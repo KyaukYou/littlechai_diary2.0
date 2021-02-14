@@ -2,7 +2,7 @@
 <lc_header header_title='编辑日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
 
 <l-calendar color="{{globalData.color}}" show="{{showBeginDate}}"  bind:linconfirm='selectBeginDate' default-date="{{default_date}}" min-date="{{minDate1}}"/>
-<l-calendar color="{{globalData.color}}" show="{{showEndDate}}"  bind:linconfirm='selectEndDate' min-date="{{minDate2}}"/>
+<l-calendar color="{{globalData.color}}" show="{{showEndDate}}"  bind:linconfirm='selectEndDate' default-date="{{default_date1}}" min-date="{{minDate1}}"/>
 <l-toast
   show="{{toastBol}}"
   title="{{toastTitle}}"
@@ -115,7 +115,8 @@
         </view>
 
         <view class="create_child_center" wx:if="{{item.show}}">
-          <textarea wx:if="{{!showBeginDate || !showEndDate}}" data-index="{{index}}" placeholder="记录下你的日记吧(500字以内)" bindinput="changeTextarea" maxlength="500" value="{{item.content}}"></textarea>
+          <!-- wx:if="{{!showBeginDate || !showEndDate}}" -->
+          <textarea wx:if="{{showTextarea}}" data-index="{{index}}" placeholder="记录下你的日记吧(500字以内)" bindinput="changeTextarea" maxlength="500" value="{{item.content}}"></textarea>
           <view class="create_textarea_length">{{item.content.length}}/500</view>
         </view>
 

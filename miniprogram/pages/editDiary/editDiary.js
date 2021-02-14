@@ -16,6 +16,7 @@ Page({
     showEndDate: false,
     minDate1: new Date(2021,0,1).getTime(),
     default_date: new Date().getTime(),
+    default_date1: new Date().getTime(),
     maxDate1: "",
     minDate2: new Date().getTime(),
     maxDate2: "",
@@ -59,7 +60,8 @@ Page({
     loginIcon: '',
     commentArr: [],
     commentNum: 0,
-    commentBol: false
+    commentBol: false,
+    showTextarea: true
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -96,7 +98,9 @@ Page({
       trueData: result,
       info: copyInfo,
       diaryArr: copyArr,
-      getBol: true
+      getBol: true,
+      default_date: new Date(copyInfo.beginDate).getTime(),
+      default_date1: new Date(copyInfo.endDate).getTime()  
     })
     // this.sortFn({
     //   detail: {
@@ -210,6 +214,13 @@ Page({
       showBeginDate: true,
       showCal: true
     })
+
+    let timer = setTimeout(() => {
+      this.setData({
+        showTextarea: false
+      })
+      clearTimeout(timer)
+    },200)
   },
 
   // 显示结束日期框
@@ -218,6 +229,13 @@ Page({
       showEndDate: true,
       showCal: true
     })
+
+    let timer = setTimeout(() => {
+      this.setData({
+        showTextarea: false
+      })
+      clearTimeout(timer)
+    },200)
   },
 
   //选择开始日期
@@ -240,8 +258,11 @@ Page({
     console.log(endDate)
     if (endDate < beginDate && endDate !== 0) {
       // 提示
+      // this.setData({
+      //   toastBol: true
+      // })
       this.setData({
-        toastBol: true
+        diaryArr: []
       })
     } else {
       if (e.type === "linconfirm") {
@@ -252,7 +273,10 @@ Page({
     this.setData({
       info: copy,
       showCal: false,
-      minDate2: new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).getTime()
+      minDate2: new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).getTime(),
+      showBeginDate: false,
+      showTextarea: true,
+      default_date: new Date(trueDate).getTime()
     })
 
   },
@@ -268,8 +292,16 @@ Page({
     })
     if (e.type === "linconfirm") {
       let res = await app.getdiffdate(copy.beginDate, copy.endDate)
-      await this.initArr(res)
+      if(this.data.info.beginDate !== '') {
+        await this.initArr(res)
+      }
     }
+
+    this.setData({
+      showEndDate: false,
+      showTextarea: true,
+      default_date1: new Date(trueDate).getTime()
+    })
 
   },
 

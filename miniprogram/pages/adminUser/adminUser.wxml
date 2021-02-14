@@ -20,7 +20,7 @@
       <view class='list-name' data-openid='{{item.openid}}' bindtap='toUsers'>
         <view class='list-text'>{{item.userInfo.nickName}}
           <view class='list-gender'>
-            <image src='{{item.userInfo.gender == 1 ? "/images/man.svg" : "/images/woman.svg" }}'></image>
+            <image src='{{item.userInfo.gender == 2 ? "/images/woman.svg" : "/images/man.svg" }}'></image>
           </view>
         </view>
         <view class="list_time">创建时间：<text>{{item.created_time}}</text></view>

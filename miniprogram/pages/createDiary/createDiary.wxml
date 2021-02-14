@@ -107,7 +107,8 @@
         </view>
 
         <view class="create_child_center" wx:if="{{item.show}}">
-          <textarea wx:if="{{showBeginDate || showEndDate}}" data-index="{{index}}" placeholder="记录下你的日记吧(500字以内)" bindinput="changeTextarea" maxlength="500" value="{{item.content}}"></textarea>
+          <!-- wx:if="{{showBeginDate || showEndDate}}"  -->
+          <textarea wx:if="{{showTextarea}}" data-index="{{index}}" placeholder="记录下你的日记吧(500字以内)" bindinput="changeTextarea" maxlength="500" value="{{item.content}}"></textarea>
           <view class="create_textarea_length">{{item.content.length}}/500</view>
         </view>
 
