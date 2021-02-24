@@ -135,8 +135,11 @@ exports.main = async (event, context) => {
         'userInfo.avatarUrl': true,
         openid: true
       }).get();
-      res.data[i].userInfo = user.data[0].userInfo
-      res.data[i].userInfo.openid = user.data[0].openid
+      if(user.data.length > 0) {
+        res.data[i].userInfo = user.data[0].userInfo
+        res.data[i].userInfo.openid = user.data[0].openid
+      }
+      
     }
 
     return res;
@@ -208,8 +211,10 @@ exports.main = async (event, context) => {
         'userInfo.avatarUrl': true,
         openid: true
       }).get();
-      res.data[i].userInfo = user.data[0].userInfo
-      res.data[i].userInfo.openid = user.data[0].openid
+      if(user.data.length > 0) {
+        res.data[i].userInfo = user.data[0].userInfo
+        res.data[i].userInfo.openid = user.data[0].openid
+      }
     }
 
     return res;
@@ -274,8 +279,11 @@ exports.main = async (event, context) => {
       // return obj;
     // }
     // else {
-      let obj = res.data[0]
-      return obj;
+      if(res.data.length > 0) {
+        let obj = res.data[0]
+        return obj;
+      }
+      
     // }
   }
   
