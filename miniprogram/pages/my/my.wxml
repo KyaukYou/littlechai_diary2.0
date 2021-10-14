@@ -37,7 +37,8 @@
 
           <view class="my_info_top">
             <view class="my_info_left">
-              <button style="background-image: {{globalData.userInfo.avatarUrl ? 'url('+globalData.userInfo.avatarUrl+')' : 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/wx.png?sign=2a8dbe026ad644fdbce891f4b2109f87&t=1610211284)'}}" open-type="getUserInfo" bindgetuserinfo='bindgetuserinfo' class="login"></button>
+              <button style="background-image: {{globalData.userInfo.avatarUrl ? 'url('+globalData.userInfo.avatarUrl+')' : 'url(https://6c69-littlechai-8gbpxj2baa4e412f-1257711591.tcb.qcloud.la/system/wx.png?sign=2a8dbe026ad644fdbce891f4b2109f87&t=1610211284)'}}" open-type="getUserInfo" bindtap="getNewUserInfo" bindgetuserinfo='bindgetuserinfo' class="login"></button>
+
             </view>
             <view class="my_info_right">
               <view class="my_info_username"><text>{{globalData.userInfo.nickName || '登录一下吧~'}}</text><image src='{{globalData.userInfo.gender === 2? "/images/woman.svg" : "/images/man.svg"}}'></image> </view>
@@ -98,6 +99,7 @@
     <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;" class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}'>
       <view class="my_wrap">
         <l-list title="个人资料" image="/images/info.svg" bindtap="toUserDetail" />
+        <!-- <l-list wx:if="{{globalData.roles[0] === 'admin'}}" title="电影日记" image="/images/film.svg" bindtap='toFilm'></l-list> -->
         <l-list title="显示背景" image="/images/image.svg">
           <view slot="right-section">
             <switch checked='{{globalData.background}}' bindchange='changeBackground' style="position: relative; right: 6px; transform: scale(0.8)" color="{{globalData.color}}" />

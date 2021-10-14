@@ -26,7 +26,8 @@
     "pages/uploadQuestion/uploadQuestion",
     "pages/answer/answer",
     "pages/createDiary/createDiary",
-    "pages/version/version"
+    "pages/version/version",
+    "pages/film/film"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

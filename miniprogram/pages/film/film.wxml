@@ -1,0 +1,6 @@
+<!--pages/film/film.wxml-->
+<lc_header header_title='和姐姐的电影日记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
+<view>
+
+
+</view>

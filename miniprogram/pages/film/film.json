@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "电影",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "lc_header": "/components/lc_header/lc_header",
+    "l-capsule-bar": "/lin-ui/dist/capsule-bar",
+    "l-segment": "/lin-ui/dist/segment",
+    "l-segment-item": "/lin-ui/dist/segment-item",
+    "l-list": "/lin-ui/dist/list",
+    "l-toast": "/lin-ui/dist/toast",
+    "van-icon": "/components/icon/index",
+    "l-icon": "/lin-ui/dist/icon",
+    "l-loading": "/lin-ui/dist/loading"
+  }
+}

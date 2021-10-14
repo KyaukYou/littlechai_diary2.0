@@ -53,7 +53,7 @@ App({
 
   
   },
-  async initData() {
+  async initData(newUserInfo) {
       let openid = wx.getStorageSync('openid')
       let res = await this.ifUser(openid);
       // console.log('a',res)
@@ -68,9 +68,16 @@ App({
       // console.log('none',res)
       if(arr.includes('scope.userInfo') && res.res.status !== "err") {
         // console.log('one')
-        let checkInfo = await wx.getUserInfo({})
+        let checkInfo = null;
+        if(newUserInfo) {
+          checkInfo = newUserInfo;
+          checkInfo.errMsg = "getUserInfo:ok";
+        }
+        else {
+          checkInfo = await wx.getUserInfo({})
+        }
         if(checkInfo.errMsg === "getUserInfo:ok") {
-          // console.log('two',checkInfo)
+          console.log('two',checkInfo)
           if(checkInfo.userInfo.avatarUrl !== res.res.data.userInfo.avatarUrl || checkInfo.userInfo.nickName !== res.res.data.userInfo.nickName) {
             let newInfo = await wx.cloud.callFunction({
               name: 'updateCustom',
@@ -82,7 +89,7 @@ App({
               }
             })
             if(newInfo.result.stats.updated === 1) {
-              await this.initData();
+              await this.initData(checkInfo);
             }
           }
         }

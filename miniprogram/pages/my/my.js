@@ -252,6 +252,7 @@ Page({
     if (wx.getStorageSync('openid')) {
       return;
     }
+
     this.setData({
       toastBol: true
     })
@@ -279,6 +280,17 @@ Page({
       console.log('错误')
     }
 
+  },
+  //通过新接口获得用户数据
+  getNewUserInfo() {
+    wx.getUserProfile({
+      desc: '用于展示你的用户名头像', 
+      success: async (val) => {
+        console.log(val)
+        await app.initData(val);
+        this.getGlobalData();
+      }
+    })
   },
   //日记开关权限控制
   async controlDiary(e) {
@@ -439,6 +451,14 @@ Page({
       url: '/pages/adminDiary/adminDiary',
     })
   },
+
+  //管理员权限：电影日记列表
+  toFilm() {
+    wx.navigateTo({
+      url: '/pages/film/film',
+    })
+  },
+
 
   //获取日志版本
   async getVersion_one() {
