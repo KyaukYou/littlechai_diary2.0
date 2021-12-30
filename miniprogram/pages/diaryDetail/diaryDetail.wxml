@@ -81,7 +81,13 @@
 
             </view>
             <view class='detail-list-text'>
-              <text decode='true' class='detail-list-top'>{{item.content == '' ? '这里还是空空如也呢~' : item.content}}</text>
+              <view wx:if="{{item.content == ''}}">
+                <text decode='true' class='detail-list-top'>这里还是空空如也呢~</text>
+              </view>
+              <view wx:if="{{item.content != ''}}">
+                <rich-text class='detail-list-top' nodes="{{item.content}}"></rich-text>
+              </view>
+              <!-- <text decode='true' class='detail-list-top'>{{item.content == '' ? '这里还是空空如也呢~' : item.content}}</text> -->
             </view>
           </view>
         </view>

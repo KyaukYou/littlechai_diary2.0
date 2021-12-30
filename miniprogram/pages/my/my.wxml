@@ -33,6 +33,7 @@
 
       <!-- 头像区域 -->
       <view class="my_info">
+          <!-- <button open-type="getUserInfo" bindgetuserinfo='bindgetuserinfo'>更新信息</button> -->
           <image class="my_edit_background" src='/images/img.svg' bindtap="chooseBackground"></image>
 
           <view class="my_info_top">
@@ -45,9 +46,9 @@
               <view class="my_info_location">
                 <view class="my_info_setline">
                   <text>{{info.headline || ''}}</text>
-                  <input maxlength='{{maxlength}}' bindblur='saveHeadline' placeholder-class='plcClass' bindinput='changeHeadline' placeholder="写点什么吧~" type="text" value="{{info.headline || ''}}" />
+                  <textarea maxlength='{{maxlength}}' bindblur='saveHeadline' placeholder-class='plcClass' bindinput='changeHeadline' placeholder="写点什么吧~" type="text" value="{{info.headline || ''}}" />
                 </view>
-                <image src='/images/pen.svg'></image> 
+                <!-- <image src='/images/pen.svg'></image>  -->
               </view>
             </view>
           </view>

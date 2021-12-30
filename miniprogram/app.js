@@ -50,15 +50,38 @@ App({
     else {
       this.initData();
     }
-
-  
   },
-  async initData(newUserInfo) {
+
+  async getUserInfoAgain() {
+    let openid = wx.getStorageSync('openid')
+    let res = await this.ifUser(openid);
+    let copy = JSON.parse(JSON.stringify(res.res.data));
+    let that = this;
+    console.log(res,copy)
+    function changeInfo() {
+      if(res.res.status === 'ok') {
+        console.log(res,copy)
+        let user = copy;
+        that.globalData.color = copy.color;
+        wx.setStorageSync('color', copy.color);
+        wx.setStorageSync('hue', copy.hue);
+        that.globalData.blur = copy.blur;
+        that.globalData.background = copy.background_bol;
+        wx.setStorageSync('blur', copy.blur);
+        wx.setStorageSync('background', copy.background_bol);
+        wx.setStorageSync('user', copy);
+        that.globalData.userInfo = JSON.parse(JSON.stringify(copy.userInfo));
+        that.globalData.roles = copy.roles;
+        console.log(new Date(),that.globalData,copy)
+      }
+    }
+    await changeInfo();
+  },
+
+  async initDataX(newUserInfo) {
       let openid = wx.getStorageSync('openid')
       let res = await this.ifUser(openid);
-      // console.log('a',res)
       let ifLogin = await wx.getSetting({});
-      // console.log(ifLogin)
       let forin = ifLogin.authSetting;
       let ifUserInfo = false;
       let arr = [];
@@ -89,14 +112,17 @@ App({
               }
             })
             if(newInfo.result.stats.updated === 1) {
-              await this.initData(checkInfo);
+              // await this.initData(checkInfo);
+              // 重新获取用户数据
+              await this.getUserInfoAgain(wx.getStorageSync('openid'))
+              console.log(new Date())
             }
           }
         }
       }
 
       // console.log(res)
-      if(res.res.status === 'ok') {
+      if(!arr.includes('scope.userInfo') && res.res.status === 'ok') {
         let user = res.res.data;
         this.globalData.color = user.color;
         wx.setStorageSync('color', user.color);
@@ -122,6 +148,67 @@ App({
       }
       this.globalData.initBol = true;
   },
+
+  async initData() {
+    let openid = wx.getStorageSync('openid')
+    let res = await this.ifUser(openid);
+    let ifLogin = await wx.getSetting({});
+    let forin = ifLogin.authSetting;
+    let ifUserInfo = false;
+    let arr = [];
+    for(var k in forin) {
+      arr.push(k)
+    }
+    // if(arr.includes('scope.userInfo') && res.res.status !== "err") {
+    //   let checkInfo = await wx.getUserInfo({})
+    //   if(checkInfo.errMsg === "getUserInfo:ok") {
+    //     // console.log('two',checkInfo)
+    //     if(checkInfo.userInfo.avatarUrl !== res.res.data.userInfo.avatarUrl || checkInfo.userInfo.nickName !== res.res.data.userInfo.nickName) {
+    //       let newInfo = await wx.cloud.callFunction({
+    //         name: 'updateCustom',
+    //         data: {
+    //           openid: wx.getStorageSync('openid'),
+    //           update: {
+    //             "userInfo": checkInfo.userInfo
+    //           }
+    //         }
+    //       })
+    //       if(newInfo.result.stats.updated === 1) {
+    //         await this.initData();
+    //       }
+    //     }
+    //   }
+    // }
+
+    // console.log(res)
+    if(res.res.status === 'ok') {
+      let user = res.res.data;
+      this.globalData.color = user.color;
+      wx.setStorageSync('color', user.color);
+      wx.setStorageSync('hue', user.hue);
+      this.globalData.blur = user.blur;
+      this.globalData.background = user.background_bol;
+      wx.setStorageSync('blur', user.blur);
+      wx.setStorageSync('background', user.background_bol);
+      wx.setStorageSync('user', user);
+      this.globalData.userInfo = user.userInfo;
+      this.globalData.roles = user.roles;
+    }
+    else {
+      if(wx.getStorageSync('color')) {
+        this.globalData.color = wx.getStorageSync('color');
+      }
+      if(wx.getStorageSync('blur')) {
+        this.globalData.blur = wx.getStorageSync('blur');
+      }
+      if(wx.getStorageSync('background')) {
+        this.globalData.background = wx.getStorageSync('background');
+      }
+    }
+    this.globalData.initBol = true;
+},
+
+
   changeColor(color) {
     this.globalData.color = color;
   },

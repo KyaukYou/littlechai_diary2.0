@@ -25,13 +25,15 @@ Page({
     toastDuration: 999999,
     ms_content: "",
     ms_show: "",
-    maxlength: 16,
+    maxlength: 80,
     version_text: "新版本介绍",
     version_num: "",
     toastBolX: false,
     toastTitleX: "",
     toastDurationX: 0,
-    answer_text: ""
+    answer_text: "",
+    userInfoBoolean: false,
+    newUserInfo: {}
   },
   // 初始化自定义导航栏
   async firstHeader() {
@@ -116,10 +118,11 @@ Page({
     })
   },
   getGlobalData() {
-    let timer = setInterval(() => {
-      // console.log(app.globalData.initBol)
+    // let timer = setInterval(() => {
+      let userInfoStorage = wx.getStorageSync('user')
+      console.log(app.globalData,userInfoStorage)
       if (app.globalData.initBol === true) {
-        clearInterval(timer)
+        // clearInterval(timer)
         this.setData({
           globalData: app.globalData,
           rgb: app.globalData.color,
@@ -153,7 +156,7 @@ Page({
 
       }
       // console.log(app.globalData)
-    }, 100)
+    // }, 100)
   },
   //scroll-view 自定义下拉刷新
   async refresh() {
@@ -246,51 +249,105 @@ Page({
   //获取用户数据
   async bindgetuserinfo(e) {
     console.log(e);
-    if(e.detail.errMsg !== "getUserInfo:ok") {
-      return;
-    }
-    if (wx.getStorageSync('openid')) {
-      return;
-    }
 
-    this.setData({
-      toastBol: true
-    })
-    app.globalData.initBol = false;
-    const res = await app.onGetOpenid();
-    wx.setStorageSync('openid', res.openid)
-    if (res.status === 'ok') {
-
-      let ifUser = await app.ifUser(res.openid);
-      // console.log(ifUser)
-      //获取值
-      if (ifUser.res.status === 'ok') {
-        console.log(ifUser.res.data)
-        wx.setStorageSync('user', ifUser.res.data)
-        await app.initData();
-        this.getGlobalData();
+    let timer = null;
+    clearInterval(timer)
+    timer = setInterval( async () =>{
+      if(this.data.userInfoBoolean) {
+        clearInterval(timer)
+        this.setData({
+          userInfoBoolean: false
+        })
+        if(e.detail.errMsg !== "getUserInfo:ok") {
+          return;
+        }
+        if (wx.getStorageSync('openid')) {
+          return;
+        }
+    
+        this.setData({
+          toastBol: true
+        })
+        app.globalData.initBol = false;
+        const res = await app.onGetOpenid();
+        wx.setStorageSync('openid', res.openid)
+        if (res.status === 'ok') {
+          let ifUser = await app.ifUser(res.openid);
+          console.log(ifUser,'======================')
+          //获取值
+          if (ifUser.res.status === 'ok') {
+            // console.log(ifUser.res.data)
+            let copy = JSON.parse(JSON.stringify(ifUser.res.data))
+            copy.userInfo = this.newUserInfo
+            wx.setStorageSync('user', copy)
+            await app.initData();
+            this.getGlobalData();
+          }
+          //创建用户
+          else if (ifUser.res.status === 'err') {
+            let createUser = await app.createUser(res.openid, this.newUserInfo)
+            await app.initData();
+            this.getGlobalData();
+          }
+        } else {
+          console.log('错误')
+        }
+        this.setData({
+          stopTimer: false
+        })
       }
-      //创建用户
-      else if (ifUser.res.status === 'err') {
-        let createUser = await app.createUser(res.openid, e.detail.userInfo)
-        await app.initData();
-        this.getGlobalData();
+      else {
+        console.log(11)
+        if(this.data.stopTimer) {
+          clearInterval(timer)
+          this.setData({
+            stopTimer: false
+          })
+        }
       }
-    } else {
-      console.log('错误')
-    }
-
+    },100)
   },
   //通过新接口获得用户数据
   getNewUserInfo() {
-    wx.getUserProfile({
-      desc: '用于展示你的用户名头像', 
-      success: async (val) => {
-        console.log(val)
-        await app.initData(val);
-        this.getGlobalData();
-      }
-    })
+    if (wx.getStorageSync('openid')) {
+      wx.getUserProfile({
+        desc: '用于展示你的用户名头像和昵称', 
+        success: async (val) => {
+          console.log(val)
+          this.setData({
+            userInfoBoolean: false,
+            stopTimer: true
+          })
+          await app.initDataX(val);
+          this.getGlobalData();
+        },
+        fail: async (val) => {
+          this.setData({
+            userInfoBoolean: false,
+            stopTimer: true
+          })
+        }
+      })
+    }else {
+      let userInfoTimer = null;
+      clearInterval(userInfoTimer)
+      wx.getUserProfile({
+        desc: '用于展示你的用户名头像和昵称', 
+        success: async (val) => {
+          console.log(val)
+          this.setData({
+            userInfoBoolean: true,
+            newUserInfo: val.userInfo
+          })
+        },
+        fail: async (val) => {
+          this.setData({
+            userInfoBoolean: false,
+            stopTimer: true
+          })
+        }
+      })
+    }
   },
   //日记开关权限控制
   async controlDiary(e) {
@@ -491,6 +548,9 @@ Page({
 
   //获取提交回复
   async getAnswerBol() {
+    if(!wx.getStorageSync('openid')) {
+      return;
+    }
     let version = await wx.cloud.callFunction({
       name: 'getAnswerBol',
       data: {
@@ -551,7 +611,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.toAsync();
   },
 
   /**

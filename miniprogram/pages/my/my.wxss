@@ -26,10 +26,11 @@
 
 .my_info_setline {
   position: relative;
-  max-width: 430rpx;
+  max-width: 630rpx;
   min-width: 154rpx;
   width: auto;
   height: 100%;
+  line-height: 34rpx;
 }
 
 .my_info_setline text {
@@ -38,12 +39,16 @@
   z-index: -1;
 }
 
-.my_info_setline input {
+.my_info_setline textarea {
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+  height: 108rpx;
+  padding: 0!important;
+  margin: 0!important;
 }
 
 .my_wrap {

@@ -215,7 +215,7 @@
 
 .create_child_center textarea {
   width: 100%;
-  height: auto;
+  height: 300rpx;
   min-height: 300rpx;
   background-color: rgba(246, 246, 246, 0.9);
   border-radius: 10rpx;
