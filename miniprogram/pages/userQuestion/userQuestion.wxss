@@ -80,16 +80,15 @@
 
 .myList-top {
   position: relative;
-  left: 120rpx;
-  top: 0;
+  top: -4rpx;
   right: 0;
-  height: 52rpx;
-  line-height: 52rpx;
+  height: 33.33333%;
   display: flex;
   align-items: center;
   font-size: 28rpx;
   box-sizing: border-box;
-  padding: 0 16rpx 0 4rpx;
+  padding: 0 16rpx 0 124rpx;
+  flex-flow: row nowrap;
 }
 
 .myList-top text {
@@ -102,6 +101,9 @@
   white-space: nowrap;
   position: relative;
   top: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .myList-bottom {

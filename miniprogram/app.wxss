@@ -489,7 +489,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2rpx 20rpx rgba(120, 120, 120, 0.3);
-  transition: background-color .2s ease;
+  /* transition: background-color .2s ease; */
 }
 
 .to_create image {

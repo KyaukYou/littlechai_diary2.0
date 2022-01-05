@@ -385,8 +385,8 @@ Page({
     var touchs = e.touches[0]; 
     var pageX = touchs.pageX; 
     var pageY = touchs.pageY; 
-    console.log('pageX: ' + pageX) 
-    console.log('pageY: ' + pageY) 
+    // console.log('pageX: ' + pageX) 
+    // console.log('pageY: ' + pageY) 
   //防止坐标越界,view宽高的一般 
     if (pageX < 30) return; 
     if (pageX > this.data.screenWidth - 30) return; 
@@ -395,15 +395,15 @@ Page({
   //这里用right和bottom.所以需要将pageX pageY转换 
     var x = this.data.screenWidth - pageX - 30; 
     var y = this.data.screenHeight - pageY - 30; 
-    console.log('x: ' + x) 
-    console.log('y: ' + y) 
+    // console.log('x: ' + x) 
+    // console.log('y: ' + y) 
     // let timer = setTimeout(() => {
       
     // },0)
     this.setData({ 
       pos: {
-        right: ((x / this.data.screenWidth) * 100).toFixed(2) + '%',
-        bottom: ((y / this.data.screenHeight) * 100).toFixed(2) + '%'
+        right: ((x / this.data.screenWidth) * 100) + '%',
+        bottom: ((y / this.data.screenHeight) * 100) + '%'
       }
      }); 
     
