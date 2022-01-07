@@ -278,14 +278,14 @@ Page({
           if (ifUser.res.status === 'ok') {
             // console.log(ifUser.res.data)
             let copy = JSON.parse(JSON.stringify(ifUser.res.data))
-            copy.userInfo = this.newUserInfo
+            copy.userInfo = this.data.newUserInfo
             wx.setStorageSync('user', copy)
             await app.initData();
             this.getGlobalData();
           }
           //创建用户
           else if (ifUser.res.status === 'err') {
-            let createUser = await app.createUser(res.openid, this.newUserInfo)
+            let createUser = await app.createUser(res.openid, this.data.newUserInfo)
             await app.initData();
             this.getGlobalData();
           }
