@@ -41,13 +41,13 @@
    + 字段1：controlChat，类型：boolean，值：false
    + 字段2：controlDiary，类型：boolean，值：false
    + 字段3：openid，类型：array，值：不填
-+ 创建成功后，复制**_id**值，找到**cloudfunctions**下的**getAdminX**文件夹，打开index.js文件，修改12行**_id**的值为刚才复制的**_id**，修改完后必须重新上传
++ 创建成功后，复制 **_id** 值，找到 **cloudfunctions** 下的 **getAdminX** 文件夹，打开index.js文件，修改12行 **_id** 的值为刚才复制的 **_id** ，修改完后必须重新上传
 + 给**versions**集合添加记录，使用默认模式添加
    + 字段1：arr，类型：array，值：不填
    + 字段2：updatedTime，类型：string，值：不填
    + 字段3：openid，类型：string，值：不填
    + 字段4：version，类型：string，值：不填
-+ 创建成功后，复制**_id**值，找到**cloudfunctions**下的**getVersion**，**getVersionOne**文件夹，打开index.js文件，修改13行**_id**的值为刚才复制的**_id**，修改完后必须重新上传
++ 创建成功后，复制 **_id** 值，找到 **cloudfunctions** 下的 **getVersion**，**getVersionOne** 文件夹，打开index.js文件，修改13行 **_id** 的值为刚才复制的 **_id** ，修改完后必须重新上传
 + 上面步骤完成以后，清除缓存，点击全部，点击编译，确保控制台没有报错
 + 在**我的**里面，点击微信图标进行登录注册
 + 注册完成后在云开发的**users**集合中找到新增的一项，找到**openid**,复制值
