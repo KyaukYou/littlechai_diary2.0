@@ -2,8 +2,8 @@
 <!-- <l-capsule-bar hidden-capsule bg-color='{{globalData.color}}' disable-back home-page="/pages/index/index" title="小柴随心记">
 </l-capsule-bar> -->
 <lc_header header_title='小柴随心记' header_color="{{globalData.color}}" blur="{{globalData.blur}}" back="{{back}}"></lc_header>
-
-<view wx:if="{{showBtn}}" hover-class="opacity_button_pos" class="to_create" style="background-color: {{globalData.color}}; right: {{pos.right}}; bottom: {{pos.bottom}}" bindtap="toCreate" bindtouchmove="ballMoveEvent">
+<!-- bindtouchmove="ballMoveEvent" -->
+<view wx:if="{{showBtn}}" hover-class="opacity_button_pos" class="to_create" style="background-color: {{globalData.color}}; right: {{pos.right}}; bottom: {{pos.bottom}}" bindtap="toCreate">
   <image src='/images/add.svg'></image>
 </view>
 
