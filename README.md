@@ -1,5 +1,7 @@
 ## 微信小程序-小柴随心记2.0(原小柴日记簿)
 
+![小柴随心记二维码](./diary.png)
+
 ## 开发文档
 
 ### 1.克隆项目，地址： https://github.com/LittleChai/littlechai_diary2.0.git
