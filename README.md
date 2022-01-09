@@ -1,7 +1,7 @@
 ## 微信小程序-小柴随心记2.0(原小柴日记簿)
 
 ## 扫描二维码查看 
-![小柴随心记二维码](./image.jpg)
+![小柴随心记二维码](http://file.littlechai.cn/image/image.jpg)
 
 ## 开发文档
 
