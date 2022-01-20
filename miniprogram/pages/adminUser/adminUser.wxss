@@ -33,7 +33,7 @@
 }
 
 .list {
-  width: 100%;
+  width: 95%;
   height: 130rpx;
   box-sizing: border-box;
   /* background-color: rgba(246, 246, 246, 1); */
@@ -42,18 +42,21 @@
   flex-flow: row nowrap;
   border-bottom: 2rpx solid rgb(246, 246, 246);
   position: relative;
+  left: 4%;
   background-color: white;
   transition: all .2s ease;
 }
 
 .list-img {
-  width: 76rpx;
-  height: 76rpx;
+  width: 86rpx;
+  height: 86rpx;
   border-radius: 50%;
   overflow: hidden;
   margin-left: 16rpx;
   margin-top: 11rpx;
   display: inline-block;
+  position: relative;
+  top: 6rpx;
 }
 
 .list-img image {
@@ -66,8 +69,8 @@
   height: 100%;
   width: 560rpx;
   line-height: 100rpx;
-  font-size: 28rpx;
-  padding-left: 22rpx;
+  font-size: 30rpx;
+  padding-left: 46rpx;
   box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
@@ -103,7 +106,7 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-start;
-  font-size: 28rpx;
+  font-size: 30rpx;
 }
 
 .list_time text {

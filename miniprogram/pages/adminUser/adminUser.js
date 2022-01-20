@@ -119,6 +119,8 @@ Page({
       name: 'almightyApi',
       data: {
         type: 'getUsers',
+        keyWords: this.data.searchValue,
+        sort: this.data.tabCurrent,
         page: this.data.page,
         per_page: this.data.per_page
       }
