@@ -18,20 +18,65 @@ Page({
     toastIcon: '',
     toastDuration: 99999,
     loadingBol: false,
+    beginBol: false,
     page: 1,
     per_page: 12,
-    bottomBol: false
+    bottomBol: false,
+    tabCurrent: 'tab_one',
+    searchValue: "",
+    searchBol: false
   },
+  changeTabs(e) {
+    // console.log(e.detail.activeKey)
+    this.setData({
+      tabCurrent: e.detail.activeKey,
+      beginBol: true,
+      page: 1
+    })
+    this.init();
+  },
+
+  //获取输入内容
+  changeSearchValue(e) {
+    if (e.detail.value == "") {
+      this.setData({
+        searchValue: e.detail.value,
+        searchBol: false
+      })
+    } else {
+      this.setData({
+        searchValue: e.detail.value,
+        searchBol: true
+      })
+    }
+  },
+
+  //清空输入内容
+  clearSearchValue() {
+    this.setData({
+      searchValue: "",
+      searchBol: false
+    })
+  },
+
+  clickSearchFn() {
+    this.setData({
+      beginBol: true,
+      page: 1
+    })
+    this.init();
+  },
+
   async getGlobalData() {
     let timer = setInterval(() => {
-      if(app.globalData.initBol === true) {
+      if (app.globalData.initBol === true) {
         this.setData({
           globalData: app.globalData,
           refreshBol: false
         })
         clearInterval(timer);
       }
-    },100)
+    }, 100)
   },
 
   async getUsers() {
@@ -39,23 +84,26 @@ Page({
       name: 'almightyApi',
       data: {
         type: 'getUsers',
-        page:this.data.page,
+        keyWords: this.data.searchValue,
+        sort: this.data.tabCurrent,
+        page: this.data.page,
         per_page: this.data.per_page
       }
     })
 
-    if(res.errMsg === "cloud.callFunction:ok") {
-        let copy = [];
-        let arr = JSON.parse(JSON.stringify(res.result.data));
+    if (res.errMsg === "cloud.callFunction:ok") {
+      let copy = [];
+      let arr = JSON.parse(JSON.stringify(res.result.data));
 
-        for(let i=0; i<arr.length; i++) {
-          copy.push(arr[i])
-        }
-        this.setData({
-          info: copy,
-          refreshBol: false,
-          loadingBol: false
-        })
+      for (let i = 0; i < arr.length; i++) {
+        copy.push(arr[i])
+      }
+      this.setData({
+        info: copy,
+        refreshBol: false,
+        loadingBol: false,
+        beginBol: false
+      })
     }
     console.log(res)
   },
@@ -71,34 +119,33 @@ Page({
       name: 'almightyApi',
       data: {
         type: 'getUsers',
-        page:this.data.page,
+        page: this.data.page,
         per_page: this.data.per_page
       }
     })
 
-    if(res.errMsg === "cloud.callFunction:ok") {
-        let copy = JSON.parse(JSON.stringify(this.data.info));
-        let arr = JSON.parse(JSON.stringify(res.result.data));
+    if (res.errMsg === "cloud.callFunction:ok") {
+      let copy = JSON.parse(JSON.stringify(this.data.info));
+      let arr = JSON.parse(JSON.stringify(res.result.data));
 
-        for(let i=0; i<arr.length; i++) {
-          copy.push(arr[i])
-        }
-        if(arr.length < 12) {
-          this.setData({
-            info: copy,
-            refreshBol: false,
-            loadingBol: false,
-            bottomBol: true
-          })
-        }
-        else {
-          this.setData({
-            info: copy,
-            refreshBol: false,
-            loadingBol: false
-          })
-        }
-        
+      for (let i = 0; i < arr.length; i++) {
+        copy.push(arr[i])
+      }
+      if (arr.length < 12) {
+        this.setData({
+          info: copy,
+          refreshBol: false,
+          loadingBol: false,
+          bottomBol: true
+        })
+      } else {
+        this.setData({
+          info: copy,
+          refreshBol: false,
+          loadingBol: false
+        })
+      }
+
     }
     console.log(res)
   },
@@ -116,7 +163,8 @@ Page({
   onLoad: function (options) {
     this.getGlobalData();
     this.setData({
-      loadingBol: true,
+      // loadingBol: true,
+      beginBol: true,
     })
     this.init();
   },
@@ -144,7 +192,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**

@@ -7,11 +7,23 @@
   duration="{{toastDuration}}"
 />
 
-<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;">
- 
+<view class="my" style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+6}}px;">
+  <view class="my_header">
+    <l-search-bar value="{{searchValue}}" class="index_search" placeholder="搜索"  cancel-text="搜索"  clear  bind:lincancel="clickSearchFn"  bind:linclear="clearSearchValue" bind:linchange="changeSearchValue"  />
+    <view class="index_tab">
+      <l-segment active-color='{{globalData.color}}' bind:linchange="changeTabs" active-key="{{tabCurrent}}">
+        <l-segment-item tab="登录时间" key="tab_one" />
+        <l-segment-item tab="创建时间" key="tab_two" />
+      </l-segment>
+    </view>
+  </view>
   <scroll-view style="padding-top: {{globalData.customHeight.height+globalData.customHeight.top+12}}px;"
     class="my_container" scroll-y refresher-enabled bindrefresherrefresh='refresh' refresher-triggered='{{refreshBol}}' bindscrolltolower='scrollToBottom'>
     <view class="my_wrap">
+
+      <view wx:if="{{beginBol}}" class="diary_loading" style="display: flex;align-items: center;justify-content: center;">
+        <l-loading show size="mini" type="circle" color="{{globalData.color}}"></l-loading>
+      </view>
   
     <view class='list' wx:for='{{info}}' wx:key='index'>
       <view class='list-img' data-openid='{{item.openid}}' bindtap='toUsers'>

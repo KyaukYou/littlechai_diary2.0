@@ -49,7 +49,6 @@ Page({
         searchBol: true
       })
     }
-    
   },
   //清空输入内容
   clearSearchValue() {
@@ -353,9 +352,7 @@ Page({
     this.setData({
       tabCurrent: e.detail.activeKey
     })
-
     this.clickSearchFn();
-
   },
   //scroll-view 自定义下拉刷新
   async refresh() {

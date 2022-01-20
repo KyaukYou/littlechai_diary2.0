@@ -2,6 +2,35 @@
   top: 0rpx;
 }
 
+.index_top {
+  width: 100%;
+  height: 156rpx;
+  position: relative;
+  z-index: 999;
+}
+
+.my_header {
+  width: 100%;
+  height: 156rpx;
+  position: relative;
+  top: 12rpx;
+  z-index: 99;
+}
+
+.my_container {
+  position: absolute;
+  top: 168rpx;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.my_wrap {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 0rpx 4rpx 0 4rpx;
+}
 
 .list {
   width: 100%;
@@ -115,4 +144,9 @@
 
 .diary_loading {
   top: 6rpx;
+}
+
+.l-tabs-horizontal .l-tabs-active .l-tab-line {
+  width: 90%;
+  left: 0
 }

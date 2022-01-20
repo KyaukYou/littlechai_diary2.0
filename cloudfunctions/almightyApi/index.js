@@ -230,22 +230,50 @@ exports.main = async (event, context) => {
     // 每页几项
     let perPage = Math.max(event.per_page * 1, 1);
 
-
-    let res = await db.collection('users')
-      .orderBy('created_time', 'desc')
-      .field({
-        'userInfo.nickName': true,
-        'userInfo.avatarUrl': true,
-        'userInfo.gender': true,
-        openid: true,
-        created_time: true,
-        updated_time: true,
-      })
-      .limit(perPage)
-      .skip(page * perPage)
-      .get()
-
-    return res;
+    if(event.keyWords != "") {
+      let res = await db.collection('users').where(_.or(
+        [
+          {
+            "userInfo.nickName": db.RegExp({
+              regexp:event.keyWords,
+              option:'i'
+            })
+          },
+        ]
+      )
+      )
+        .orderBy(event.sort == 'tab_one' ? 'updated_time' : 'created_time', 'desc')
+        .field({
+          'userInfo.nickName': true,
+          'userInfo.avatarUrl': true,
+          'userInfo.gender': true,
+          openid: true,
+          created_time: true,
+          updated_time: true,
+        })
+        .limit(perPage)
+        .skip(page * perPage)
+        .get()
+  
+      return res;
+    }
+    else {
+      let res = await db.collection('users')
+        .orderBy(event.sort == 'tab_one' ? 'updated_time' : 'created_time', 'desc')
+        .field({
+          'userInfo.nickName': true,
+          'userInfo.avatarUrl': true,
+          'userInfo.gender': true,
+          openid: true,
+          created_time: true,
+          updated_time: true,
+        })
+        .limit(perPage)
+        .skip(page * perPage)
+        .get()
+  
+      return res;
+    }
   }
   else if(event.type === 'adminGetUserInfo') {
     let res = await db.collection('users').where({
