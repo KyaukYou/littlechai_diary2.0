@@ -409,11 +409,17 @@ Page({
   },
   toEditDiary(e) {
     let id = e.currentTarget.dataset.id;
-    
+    // let openid = wx.getStorageSync('openid');
+    // if(openid ==  e.currentTarget.dataset.openid) {
+    //   wx.navigateTo({
+    //     url: '/pages/editDiary/editDiary?id='+id,
+    //   })
+    // }
+    // else {
+    // }
     wx.navigateTo({
-      url: '/pages/editDiary/editDiary?id='+id,
+      url: '/pages/diaryDetail/diaryDetail?id='+id,
     })
-    
   },
 
   toUsers(e) {
